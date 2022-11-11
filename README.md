@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
 
+## Detail
+Proyecto de autenticación(SSO) con Angular, Tailwindcss
+* Administración de usuarios, dominios, roles, etc.  
+* Interfaz de autenticación reutilizable  
+* Versión Beta  
+Backend: https://github.com/leonardoburgosd/authenticator_backend  
+Frontend: https://github.com/leonardoburgosd/authenticator_frontend
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
