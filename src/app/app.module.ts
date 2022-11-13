@@ -9,10 +9,6 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './means/forms/user-register/user-register.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AccountComponent } from './dashboard/account/account.component';
-import { DomainComponent } from './dashboard/domain/domain.component';
-import { UsersComponent } from './dashboard/users/users.component';
 
 
 @NgModule({
@@ -21,11 +17,7 @@ import { UsersComponent } from './dashboard/users/users.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    UserRegisterComponent,
-    DashboardComponent,
-    AccountComponent,
-    DomainComponent,
-    UsersComponent
+    UserRegisterComponent
   ],
   imports: [
     BrowserModule,
