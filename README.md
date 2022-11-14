@@ -10,7 +10,7 @@ Proyecto de autenticación(SSO) con Angular, Tailwindcss
 Backend: https://github.com/leonardoburgosd/authenticator_backend  
 Frontend: https://github.com/leonardoburgosd/authenticator_frontend
   
-## Deploy url
+## Deployed url
 https://authdash-bcd10.web.app 
 
 ## Development server
