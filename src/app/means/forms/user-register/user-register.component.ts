@@ -24,7 +24,7 @@ export class UserRegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userSerices: userServices
+    private userServices: userServices
   ) {}
 
   private validacionFormulario() {
@@ -53,15 +53,18 @@ export class UserRegisterComponent implements OnInit {
     let newUser: createUser = new createUser();
     newUser.email = this.formGroup.controls['email'].value;
     newUser.password = this.formGroup.controls['password'].value;
-    newUser.passwordConfirm = this.formGroup.controls['passwordConfirm'].value;
+    newUser.passwordConfirmation = this.formGroup.controls['passwordConfirm'].value;
     newUser.name = this.formGroup.controls['name'].value;
     newUser.lastName = this.formGroup.controls['lastName'].value;
     newUser.birthday = this.formGroup.controls['birthday'].value;
-    this.userSerices.crear(newUser).subscribe(
+    this.userServices.crear$(newUser).subscribe(
       (resp: any) => {
         isAdd = true;
       },
-      (err: any) => {}
+      (err: any) => {
+        console.log(JSON.stringify(newUser));
+        console.log(err)
+      }
     );
     return isAdd;
   }

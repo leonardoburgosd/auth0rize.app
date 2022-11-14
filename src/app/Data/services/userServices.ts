@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { createUser } from '../dto/user/createUser';
 import { parametersConfig } from "../common/param-config";
-import { loginUser } from "../dto/user/loginUser";
+import { Observable } from "rxjs";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -21,15 +21,13 @@ export class userServices {
 
     constructor(private httpClient: HttpClient) { }
 
-    crear(createUser: createUser): any {
-        return this.httpClient.post(this.api, createUser).toPromise();
+    crear$(createUser: createUser): Observable<any> {
+        return this.httpClient.post(this.api, createUser);
     }
 
     listarUsuarios(application: string): any {
-        return this.httpClient.get(`${this.api}/${application}`, httpOptions).toPromise();
+        return this.httpClient.get(`${this.api}/${application}`, httpOptions);
     }
 
-    login(user: loginUser):any{
-        return this.httpClient.post(this.api, user).toPromise();
-    }
+    
 }

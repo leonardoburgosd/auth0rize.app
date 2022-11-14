@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { loginUser } from '../Data/dto/user/loginUser';
 import { tokenUser } from '../Data/dto/user/tokenLogin';
-import { userServices } from '../Data/services/userServices';
+import { authServices } from '../Data/services/authServices';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: userServices
+    private authService: authServices
   ) {}
   
   private validacionFormaulario() {
@@ -36,9 +36,16 @@ export class LoginComponent implements OnInit {
 
   login() {
     let login: loginUser = new loginUser();
-    this.userService.login(login).subscribe(
-      (res: tokenUser) => {},
-      (err: any) => {}
+    login.email = this.formGroup.controls['email'].value;
+    login.password = this.formGroup.controls['password'].value;
+    login.domain = 'default';
+    this.authService.login$(login).subscribe(
+      (res: tokenUser) => {
+        
+      },
+      (err: any) => {
+        console.log(err)
+      }
     );
   }
   

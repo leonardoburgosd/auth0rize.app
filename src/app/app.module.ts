@@ -10,14 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './means/forms/user-register/user-register.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+
   ],
   imports: [
     BrowserModule,
