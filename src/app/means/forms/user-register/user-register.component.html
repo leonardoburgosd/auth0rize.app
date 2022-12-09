@@ -1,97 +1,164 @@
 <form [formGroup]="formGroup" class="flex flex-col gap-4">
+
+  <!--Control: Email-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Email
     </span>
-    <input
-      type="email"
-      autocomplete="off"
-      name="email"
-      formControlName="email"
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      placeholder="email@email.com"
-    />
+    <input type="email" autocomplete="off" name="email" formControlName="email" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['email'].invalid &&
+          formGroup.controls['email'].touched
+      }"
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      placeholder="email@email.com" />
+    <div *ngIf="
+        formGroup.controls['email'].touched &&
+        formGroup.controls['email'].invalid
+      ">
+      <small class="text-rose-500" *ngIf="formGroup.controls['email'].errors?.['required'] ">Debe ingresar un
+        correo.</small>
+      <small class="text-rose-500" *ngIf="formGroup.controls['email'].errors?.['email'] ">Email no tiene el formato
+        correcto.</small>
+    </div>
   </label>
+
+  <!--Control: Password-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Contraseña
     </span>
-    <input
-      type="password"
-      name="password"
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      formControlName="password"
-      placeholder="Contraseña"
-    />
+    <input type="password" name="password" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['password'].invalid &&
+          formGroup.controls['password'].touched
+      }"
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      formControlName="password" placeholder="Contraseña" />
+    <!--Validations-->
+    <div *ngIf="
+          formGroup.controls['password'].touched &&
+          formGroup.controls['password'].invalid
+        ">
+      <small class="text-rose-500" *ngIf="formGroup.controls['password'].errors?.['required'] ">
+        Debe ingresar su contraseña.
+      </small>
+      <small class="text-rose-500" *ngIf="formGroup.controls['password'].errors?.['minlength'] ">
+        Cantidad de caracteres insuficiente.
+      </small>
+    </div>
   </label>
+
+  <!--Control: Password confirm-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Repetir contraseña
     </span>
-    <input
-      type="password"
-      name="password"
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      formControlName="passwordConfirm"
-      placeholder="Repetir contraseña"
-    />
+    <input type="password" name="passwordConfirm" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['passwordConfirm'].invalid &&
+          formGroup.controls['passwordConfirm'].touched ||
+          formGroup.errors?.['match']
+      }"
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      formControlName="passwordConfirm" placeholder="Repetir contraseña" />
+
+    <!--Validations-->
+    <div *ngIf="
+        formGroup.controls['passwordConfirm'].touched &&
+        formGroup.controls['passwordConfirm'].invalid
+      ">
+      <small class="text-rose-500" *ngIf="formGroup.controls['passwordConfirm'].errors?.['required']">Debe ingresar su
+        contraseña.</small>
+      <small class="text-rose-500" *ngIf="formGroup.controls['passwordConfirm'].errors?.['minlength']">Cantidad de
+        caracteres insuficiente.</small>
+    </div>
+    <small class="text-rose-500" *ngIf="formGroup.errors?.['match'] ">Las
+      contraseñas
+      no son iguales.</small>
   </label>
+
+  <!--Control: Name-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Nombres
     </span>
-    <input
-      type="text"
-      name="text"
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      name="name"
-      formControlName="name"
-      placeholder="Nombres"
-    />
+    <input type="text" name="text"
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      name="name" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['name'].invalid &&
+          formGroup.controls['name'].touched
+      }" formControlName="name" placeholder="Nombres" />
+
+    <!--Validations-->
+    <div *ngIf="formGroup.controls['name'].touched && formGroup.controls['name'].invalid">
+      <small class="text-rose-500" *ngIf="formGroup.controls['name'].errors?.['required'] ">
+        Debe ingresar su nombre.
+      </small>
+      <small class="text-rose-500" *ngIf="formGroup.controls['name'].errors?.['minlength'] ">
+        Debe ingresar al menos 2 caracteres.
+      </small>
+    </div>
+    <small class="text-rose-500" *ngIf="formGroup.controls['name'].errors?.['pattern'] ">
+      No se aceptan números ni caracteres especiales.
+    </small>
   </label>
+
+  <!--Control: Lastname-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Apellidos
     </span>
-    <input
-      type="text"
-      name="text"
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      name="lastName"
-      autocomplete="off"
-      formControlName="lastName"
-      placeholder="Apellidos"
-    />
+    <input type="text" name="text"
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      name="lastName" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['lastName'].invalid &&
+          formGroup.controls['lastName'].touched
+      }" autocomplete="off" formControlName="lastName" placeholder="Apellidos" />
+
+    <!--Validations-->
+    <div *ngIf="formGroup.controls['lastName'].touched && formGroup.controls['lastName'].invalid">
+      <small class="text-rose-500" *ngIf="formGroup.controls['lastName'].errors?.['required'] ">
+        Debe ingresar su apellido.
+      </small>
+      <small class="text-rose-500" *ngIf="formGroup.controls['lastName'].errors?.['minlength'] ">
+        Debe ingresar al menos 2 caracteres.
+      </small>
+    </div>
+    <small class="text-rose-500" *ngIf="formGroup.controls['lastName'].errors?.['pattern'] ">
+      No se aceptan números ni caracteres especiales.
+    </small>
   </label>
+
+  <!--Control: Birthday-->
   <label class="block">
-    <span
-      class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
-    >
+    <span class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
       Fecha de nacimiento
     </span>
     <input
-      class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-      autocomplete="off"
-      formControlName="birthday"
-      type="date"
-      name="birthday"
-    />
+      class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+      autocomplete="off" formControlName="birthday" type="date" [ngClass]="{
+        'border-rose-500 ':
+          formGroup.controls['birthday'].invalid &&
+          formGroup.controls['birthday'].touched &&
+          !formGroup.errors?.['adult'] 
+      }" name="birthday" />
+    <!--Validations-->
+    <div *ngIf="formGroup.controls['birthday'].touched && formGroup.controls['birthday'].invalid">
+      <small class="text-rose-500" *ngIf="formGroup.controls['birthday'].errors?.['required'] ">
+        Debe ingresar su fecha de nacimiento.
+      </small><br>
+
+    </div>
+    <small class="text-rose-500" *ngIf="formGroup.errors?.['adult'] ">
+      Debe ser mayor de 18 años.
+    </small>
   </label>
-  <button
-    
-    (click)="registerSuperUser()"
-    class="bg-[#005d99] rounded-xl text-white py-2 hover:bg-violet-600 duration-300 disabled:bg-slate-600"
-  >
+
+  <button [disabled]="formGroup.invalid" (click)="registerSuperUser()"
+    class="bg-[#005d99] rounded-xl text-white py-2 hover:bg-violet-600 duration-300 disabled:bg-slate-600">
     Registrar
   </button>
 </form>

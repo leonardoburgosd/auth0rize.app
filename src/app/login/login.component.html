@@ -9,25 +9,43 @@
       </p>
 
       <form [formGroup]="formGroup" class="flex flex-col gap-4">
-        <label class="block">
+        <label class="block" for="email">
           <span
             class="after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
           >
-            Email
+            Correo
           </span>
           <input
             type="email"
+            id="email"
             autocomplete="off"
             name="email"
             formControlName="email"
             [ngClass]="{
               'border-rose-500 ':
                 formGroup.controls['email'].invalid &&
-                this.formGroup.controls['email'].touched
+                formGroup.controls['email'].touched
             }"
-            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
-            placeholder="email@email.com"
+            class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+            placeholder="mail@mail.com"
           />
+          <div
+            *ngIf="
+              formGroup.controls['email'].touched &&
+              formGroup.controls['email'].invalid
+            "
+          >
+            <small
+              class="text-rose-500"
+              *ngIf="formGroup.controls['email'].errors?.['required'] "
+              >Debe ingresar un correo</small
+            >
+            <small
+              class="text-rose-500"
+              *ngIf="formGroup.controls['email'].errors?.['email'] "
+              >Email no tiene el formato correcto</small
+            >
+          </div>
         </label>
         <label class="block">
           <span
@@ -41,12 +59,29 @@
             [ngClass]="{
               'border-rose-500 ':
                 formGroup.controls['password'].invalid &&
-                this.formGroup.controls['password'].touched
+                formGroup.controls['password'].touched
             }"
-            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
+            class="mt-1 px-3 py-2 bg-white border shadow-sm placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm"
             formControlName="password"
             placeholder="Contraseña"
           />
+          <div
+            *ngIf="
+              formGroup.controls['password'].touched &&
+              formGroup.controls['password'].invalid
+            "
+          >
+            <small
+              class="text-rose-500"
+              *ngIf="formGroup.controls['password'].errors?.['required'] "
+              >Debe ingresar su contraseña</small
+            >
+            <small
+              class="text-rose-500"
+              *ngIf="formGroup.controls['password'].errors?.['minlength'] "
+              >Cantidad de caracteres insuficiente.</small
+            >
+          </div>
         </label>
         <button
           [disabled]="formGroup.invalid"

@@ -25,11 +25,8 @@ export class LoginComponent implements OnInit {
 
   private validacionFormaulario() {
     this.formGroup = this.formBuilder.group({
-      email: [
-        '',
-        [Validators.required, Validators.email],
-      ],
-      password: [null, [Validators.required, Validators.minLength(8)]],
+      email: [this.nuevoUsuario.email, [Validators.required, Validators.email]],
+      password: [this.nuevoUsuario.password, [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -39,8 +36,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     let login: loginUser = new loginUser();
-    login.email = this.formGroup.controls['email'].value;
-    login.password = this.formGroup.controls['password'].value;
     login.domain = 'default';
     this.authService.login$(login).subscribe(
       (res: tokenUser) => {},
@@ -49,5 +44,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 }
