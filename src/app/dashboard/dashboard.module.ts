@@ -9,6 +9,7 @@ import { AbstractComponent } from './abstract/abstract.component';
 import { NavDownComponent } from "../means/large-items/nav/nav-down/nav-down.component";
 import { NavLeftComponent } from "../means/large-items/nav/nav-left/nav-left.component";
 import { NavUpComponent } from "../means/large-items/nav/nav-up/nav-up.component";
+import { NavSecLeftComponent } from "../means/large-items/nav/nav-sec-left/nav-sec-left.component";
 
 @NgModule({
     declarations:[
@@ -19,7 +20,8 @@ import { NavUpComponent } from "../means/large-items/nav/nav-up/nav-up.component
         AbstractComponent ,
         NavUpComponent,
         NavLeftComponent,
-        NavDownComponent
+        NavDownComponent,
+        NavSecLeftComponent,
     ],
     imports:[
         CommonModule,

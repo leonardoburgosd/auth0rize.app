@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './means/forms/user-register/user-register.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavSecLeftComponent } from './means/large-items/nav/nav-sec-left/nav-sec-left.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     RegisterComponent,
     UserRegisterComponent,
+    
 
   ],
   imports: [

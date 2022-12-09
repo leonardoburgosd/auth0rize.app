@@ -1,4 +1,19 @@
-<app-nav-up></app-nav-up>
-<app-nav-left></app-nav-left>
-<router-outlet></router-outlet>
-<app-nav-down></app-nav-down>
+<div class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
+    <div
+        class="bg-white dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
+        <div class="h-16 text-blue-500 flex items-center justify-center">
+            <h1>AB</h1>
+        </div>
+        <app-nav-left></app-nav-left>
+    </div>
+    <div class="flex-grow overflow-hidden h-full flex flex-col">
+        <app-nav-up></app-nav-up>
+        <div class="flex-grow flex overflow-x-hidden">
+           <app-nav-sec-left></app-nav-sec-left>
+            <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+                <router-outlet></router-outlet>
+                <app-nav-down></app-nav-down>
+            </div>
+        </div>
+    </div>
+</div>
