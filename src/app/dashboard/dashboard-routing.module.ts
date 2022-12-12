@@ -5,14 +5,14 @@ import { AbstractComponent } from './abstract/abstract.component';
 import { DomainComponent } from './domain/domain.component';
 import { UsersComponent } from './users/users.component';
 
-const routes: Routes=[
-    {path:'',component: AbstractComponent},
-    { path:'account', component: AccountComponent},
-    { path:'domain', component: DomainComponent},
-    { path:'users', component: UsersComponent}
+const routes: Routes = [
+    { path: '', component: AbstractComponent },
+    { path: 'account', component: AccountComponent },
+    { path: 'domain', component: DomainComponent },
+    { path: 'users', component: UsersComponent }
 ];
 @NgModule({
-    imports: [ RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DashboardRoutingModule{} 
+export class DashboardRoutingModule { } 
