@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { loginUser } from '../Data/dto/user/loginUser';
-import { tokenUser } from '../Data/dto/user/tokenLogin';
-import { authServices } from '../Data/services/authServices';
+import { loginUser, responseLogin } from '../../Data/dto/user/loginUser';
+import { authServices } from '../../Data/services/authServices';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: authServices
-  ) {}
+    private authService: authServices,
+    private router: Router
+  ) { }
 
   private validacionFormaulario() {
     this.formGroup = this.formBuilder.group({
@@ -35,13 +36,24 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let login: loginUser = new loginUser();
-    login.domain = 'default';
-    this.authService.login$(login).subscribe(
-      (res: tokenUser) => {},
+    this.nuevoUsuario.email = this.formGroup.get('email')?.value;
+    this.nuevoUsuario.password = this.formGroup.get('password')?.value;
+    this.authService.login$(this.nuevoUsuario).subscribe(
+      (res: responseLogin) => {
+        if (res.isSuccess) {
+          this.router.navigate(['/dashboard']);
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Login error',
+            text: res.message
+          })
+        }
+      },
       (err: any) => {
-        console.log(err);
+        console.table(err);
       }
     );
   }
+
 }

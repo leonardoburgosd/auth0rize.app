@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { createUser } from '../Data/dto/user/createUser';
+import { createUser } from '../../Data/dto/user/createUser';
 
 @Component({
   selector: 'app-register',

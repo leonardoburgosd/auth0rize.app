@@ -6,27 +6,27 @@ import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AbstractComponent } from './abstract/abstract.component';
-import { NavDownComponent } from "../means/large-items/nav/nav-down/nav-down.component";
-import { NavLeftComponent } from "../means/large-items/nav/nav-left/nav-left.component";
-import { NavUpComponent } from "../means/large-items/nav/nav-up/nav-up.component";
-import { NavSecLeftComponent } from "../means/large-items/nav/nav-sec-left/nav-sec-left.component";
+import { NavDownComponent } from "../../means/large-items/nav/nav-down/nav-down.component";
+import { NavLeftComponent } from "../../means/large-items/nav/nav-left/nav-left.component";
+import { NavUpComponent } from "../../means/large-items/nav/nav-up/nav-up.component";
+import { NavSecLeftComponent } from "../../means/large-items/nav/nav-sec-left/nav-sec-left.component";
 
 @NgModule({
-    declarations:[
+    declarations: [
         DashboardComponent,
         AccountComponent,
         DomainComponent,
         UsersComponent,
-        AbstractComponent ,
+        AbstractComponent,
         NavUpComponent,
         NavLeftComponent,
         NavDownComponent,
         NavSecLeftComponent,
     ],
-    imports:[
+    imports: [
         CommonModule,
         DashboardRoutingModule
     ]
 })
 
-export class DashboardModule{}
+export class DashboardModule { }

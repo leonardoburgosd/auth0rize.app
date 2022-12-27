@@ -1,6 +1,6 @@
 import { parametersConfig } from "../common/param-config";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { loginUser } from "../dto/user/loginUser";
+import { loginUser, responseLogin } from "../dto/user/loginUser";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 
@@ -15,13 +15,12 @@ const httpOptions = {
     providedIn: 'root'
 })
 
-export class authServices{
-    private api: string = new parametersConfig().url+ 'auth';
+export class authServices {
+    private api: string = new parametersConfig().url + 'auth';
 
-    constructor(private httpClient: HttpClient){}
+    constructor(private httpClient: HttpClient) { }
 
-
-    login$(user: loginUser):Observable<any>{
-        return this.httpClient.post(this.api, user);
+    login$(user: loginUser): Observable<responseLogin> {
+        return this.httpClient.post<responseLogin>(this.api, user);
     }
 } 
