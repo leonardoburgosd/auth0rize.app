@@ -22,8 +22,11 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 | Backend       | https://github.com/leonardoburgosd/authenticator_backend  |
 | SSO Frontend  | https://github.com/leonardoburgosd/authenticator_frontend |
 
+## Version 1 (desplegado)
+- https://dashboard.auth.leonardoburgosd.site
 ## Version 1 (desplegada en firebase)
 - https://authdash-bcd10.web.app
+
 
 ## Implementaciones
 |Funcionalidad      | Descripcion                                               | Realizado          | Desplegado       | 
