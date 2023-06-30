@@ -1,39 +1,33 @@
-# AuthDash
+# Auth Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos forma parte de un entorno de autenticacion y administracion de usuarios.
 
-## Detail
-Proyecto de autenticación(SSO) con Angular, Tailwindcss
-* Administración de usuarios, dominios, roles, etc.  
-* Interfaz de autenticación reutilizable  
-* Versión Beta  
-Backend: https://github.com/leonardoburgosd/authenticator_backend  
-Frontend: https://github.com/leonardoburgosd/authenticator_frontend
-  
-## Deployed url
-https://authdash-bcd10.web.app 
+## Tecnologías utilizadas
 
-## Development server
+- :white_check_mark: Angular
+- :white_check_mark: Tailwind
+- :white_check_mark: Firebase
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Funcionalidades
 
-## Code scaffolding
+- Administración de usuarios
+- Administracion de dominios
+- Administracion de roles
+- Administracion de permisos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Proyectos relacionados
 
-## Build
+| Funcionalidad | Acceso                                                    |
+| ------------- | --------------------------------------------------------- |
+| Backend       | https://github.com/leonardoburgosd/authenticator_backend  |
+| SSO Frontend  | https://github.com/leonardoburgosd/authenticator_frontend |
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Version 1 (desplegada en firebase)
+- https://authdash-bcd10.web.app
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
+## Implementaciones
+|Funcionalidad      | Descripcion                                               | Realizado          | Desplegado       | 
+|-------------------|-----------------------------------------------------------|:------------------:|:----------------:|
+|Pantalla principal |Implementación de landing page principal                   |  10%               | :x:              |
+|Login (UI)         |Implementación de pantalla de autenticacion general        | :white_check_mark: |:white_check_mark:|
+|Registro (UI)      |Implementación de pantalla de registro general de usuario  | :white_check_mark: |:white_check_mark:|
