@@ -37,7 +37,7 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 
 
 ## Capturas
-|PantallaPrincipal                                  |
+|Principal Screen                                   |
 |---------------------------------------------------|
 |![Principal Screen](/captures/principalScreen.png) |
 |Login                                              |
