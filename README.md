@@ -34,3 +34,13 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 |Pantalla principal |Implementación de landing page principal                   |  10%               | :x:              |
 |Login (UI)         |Implementación de pantalla de autenticacion general        | :white_check_mark: |:white_check_mark:|
 |Registro (UI)      |Implementación de pantalla de registro general de usuario  | :white_check_mark: |:white_check_mark:|
+
+
+## Capturas
+|PantallaPrincipal                                  |
+|---------------------------------------------------|
+|![Principal Screen](/captures/principalScreen.png) |
+|Login                                              |
+|![Login](/captures/loginScreen.png)                |
+|Register                                           |
+|![Register](/captures/registerScreen.png)          |
