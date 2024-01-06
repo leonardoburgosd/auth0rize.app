@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { isAdult, passwordConfirm } from 'src/app/Data/common/validations';
 import { userServices } from 'src/app/Data/services/userServices';
 import { createUser } from '../../../Data/dto/user/createUser';
@@ -58,11 +53,11 @@ export class UserRegisterComponent implements OnInit {
         ]),
         birthday: new FormControl('', [
           Validators.required
-          
+
         ]),
       },
       {
-        validators: [passwordConfirm(),isAdult()]
+        validators: [passwordConfirm(), isAdult()]
       }
     );
   }
