@@ -1,19 +1,23 @@
 # Auth Dashboard
 
-Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos forma parte de un entorno de autenticacion y administracion de usuarios.
+Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos forma parte de un entorno de autenticación y administración de usuarios.
 
 ## Tecnologías utilizadas
 
 - :white_check_mark: Angular
 - :white_check_mark: Tailwind
-- :white_check_mark: Firebase
 
 ## Funcionalidades
 
-- Administración de usuarios
-- Administracion de dominios
-- Administracion de roles
-- Administracion de permisos
+- Login
+- Registro
+- Recuperación de contraseña
+- Doble factor de autenticación
+- Administración de usuarios (Por implementar)
+- Administracion de dominios (Por implementar)
+- Administracion de roles (Por implementar)
+- Administracion de permisos (Por implementar)
+- Administracion de menus (NUEVO! - Por implementar)
 
 ## Proyectos relacionados
 
@@ -45,4 +49,4 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 |Login contraseña                                    |
 |![Login](/captures/login-password.jpg)              |
 |Register                                            |
-|![Register](/captures/register.jpg)           |
+|![Register](/captures/register.jpg)                 |
