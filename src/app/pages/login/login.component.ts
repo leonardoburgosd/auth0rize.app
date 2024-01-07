@@ -36,24 +36,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.nuevoUsuario.email = this.formGroup.get('email')?.value;
-    this.nuevoUsuario.password = this.formGroup.get('password')?.value;
-    this.authService.login$(this.nuevoUsuario).subscribe(
-      (res: responseLogin) => {
-        if (res.isSuccess) {
-          this.router.navigate(['/dashboard']);
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Login error',
-            text: res.message
-          })
-        }
-      },
-      (err: any) => {
-        console.table(err);
-      }
-    );
+    this.router.navigate(['pwd']);
+    // this.nuevoUsuario.email = this.formGroup.get('email')?.value;
+    // this.nuevoUsuario.password = this.formGroup.get('password')?.value;
+    // this.authService.login$(this.nuevoUsuario).subscribe(
+    //   (res: responseLogin) => {
+    //     if (res.isSuccess) {
+    //       this.router.navigate(['/dashboard']);
+    //     }else{
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Login error',
+    //         text: res.message
+    //       })
+    //     }
+    //   },
+    //   (err: any) => {
+    //     console.table(err);
+    //   }
+    // );
   }
 
 }

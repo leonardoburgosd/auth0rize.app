@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './means/forms/user-register/user-register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavSecLeftComponent } from './means/large-items/nav/nav-sec-left/nav-sec-left.component';
+import { LoginPwdComponent } from './pages/login-pwd/login-pwd.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NavSecLeftComponent } from './means/large-items/nav/nav-sec-left/nav-se
     LoginComponent,
     RegisterComponent,
     UserRegisterComponent,
+    LoginPwdComponent,
     
 
   ],
