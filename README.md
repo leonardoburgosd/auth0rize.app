@@ -31,16 +31,18 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 ## Implementaciones
 |Funcionalidad      | Descripcion                                               | Realizado          | Desplegado       | 
 |-------------------|-----------------------------------------------------------|:------------------:|:----------------:|
-|Pantalla principal |Implementación de landing page principal                   |  10%               | :x:              |
-|Login (UI)         |Implementación de pantalla de autenticacion general        | :white_check_mark: |:white_check_mark:|
-|Registro (UI)      |Implementación de pantalla de registro general de usuario  | :white_check_mark: |:white_check_mark:|
+|Pantalla principal |Implementación de landing page principal                   | 90%                | :x:              |
+|Login (UI)         |Implementación de pantalla de autenticacion general        | 50%                |:white_check_mark:|
+|Registro (UI)      |Implementación de pantalla de registro general de usuario  | 50%                |:white_check_mark:|
 
 
 ## Capturas
-|Principal Screen                                   |
-|---------------------------------------------------|
-|![Principal Screen](/captures/principalScreen.png) |
-|Login                                              |
-|![Login](/captures/loginScreen.png)                |
-|Register                                           |
-|![Register](/captures/registerScreen.png)          |
+|Pantalla princiapl                                  |
+|----------------------------------------------------|
+|![PantallaPrincipal](/captures/principal.jpg)       |
+|Login nombre usuario                                |
+|![Login](/captures/login-username.jpg)              |
+|Login contraseña                                    |
+|![Login](/captures/login-password.jpg)              |
+|Register                                            |
+|![Register](/captures/register.jpg)           |
