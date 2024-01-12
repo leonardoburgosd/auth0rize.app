@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-pwd',
@@ -12,15 +13,17 @@ export class LoginPwdComponent implements OnInit {
   message: string = '';
   redirecturl!: any;
   secretkey!: any;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.databasic.email = 'leonardoburgos@site.pe';
   }
 
   login() {
     let dataResponse: any;
 
-    
+    this.router.navigate(['two-factor-phone']);
   }
 }
+
+
+

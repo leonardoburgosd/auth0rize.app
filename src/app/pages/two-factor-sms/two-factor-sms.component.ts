@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-two-factor-sms',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./two-factor-sms.component.scss']
 })
 export class TwoFactorSmsComponent implements OnInit {
+  databasic: any;
 
-  constructor() { }
+  password: string = '';
+  message: string = '';
+  redirecturl!: any;
+  secretkey!: any;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  validar() {
+    this.router.navigate(['dashboard']);
+  }
 }

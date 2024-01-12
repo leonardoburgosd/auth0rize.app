@@ -9,6 +9,7 @@ export class InputTextComponent {
     @Input('placeholder')
     public placeholder: string = '';
 
-
+    @Input('texto')
+    public texto: string = '';
 }
 
