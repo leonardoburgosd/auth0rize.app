@@ -6,19 +6,19 @@
             <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
         </a>
 
-        <h1 class="text-black text-xl text-center mt-6">Busca tu dirección de correo</h1>
-        <h4 class="text-black text-sm text-center mt-3 mb-2">Introduce el nombre de usuario</h4>
-
-        <div class="flex items-center justify-center">
-            <div class="p-4 rounded-md">
-                <div class="bg-slate-200 rounded-md flex w-[210px] items-center">
-                    <div class="text-neutral-700 text-xs">
-                        {{ databasic.email }}
-                    </div>
-                </div>
+        <h1 class="text-black text-xl text-center mt-6">Recuperación de la cuenta</h1>
+        <div class="w-80 mx-auto text-center m-3">
+            <p class="text-zinc-600 text-sm">
+                Para proteger tu cuenta, queremos asegurarnos
+                que eres tu la persona que intenta acceder
+            </p>
+        </div>
+        <div class="flex items-center justify-center m-2">
+            <div class="flex bg-slate-200 w-[210px] px-2 py-2 rounded-md items-center justify-center">
+                <i class="fa-solid fa-user pr-3"></i>
+                <span class="text-neutral-700 text-sm"> email@auth0rize.com</span>
             </div>
         </div>
-
         <div class="pl-10 pr-10 text-right pb-11">
             <input type="password"
                 class="ring-1 w-full rounded-md px-4 py-2 mt-2 mb-2 bg-white outline-none border border-neutral-150"
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="w-full text-left pl-1 pt-2 pb-5">
-                <a routerLink="/recover-phone" class="text-sky-600 text-sm">Por número de teléfono</a>
+                <a routerLink="/recover-phone" class="text-sky-600 text-sm">Probar otro método</a>
             </div>
 
             <button class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 hover:bg-[#15213b]">
