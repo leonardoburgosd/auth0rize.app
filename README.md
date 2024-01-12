@@ -9,10 +9,10 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 
 ## Funcionalidades
 
-- Login
-- Registro
-- Recuperación de contraseña
-- Doble factor de autenticación
+- Login (50% implementado - renovado)
+- Registro (50% implementado - renovado)
+- Recuperación de contraseña (NUEVO!)
+- Doble factor de autenticación (NUEVO!)
 - Administración de usuarios (Por implementar)
 - Administracion de dominios (Por implementar)
 - Administracion de roles (Por implementar)
