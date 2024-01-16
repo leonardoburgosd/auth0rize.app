@@ -10,6 +10,7 @@ import { NavDownComponent } from "../../means/large-items/nav/nav-down/nav-down.
 import { NavLeftComponent } from "../../means/large-items/nav/nav-left/nav-left.component";
 import { NavUpComponent } from "../../means/large-items/nav/nav-up/nav-up.component";
 import { NavSecLeftComponent } from "../../means/large-items/nav/nav-sec-left/nav-sec-left.component";
+import { DomainCardComponent } from "src/app/means/components/cards/domain-card/domain-card.component";
 
 @NgModule({
     declarations: [
@@ -22,6 +23,8 @@ import { NavSecLeftComponent } from "../../means/large-items/nav/nav-sec-left/na
         NavLeftComponent,
         NavDownComponent,
         NavSecLeftComponent,
+
+        DomainCardComponent
     ],
     imports: [
         CommonModule,

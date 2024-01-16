@@ -24,6 +24,7 @@ import { ViteIcon } from './means/components/icons/vite/vite.icon';
 import { PenpotIcon } from './means/components/icons/penpot/penpot.icon';
 import { DotnetIcon } from './means/components/icons/dotnet/dotnet.icon';
 import { UbuntuIcon } from './means/components/icons/ubuntu/ubuntu.icon';
+import { DocsComponent } from './pages/docs/docs.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { UbuntuIcon } from './means/components/icons/ubuntu/ubuntu.icon';
     ViteIcon,
     PenpotIcon,
     DotnetIcon,
-    UbuntuIcon
+    UbuntuIcon,
+    DocsComponent
   ],
   imports: [
     BrowserModule,
