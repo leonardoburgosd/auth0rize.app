@@ -7,18 +7,17 @@
     <h4 class="text-black text-sm text-center mt-3 mb-12">Si eres miembro ingresa tus datos</h4>
 
     <form [formGroup]="formGroup" class="pl-10 pr-10 text-right">
-      <input class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none"
-        placeholder="Correo o nombre de usuario" formControlName="email" />
-
+      <input class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none" placeholder="Nombre de usuario" formControlName="username" />
       <div class="w-full text-left pl-1 pt-2 pb-5">
         <a routerLink="/recover-username" class="text-sky-600 text-sm">¿Has olvidado tu correo?</a>
       </div>
       <div class="flex flex-wrap justify-center">
         <a routerLink="/register"
-          class="flex items-center h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto hover:bg-blue-100">
+          class="flex items-center font-semibold h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto hover:bg-blue-100">
           Registrarme
         </a>
-        <button (click)="login()" class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b]">
+        <button [disabled]="formGroup.invalid" (click)="login()" 
+        class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
           Siguiente
         </button>
       </div>

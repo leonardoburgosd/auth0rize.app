@@ -4,10 +4,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { loginUser, responseLogin } from '../../Data/dto/user/loginUser';
+import { loginUser } from '../../Data/dto/user/loginUser';
 import { authServices } from '../../Data/services/authServices';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
+import { requestUserNameVerification, responseUserNameVerification } from 'src/app/Data/dto/user/userNameVerificate';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2'
 })
 export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;
+  public requestUsernameVerification: requestUserNameVerification = new requestUserNameVerification();
   public nuevoUsuario: loginUser = new loginUser();
 
   constructor(
@@ -24,37 +26,42 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
 
-  private validacionFormaulario() {
-    this.formGroup = this.formBuilder.group({
-      email: [this.nuevoUsuario.email, [Validators.required, Validators.email]],
-      password: [this.nuevoUsuario.password, [Validators.required, Validators.minLength(8)]],
-    });
-  }
-
   ngOnInit(): void {
     this.validacionFormaulario();
   }
 
+  private validacionFormaulario() {
+    this.formGroup = this.formBuilder.group({
+      username: [this.nuevoUsuario.userName, [Validators.required]]
+    });
+  }
+
+
+
   login() {
-    this.router.navigate(['pwd']);
-    // this.nuevoUsuario.email = this.formGroup.get('email')?.value;
-    // this.nuevoUsuario.password = this.formGroup.get('password')?.value;
-    // this.authService.login$(this.nuevoUsuario).subscribe(
-    //   (res: responseLogin) => {
-    //     if (res.isSuccess) {
-    //       this.router.navigate(['/dashboard']);
-    //     }else{
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Login error',
-    //         text: res.message
-    //       })
-    //     }
-    //   },
-    //   (err: any) => {
-    //     console.table(err);
-    //   }
-    // );
+
+    this.requestUsernameVerification.userName = this.formGroup.get('username')?.value;
+    this.requestUsernameVerification.application = '';
+    this.authService.userNameVerification$(this.requestUsernameVerification).subscribe(
+      (res: responseUserNameVerification) => {
+        if (res.success) {
+          this.router.navigate(['pwd']);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Login error',
+            text: res.message
+          })
+        }
+      },
+      (err: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error fatal',
+          text: err.error.message
+        })
+      }
+    );
   }
 
 }

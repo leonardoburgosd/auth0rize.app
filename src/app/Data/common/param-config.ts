@@ -1,3 +1,3 @@
 export class parametersConfig{
-    url :string = 'https://localhost:7145/api/';
+    url :string = 'https://auth.api.leonardoburgosd.site/api/';
 }
