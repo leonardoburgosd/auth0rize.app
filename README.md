@@ -39,6 +39,15 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 |Login (UI)         |Implementación de pantalla de autenticacion general        | 50%                |:white_check_mark:|
 |Registro (UI)      |Implementación de pantalla de registro general de usuario  | 50%                |:white_check_mark:|
 
+## Usuario
+|Nombre de usuario | Password    |
+|------------------|-------------|
+|leburgos          |123456       |
+|agrodriguez       |g6Pt(*?6:1   |
+|vmendonza         |:wg>J8a2*0   |
+|dherrera          |qXd;118W     |
+|cmartinez         |wy7G;_%0t1   |
+|jperez            |$C238~qRJ8   |
 
 ## Capturas
 |Pantalla princiapl                                  |
@@ -50,3 +59,4 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 |![Login](/captures/login-password.jpg)              |
 |Register                                            |
 |![Register](/captures/register.jpg)                 |
+

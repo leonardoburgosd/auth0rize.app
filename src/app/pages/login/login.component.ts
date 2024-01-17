@@ -7,8 +7,9 @@ import {
 import { loginUser } from '../../Data/dto/user/loginUser';
 import { authServices } from '../../Data/services/authServices';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { requestUserNameVerification, responseUserNameVerification } from 'src/app/Data/dto/user/userNameVerificate';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: authServices,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
       (res: responseUserNameVerification) => {
         if (res.success) {
           this.router.navigate(['pwd']);
+          this.cookieService.set('basicData', JSON.stringify(res.data));
         } else {
           Swal.fire({
             icon: 'error',

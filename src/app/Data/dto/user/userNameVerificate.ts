@@ -6,6 +6,7 @@ export class responseUserNameVerification {
 }
 export class userVerificationResponse {
     public email!:string;
+    public userName!:string;
 }
 
 export class requestUserNameVerification{
