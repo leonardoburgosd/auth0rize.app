@@ -1,18 +1,46 @@
-<div class="flex mx-auto flex-grow mt-4 flex-col text-gray-400 space-y-4">
-    <a title="Dashboard" class="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center"
-        routerLink="/dashboard">
-        <i class="fa-solid fa-house text-xl"></i>
-    </a>
-    <a title="Dominios" class="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center"
-        routerLink="/dashboard/domain">
-        <i class="fa-solid fa-bottle-droplet text-xl"></i>
-    </a>
-    <a title="Cuenta" class="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center"
-        routerLink="/dashboard/account">
-        <i class="fa-solid fa-gear text-xl"></i>
-    </a>
-    <button title="Salir" class="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center"
-        (click)="cerrarSesion()">
-        <i class="fa-solid fa-right-to-bracket text-xl text-cyan-500"></i>
-    </button>
+<div class="w-full dark:bg-gray-900 dark:text-zinc-500 h-screen p-5 pt-8 border-r border-solid border-gray-800">
+    <div class="inline-flex dark:text-zinc-500 justify-center">
+        <div class="fix fix-col">
+            <img src="../../../../../assets/icon.png" class="text-center p-4 font-semibold"
+                alt="Descripción de la imagen" />
+            <div class='flex justify-center'>
+                <h1 class="text-center mt-4 font-semibold text-xl text-teal-500">[Workforce]</h1>
+            </div>
+        </div>
+    </div>
+    <nav class="dark:text-fuchsia-50">
+        <ul>
+            <li class="flex flex-col">
+                <a [routerLink]="['/dashboard']" class="text-zinc-500 p-3 hover:text-teal-700">Dashboard</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="flex flex-col">
+                <a [routerLink]="['/dashboard/domain']" class="text-zinc-500 p-3 hover:text-teal-700">Usuarios</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="flex flex-col">
+                <a [routerLink]="['/dashboard/account']" class="text-zinc-500 p-3 hover:text-teal-700">Aplicaciones</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="flex flex-col">
+                <a [routerLink]="['/dashboard']" class="text-zinc-500 p-3 hover:text-teal-700">Permisos</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="flex flex-col">
+                <a [routerLink]="['/dashboard']" class="text-zinc-500 p-3 hover:text-teal-700">Menús</a>
+            </li>
+        </ul>
+    </nav>
+    <footer>
+        <ul>
+            <li>
+                <button (click)="cerrarSesion()" class="text-teal-500 p-3 font-bold hover:text-teal-700">Cerrar
+                    sesion</button>
+            </li>
+        </ul>
+    </footer>
 </div>

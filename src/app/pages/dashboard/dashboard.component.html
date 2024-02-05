@@ -1,18 +1,10 @@
-<div class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
+<div class="h-full relative">
     <div
-        class="bg-white dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
-        <div class="h-16 text-blue-500 flex items-center justify-center">
-            <img width="40px" height="40px" class="bg-white rounded-full" src="../../../assets/icon.png" />
-        </div>
+        class="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:insert-y-0 z-[80]">
         <app-nav-left></app-nav-left>
     </div>
-    <div class="flex-grow overflow-hidden h-full flex flex-col">
+    <main class="md:pl-72 dark:bg-gray-900 dark:text-zinc-400 w-full h-screen overflow-y-auto">
         <app-nav-up></app-nav-up>
-        <div class="flex-grow flex overflow-x-hidden">
-           <app-nav-sec-left></app-nav-sec-left>
-            <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
+        <router-outlet></router-outlet>
+    </main>
 </div>

@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;
   public requestUsernameVerification: requestUserNameVerification = new requestUserNameVerification();
   public nuevoUsuario: loginUser = new loginUser();
+  public cargando: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,12 +39,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
-
   login() {
-
+    this.cargando = true;
     this.requestUsernameVerification.userName = this.formGroup.get('username')?.value;
     this.requestUsernameVerification.application = '';
+
     this.authService.userNameVerification$(this.requestUsernameVerification).subscribe(
       (res: responseUserNameVerification) => {
         if (res.success) {
@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
             title: 'Login error',
             text: res.message
           })
+          this.cargando = false;
         }
       },
       (err: any) => {
@@ -62,7 +63,8 @@ export class LoginComponent implements OnInit {
           icon: 'error',
           title: 'Error fatal',
           text: err.error.message
-        })
+        });
+        this.cargando = false;
       }
     );
   }

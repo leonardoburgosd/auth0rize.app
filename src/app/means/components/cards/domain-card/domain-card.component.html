@@ -1,18 +1,63 @@
-<div class="flex bg-white max-w-full text-black p-4 rounded m-2">
-    <div class="flex flex-col justify-center">
-        <div class="flex ">
-            <img width="50" height="50" class="bg-slate-500 rounded-full m-auto" src="../../../../../assets/icon.png" />
-            <div class="flex flex-col ml-2">
-                <h4 class="text-base">Authorizacion</h4>
-                <span
-                    class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Activo</span>
-            </div>
+<div class="relative flex flex-col m-1 text-white bg-slate-800 shadow-md bg-clip-border rounded-xl w-96">
+    <div class="p-6">
+
+        <img class="w-[40px] h-[40px] mr-4 object-contain rounded-full bg-white" src="../../../../../assets/icon.png"
+            alt="Icono de aplicativo" />
+
+        <div class='flex items-center'>
+            <h5
+                class="block mb-2 mr-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                Intranet
+            </h5>
+            <i class="fa-solid fa-copy"></i>
         </div>
-        <div class="flex">
-            <div class="flex flex-row">
-                <label class="font-bold p-2 m-1">ID: ASKDJHAKSJDHKAJ-</label>
-                <button class="hover:bg-slate-200 rounded p-1"><i class="fa-solid fa-copy"></i></button>
-            </div>
+        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+            Intranet es un aplicativo que permite la implementación de acceso a proyectos de CENS.
+        </p>
+    </div>
+    <div class="p-3 pt-0">
+        <a href="#" class="inline-block">
+            <button
+                class="flex items-center gap-2 px-4 py-2  text-xs font-bold text-center text-white uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-400/10 active:bg-gray-400/20"
+                type="button">
+                Editar
+            </button>
+        </a>
+    </div>
+</div>
+
+
+
+<div *ngIf="false"
+    class="fixed z-10 inset-0 overflow-y-auto bg-gray-800 bg-opacity-10 flex items-center justify-center text-black">
+    <div class="bg-white rounded-lg">
+        <header class="mb-4 border-b border-white-200 px-12 pt-6 pb-3 flex flex-col justify-between">
+            <h2 class="text-lg font-bold">Actualizar aplicativo</h2>
+            <small>Actualiza datos de un aplicativo</small>
+        </header>
+        <div class="px-12 pt-3 pb-6 flex flex-col text-sm">
+            <label
+                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1 font-bold'>
+                AKSJDHKAJS-ASDKJASKD-ASDKJASKDJHAJKSD
+            </label>
+            <input type="text"
+                class="ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1" />
+            <textarea
+                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1'
+                value='' placeholder='Descripción'>
+                </textarea>
+            <input
+                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1'
+                type="file" />
         </div>
+        <footer class="border-t border-white-200 bg-gray-50 p-3 flex justify-end">
+            <button class="text-sky-600 text-sm">
+                Cerrar
+            </button>
+            <button
+                class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
+                Guardar
+            </button>
+        </footer>
     </div>
 </div>

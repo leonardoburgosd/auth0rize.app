@@ -20,6 +20,7 @@ export class LoginPwdComponent implements OnInit {
   public formGroup!: FormGroup;
   userVerification: userVerificationResponse = new userVerificationResponse();
   loginUser: loginUser = new loginUser();
+  public cargando: boolean = false;
 
 
   constructor(
@@ -41,6 +42,7 @@ export class LoginPwdComponent implements OnInit {
   }
 
   login() {
+    this.cargando = true;
     this.loginUser.application = '';
     this.loginUser.password = this.formGroup.get('password')?.value;
     this.loginUser.userName = this.userVerification.userName;
@@ -57,7 +59,8 @@ export class LoginPwdComponent implements OnInit {
           icon: 'error',
           title: 'Error fatal',
           text: err.error.message
-        })
+        });
+        this.cargando = false;
       }
     );
   }
