@@ -23,7 +23,6 @@ import { DomainCardComponent } from "src/app/means/components/cards/domain-card/
         NavLeftComponent,
         NavDownComponent,
         NavSecLeftComponent,
-
         DomainCardComponent
     ],
     imports: [

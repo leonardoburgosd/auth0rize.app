@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'domain-card',
@@ -6,5 +7,10 @@ import { Component, Input } from "@angular/core";
 })
 
 export class DomainCardComponent {
-    
+
+    constructor(private router: Router){}
+
+    detail() {
+        this.router.navigate(['dashboard','domain','detail'])
+    }
 }
