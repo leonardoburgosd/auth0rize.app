@@ -25,6 +25,8 @@ import { PenpotIcon } from './means/components/icons/penpot/penpot.icon';
 import { DotnetIcon } from './means/components/icons/dotnet/dotnet.icon';
 import { UbuntuIcon } from './means/components/icons/ubuntu/ubuntu.icon';
 import { DocsComponent } from './pages/docs/docs.component';
+import { NavBarComponent } from './pages/docs/nav-bar/nav-bar.component';
+import { FlowsComponent } from './pages/docs/flows/flows.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { DocsComponent } from './pages/docs/docs.component';
     PenpotIcon,
     DotnetIcon,
     UbuntuIcon,
-    DocsComponent
+    DocsComponent,
+    NavBarComponent,
+    FlowsComponent
   ],
   imports: [
     BrowserModule,

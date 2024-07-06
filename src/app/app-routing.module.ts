@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'two-factor-phone', component: TwoFactorSmsComponent },
   { path: 'two-factor-email', component: TwoFactorEmailComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'docs', component: DocsComponent }
+  { path: 'docs', component: DocsComponent, loadChildren: () => import(`./pages/docs/docs.module`).then(m => m.DocRoutingModule) }
 ];
 
 @NgModule({

@@ -4,31 +4,82 @@
       <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
     </a>
     <h1 class="text-black text-xl text-center mt-6">Registro</h1>
-    <h4 class="text-black text-sm text-center mt-3 mb-6">Ingresa datos y abre una cuenta</h4>
-    <div class="pl-10 pr-10 text-right">
-      <input class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Correo corporativo o nombre de usuario" formControlName="email" />
-      <input type="password"
-        class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Contraseña" formControlName="email" />
-      <input type="password"
-        class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Confirmar contraseña" formControlName="email" />
-      <input class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Nombres" formControlName="email" />
-      <input class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Apellidos" formControlName="email" />
-      <input type="date" class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-        placeholder="Apellidos" formControlName="email" />
-      <div class="flex flex-wrap justify-center pt-5 pb-16">
-        <a routerLink="/login"
-          class="flex items-center h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto">
-          Iniciar sesión
-        </a>
-        <button class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto">
-          Registrar
-        </button>
-      </div>
+    <h4 class="text-black text-sm text-center mt-3 mb-6">Ingresa tus datos y abre una cuenta</h4>
+    <div class="pl-10 pr-10 ">
+      <form [formGroup]="formGroup">
+        <div class="text-left pl-2 pr-2">
+          <ul class="text-xs font-semibold">
+            <!-- <li class="text-red-500 rounded-lg p-1"><i class="fa-solid fa-xmark"></i> Este es un mensaje de error mensaje de error mensaje de error.</li> -->
+            <!-- <li class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i> Este es un mensaje de alerta.</li> -->
+          </ul>
+        </div>
+        <input type="text" formControlName="username"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Nombre de usuario" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['username'].invalid &&
+                  formGroup.controls['username'].touched
+        }" />
+        <ul class="text-xs font-semibold">
+          <li *ngIf="formGroup.invalid && formGroup.touched" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario</li>
+        </ul>
+        <input type="email" formControlName="email" [ngClass]="{ 'border-rose-500':
+        formGroup.controls['email'].invalid &&
+                formGroup.controls['email'].touched
+      }" class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Correo" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['email'].invalid &&
+                  formGroup.controls['email'].touched
+        }" />
+        <ul class="text-xs font-semibold">
+          <li *ngIf="formGroup.invalid && formGroup.touched" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su email</li>
+        </ul>
+        <input type="password" formControlName="password"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Contraseña" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['password'].invalid &&
+                  formGroup.controls['password'].touched
+        }" />
+        <ul class="text-xs font-semibold">
+          <li *ngIf="formGroup.invalid && formGroup.touched" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su password</li>
+        </ul>
+        <input type="password" formControlName="passwordVerification"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Confirmar contraseña" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['passwordVerification'].invalid &&
+                  formGroup.controls['passwordVerification'].touched
+        }" />
+        <input type="text" formControlName="name"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Nombres" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['name'].invalid &&
+                  formGroup.controls['name'].touched
+        }" />
+        <input type="text" formControlName="lastName"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Apellido paterno" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['lastName'].invalid &&
+                  formGroup.controls['lastName'].touched
+        }" />
+        <input type="text" formControlName="motherLastName"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Apellido materno" [ngClass]="{ 'border-rose-500':
+          formGroup.controls['motherLastName'].invalid &&
+                  formGroup.controls['motherLastName'].touched
+        }" />
+        <div class="flex flex-wrap justify-center pt-5 pb-16">
+          <a routerLink="/login"
+            class="flex items-center h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto">
+            Iniciar sesión
+          </a>
+          <button [disabled]="formGroup.invalid || cargando" (click)="registerUser()"
+            class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
+            Registrar <i class="fa-solid fa-spinner"></i>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

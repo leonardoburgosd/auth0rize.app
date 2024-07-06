@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         } else {
           Swal.fire({
             icon: 'error',
-            title: 'Login error',
+            title: 'Error al autenticarse.',
             text: res.message
           })
           this.cargando = false;
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       (err: any) => {
         Swal.fire({
           icon: 'error',
-          title: 'Error fatal',
+          title: 'Error fatal al autenticarse.',
           text: err.error.message
         });
         this.cargando = false;

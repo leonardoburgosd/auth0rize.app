@@ -2,6 +2,13 @@
 
 Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos forma parte de un entorno de autenticación y administración de usuarios.
 
+## Modo de uso
+
+- NodeJs compatible: 16.10
+- Version angular: 14.0
+- Modo de ejecucion: ng serve
+- Compilar proyecto: ng build
+
 ## Tecnologías utilizadas
 
 - :white_check_mark: Angular
