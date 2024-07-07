@@ -22,6 +22,7 @@ export class userServices {
     constructor(private httpClient: HttpClient) { }
 
     crear$(createUser: createUser): Observable<any> {
+        debugger
         return this.httpClient.post(this.api, createUser);
     }
 
