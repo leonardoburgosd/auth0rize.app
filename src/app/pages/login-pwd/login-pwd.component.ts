@@ -13,6 +13,7 @@ import { loginResponse } from 'src/app/Data/dto/user/response/loginResponse';
 import { RestResponse } from 'src/app/Data/common/restResponse';
 import { userNameVerificationResponse } from 'src/app/Data/dto/user/response/userNameVerificationResponse';
 import { Observable } from 'rxjs';
+import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
 @Component({
   selector: 'app-login-pwd',
@@ -52,17 +53,27 @@ export class LoginPwdComponent implements OnInit {
     const login: Observable<RestResponse<loginResponse>> = this.authService.login$(this.loginUser);
     login.subscribe({
       next: (res: RestResponse<loginResponse>) => {
-        if (res.data.doubleFactorCode == 0)
-          this.router.navigate(['dashboard']);
-        else
-          this.router.navigate(['two-factor-phone']);
+        if (res.success) {
+          if (res.data.doubleFactorCode == 0)
+            this.router.navigate(['dashboard']);
+          else
+            this.router.navigate(['two-factor-phone']);
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Atención.',
+            text: res.message
+          })
+        }
       },
       error: (err) => {
         Swal.fire({
           icon: 'error',
-          title: 'Error fatal',
-          text: err.error.message
+          title: MessageDefault.errorConexion,
+          text: err.toString()
         });
+      },
+      complete: () => {
         this.cargando = false;
       }
     });
