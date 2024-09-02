@@ -63,9 +63,11 @@ export class LoginPwdComponent implements OnInit {
           title: 'Error fatal',
           text: err.error.message
         });
-      }, complete: () => {
         this.cargando = false;
       }
     });
   }
 }
+
+
+
