@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { createUser } from '../../Data/dto/user/createUser';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
-import { passwordConfirm } from 'src/app/Data/common/validations';
+import { Router } from '@angular/router';
+import { RestResponse } from 'src/app/Data/common/restResponse';
+import { Observable } from 'rxjs';
+import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
+import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
+import { registerSuperadminResponse } from 'src/app/Data/dto/user/response/registerSuperadminResponse';
 
 @Component({
   selector: 'app-register',
@@ -11,22 +15,23 @@ import { passwordConfirm } from 'src/app/Data/common/validations';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  public newUser: createUser = new createUser();
+  public newUser: createUserRequest = new createUserRequest();
   public formGroup!: FormGroup;
   public cargando: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: userServices
+    private userService: userServices,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.validationForm();
   }
 
-  private validationForm() {
+  private validationForm = () =>
     this.formGroup = this.formBuilder.group({
-      username: [this.newUser.userName, [Validators.required, Validators.min(3), Validators.max(30)]],
+      userName: [this.newUser.userName, [Validators.required, Validators.min(3), Validators.max(30)]],
       email: [this.newUser.email, [Validators.required, Validators.email, Validators.max(30)]],
       password: [this.newUser.password, [Validators.required, Validators.min(9), Validators.max(100)]],
       passwordVerification: [this.newUser.passwordConfirmation, [Validators.required, Validators.min(9), Validators.max(100)]],
@@ -34,45 +39,43 @@ export class RegisterComponent implements OnInit {
       lastName: [this.newUser.lastName, [Validators.required, Validators.min(2), Validators.max(150)]],
       motherLastName: [this.newUser.motherLastName, [Validators.required, Validators.min(2), Validators.max(150)]],
     });
-  }
 
-  registerUser() {
+  registerUser(user: createUserRequest) {
     this.cargando = true;
-    this.userService.crear$(this.newUser).subscribe(
-      (res: any) => {
-        if (res.success) {
-          console.log('res.success')
-          console.log(res.success)
+    const newUser: createUserResponse = {
+      email: user.email,
+      lastName: user.lastName,
+      motherLastName: user.motherLastName,
+      name: user.name,
+      password: user.password,
+      userName: user.userName
+    };
+
+    const userServiceCreate: Observable<RestResponse<registerSuperadminResponse>> = this.userService.crear$(newUser);
+
+    userServiceCreate.subscribe({
+      next: (data) => {
+        if (data.success) {
+          this.loginUserReload;
         } else {
-          console.log('res.success')
-          console.log(res.success)
           Swal.fire({
             icon: 'error',
             title: 'Error al registrar usuario.',
-            text: res.message
+            text: data.message
           });
         }
       },
-      (err: any) => {
-        console.log('err')
-        console.log(err)
+      error: (err) => {
         this.cargando = false;
         Swal.fire({
           icon: 'error',
           title: 'Error fatal al registrar usuario.',
           text: err.error.message
         })
-      }, () => {
-        this.cargando = false;
       }
-    );
+    });
   }
 
-  loginUserReload() { }
-
-  userCreated(isCreatedUser: boolean) {
-    isCreatedUser ? this.loginUserReload() : null;
-  }
-
+  loginUserReload = () => this.router.navigate(['/']);
 
 }

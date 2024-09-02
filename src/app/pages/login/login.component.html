@@ -1,4 +1,4 @@
-<div class="bg-slate-900 flex items-center justify-center h-screen">
+<div class="bg-slate-900 flex items-center justify-center min-h-screen flex-col">
   <div class="w-[462px] h-[512px] bg-blue-50 rounded-[10px] border border-sky-700">
     <a routerLink="/">
       <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
@@ -8,10 +8,15 @@
 
     <form [formGroup]="formGroup" class="pl-10 pr-10 text-right">
       <input class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none"
-        placeholder="Nombre de usuario" formControlName="username" [ngClass]="{ 'border-rose-500':
-        formGroup.controls['username'].invalid &&
-                formGroup.controls['username'].touched
+        type="text" placeholder="Nombre de usuario" formControlName="userName" [ngClass]="{ 'border-yellow-500':
+        formGroup.controls['userName'].invalid &&
+                formGroup.controls['userName'].touched
       }" />
+      <ul *ngIf="formGroup.controls['userName'].invalid && formGroup.controls['userName'].touched"
+          class="text-xs font-semibold">
+          <li *ngIf="formGroup.controls['userName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario</li>
+        </ul>
       <div class="w-full text-left pl-1 pt-2 pb-5">
         <a routerLink="/recover-username" class="text-sky-600 text-sm">¿Has olvidado tu correo?</a>
       </div>
@@ -20,9 +25,10 @@
           class="flex items-center font-semibold h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto hover:bg-blue-100">
           Registrarme
         </a>
-        <button [disabled]="formGroup.invalid || cargando" (click)="login()"
-          class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
-          Siguiente
+        <button [disabled]="formGroup.invalid || cargando" (click)="login(formGroup.value)"
+        class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
+          <p *ngIf="!cargando">Siguiente</p>
+          <i *ngIf="cargando" class="fa-solid fa-spinner fa-spin-pulse"></i>
         </button>
       </div>
     </form>

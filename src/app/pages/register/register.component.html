@@ -1,4 +1,4 @@
-<div class="bg-slate-900 flex items-center justify-center h-screen">
+<div class="bg-slate-900 flex items-center justify-center min-h-screen flex-col">
   <div class="w-[462px] h-auto bg-blue-50 rounded-[10px] border border-sky-700">
     <a routerLink="/">
       <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
@@ -13,15 +13,15 @@
             <!-- <li class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i> Este es un mensaje de alerta.</li> -->
           </ul>
         </div>
-        <input type="text" formControlName="username"
+        <input type="text" formControlName="userName"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Nombre de usuario" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['username'].invalid &&
-                  formGroup.controls['username'].touched
+          formGroup.controls['userName'].invalid &&
+                  formGroup.controls['userName'].touched
         }" />
-        <ul *ngIf="formGroup.controls['username'].invalid && formGroup.controls['username'].touched"
+        <ul *ngIf="formGroup.controls['userName'].invalid && formGroup.controls['userName'].touched"
           class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['username'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
+          <li *ngIf="formGroup.controls['userName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
               class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario</li>
         </ul>
 
@@ -108,7 +108,7 @@
             class="flex items-center h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto">
             Iniciar sesión
           </a>
-          <button [disabled]="formGroup.invalid || cargando" (click)="registerUser()"
+          <button [disabled]="formGroup.invalid || cargando" (click)="registerUser(formGroup.value)"
             class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
             <p *ngIf="!cargando">Registrar</p> <i *ngIf="cargando" class="fa-solid fa-spinner fa-spin-pulse"></i>
           </button>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { loginUser } from '../../Data/dto/user/loginUser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { authServices } from '../../Data/services/authServices';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { requestUserNameVerification, responseUserNameVerification } from 'src/app/Data/dto/user/userNameVerificate';
 import { CookieService } from 'ngx-cookie-service';
+import { userNameVerificationRequest } from 'src/app/Data/dto/user/request/userNameVerificationRequest';
+import { loginUserRequest } from 'src/app/Data/dto/user/request/loginUserRequest';
+import { Observable } from 'rxjs';
+import { RestResponse } from 'src/app/Data/common/restResponse';
+import { userNameVerificationResponse } from 'src/app/Data/dto/user/response/userNameVerificationResponse';
+import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +18,8 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;
-  public requestUsernameVerification: requestUserNameVerification = new requestUserNameVerification();
-  public nuevoUsuario: loginUser = new loginUser();
+  public requestUsernameVerification: userNameVerificationRequest = new userNameVerificationRequest();
+  public nuevoUsuario: loginUserRequest = new loginUserRequest();
   public cargando: boolean = false;
 
   constructor(
@@ -33,40 +33,39 @@ export class LoginComponent implements OnInit {
     this.validacionFormaulario();
   }
 
-  private validacionFormaulario() {
+  private validacionFormaulario = () =>
     this.formGroup = this.formBuilder.group({
-      username: [this.nuevoUsuario.userName, [Validators.required]]
+      userName: [this.nuevoUsuario.userName, [Validators.required, Validators.min(3)]]
     });
-  }
 
-  login() {
+  login(loginUser: loginUserRequest) {
     this.cargando = true;
-    this.requestUsernameVerification.userName = this.formGroup.get('username')?.value;
+    this.requestUsernameVerification.userName = loginUser.userName;
     this.requestUsernameVerification.application = '';
 
-    this.authService.userNameVerification$(this.requestUsernameVerification).subscribe(
-      (res: responseUserNameVerification) => {
+    const usernameverification: Observable<RestResponse<userNameVerificationResponse>> = this.authService.userNameVerification$(this.requestUsernameVerification)
+    usernameverification.subscribe({
+      next: (res) => {
         if (res.success) {
           this.router.navigate(['pwd']);
           this.cookieService.set('basicData', JSON.stringify(res.data));
         } else {
           Swal.fire({
-            icon: 'error',
-            title: 'Error al autenticarse.',
+            icon: 'warning',
+            title: 'Atención.',
             text: res.message
           })
-          this.cargando = false;
         }
       },
-      (err: any) => {
+      error: (err) => {
+        this.cargando = false;
         Swal.fire({
           icon: 'error',
-          title: 'Error fatal al autenticarse.',
+          title: MessageDefault.errorConexion,
           text: err.error.message
         });
-        this.cargando = false;
       }
-    );
+    });
   }
 
 }

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { isAdult, passwordConfirm } from 'src/app/Data/common/validations';
+import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { userServices } from 'src/app/Data/services/userServices';
-import { createUser } from '../../../Data/dto/user/createUser';
 
 @Component({
   selector: 'app-user-register',
@@ -12,7 +12,7 @@ import { createUser } from '../../../Data/dto/user/createUser';
 export class UserRegisterComponent implements OnInit {
   @Input('isSuperUser')
   public isSuperUser: boolean = false;
-  newUser: createUser = new createUser();
+  newUser: createUserRequest = new createUserRequest();
 
   @Output() isAddNewUser: EventEmitter<boolean> = new EventEmitter();
 

@@ -1,4 +1,4 @@
-<div class="bg-slate-900 flex items-center justify-center h-screen">
+<div class="bg-slate-900 flex items-center justify-center min-h-screen flex-col">
 
   <div class="w-[462px] h-auto bg-blue-50 rounded-[10px] border border-sky-700">
     <a href="#">
@@ -28,7 +28,8 @@
 
         <button [disabled]="formGroup.invalid || cargando" (click)="login()"
           class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
-          Siguiente
+          <p *ngIf="!cargando">Siguiente</p>
+          <i *ngIf="cargando" class="fa-solid fa-spinner fa-spin-pulse"></i>
         </button>
       </form>
     </div>

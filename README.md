@@ -56,14 +56,17 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 |cmartinez         |wy7G;_%0t1   |
 |jperez            |$C238~qRJ8   |
 
-## Capturas
+## Pantallas
 |Pantalla princiapl                                  |
 |----------------------------------------------------|
-|![PantallaPrincipal](/captures/principal.jpg)       |
+|![PantallaPrincipal](/captures/principal.png)       |
 |Login nombre usuario                                |
-|![Login](/captures/login-username.jpg)              |
+|![Login](/captures/login-username.png)              |
 |Login contraseña                                    |
-|![Login](/captures/login-password.jpg)              |
+|![Login](/captures/login-password.png)              |
 |Register                                            |
-|![Register](/captures/register.jpg)                 |
-
+|![Register](/captures/register.png)                 |
+|Recuperar cuenta                                    |
+|![Register](/captures/recover-account.png)          |
+|Alternativa de recuperacion                         |
+|![Register](/captures/another-recover.png)          |

@@ -6,10 +6,13 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { loginUser, responseLogin } from 'src/app/Data/dto/user/loginUser';
-import { userVerificationResponse } from 'src/app/Data/dto/user/userNameVerificate';
 import { authServices } from '../../Data/services/authServices';
 import Swal from 'sweetalert2';
+import { loginUserRequest } from 'src/app/Data/dto/user/request/loginUserRequest';
+import { loginResponse } from 'src/app/Data/dto/user/response/loginResponse';
+import { RestResponse } from 'src/app/Data/common/restResponse';
+import { userNameVerificationResponse } from 'src/app/Data/dto/user/response/userNameVerificationResponse';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-pwd',
@@ -18,10 +21,9 @@ import Swal from 'sweetalert2';
 })
 export class LoginPwdComponent implements OnInit {
   public formGroup!: FormGroup;
-  userVerification: userVerificationResponse = new userVerificationResponse();
-  loginUser: loginUser = new loginUser();
+  userVerification: userNameVerificationResponse = new userNameVerificationResponse();
+  loginUser: loginUserRequest = new loginUserRequest();
   public cargando: boolean = false;
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,24 +49,23 @@ export class LoginPwdComponent implements OnInit {
     this.loginUser.password = this.formGroup.get('password')?.value;
     this.loginUser.userName = this.userVerification.userName;
 
-    this.authService.login$(this.loginUser).subscribe(
-      (res: responseLogin) => {
+    const login: Observable<RestResponse<loginResponse>> = this.authService.login$(this.loginUser);
+    login.subscribe({
+      next: (res: RestResponse<loginResponse>) => {
         if (res.data.doubleFactorCode == 0)
           this.router.navigate(['dashboard']);
         else
           this.router.navigate(['two-factor-phone']);
       },
-      (err: any) => {
+      error: (err) => {
         Swal.fire({
           icon: 'error',
           title: 'Error fatal',
           text: err.error.message
         });
+      }, complete: () => {
         this.cargando = false;
       }
-    );
+    });
   }
 }
-
-
-
