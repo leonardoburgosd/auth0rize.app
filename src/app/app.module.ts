@@ -8,7 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './means/forms/user-register/user-register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LoginPwdComponent } from './pages/login-pwd/login-pwd.component';
 import { RecoverEmailComponent } from './pages/recover-email/recover-email.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
@@ -42,7 +42,6 @@ import { FlowsComponent } from './pages/docs/flows/flows.component';
     RecoverEmailByPhoneComponent,
     TwoFactorSmsComponent,
     TwoFactorEmailComponent,
-
     TailwindIcon,
     GithubIcon,
     AngularIcon,
@@ -55,15 +54,10 @@ import { FlowsComponent } from './pages/docs/flows/flows.component';
     NavBarComponent,
     FlowsComponent
   ],
-  imports: [
-    BrowserModule,
+  exports: [],
+  bootstrap: [AppComponent], imports: [BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  exports: [],
-  providers: [],
-  bootstrap: [AppComponent]
+    ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule { }
