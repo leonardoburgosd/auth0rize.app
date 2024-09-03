@@ -7,6 +7,7 @@ import { userNameVerificationRequest } from "../dto/user/request/userNameVerific
 import { RestResponse } from "../common/restResponse";
 import { loginResponse } from "../dto/user/response/loginResponse";
 import { userNameVerificationResponse } from "../dto/user/response/userNameVerificationResponse";
+import { recoveryByEmailRequest } from "../dto/user/request/recoveryByEmailRequest";
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -29,5 +30,11 @@ export class authServices {
 
     login$(user: loginUserRequest): Observable<RestResponse<loginResponse>> {
         return this.httpClient.post<RestResponse<loginResponse>>(this.api, user);
+    }
+
+    recoveryByEmail$(email: string): Observable<RestResponse<boolean>> {
+        const recovery: recoveryByEmailRequest = new recoveryByEmailRequest();
+        recovery.email = email;
+        return this.httpClient.post<RestResponse<boolean>>(this.api + '/recovery-by-email', recovery);
     }
 } 
