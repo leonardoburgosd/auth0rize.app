@@ -58,12 +58,14 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.cargando = false;
         Swal.fire({
           icon: 'error',
           title: MessageDefault.errorConexion,
-          text: err.error.message
+          text: err.toString()
         });
+      },
+      complete: () => {
+        this.cargando = false;
       }
     });
   }

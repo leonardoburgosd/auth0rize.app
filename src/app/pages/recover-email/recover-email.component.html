@@ -1,40 +1,43 @@
 <div class="bg-slate-900 flex items-center justify-center min-h-screen flex-col">
 
-    <div class="w-[462px] h-auto bg-blue-50 rounded-[10px] border border-sky-700">
+    <div class="w-[462px] h-[512px] bg-blue-50 rounded-[10px] border border-sky-700">
         <a href="#">
 
             <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
         </a>
 
-        <h1 class="text-black text-xl text-center mt-6">Recuperación de la cuenta</h1>
-        <div class="w-80 mx-auto text-center m-3">
-            <p class="text-zinc-600 text-sm">
-                Para proteger tu cuenta, queremos asegurarnos
-                que eres tu la persona que intenta acceder
-            </p>
-        </div>
-        <div class="flex items-center justify-center m-2">
-            <div class="flex bg-slate-200 w-[210px] px-2 py-2 rounded-md items-center justify-center">
-                <i class="fa-solid fa-user pr-3"></i>
-                <span class="text-neutral-700 text-sm"> email@auth0rize.com</span>
-            </div>
-        </div>
-        <div class="pl-10 pr-10 text-right pb-11">
-            <input type="password"
-                class="ring-1 w-full rounded-md px-4 py-2 mt-2 mb-2 bg-white outline-none border border-neutral-150"
-                placeholder="Ingrese su nombre de usuario" />
-            <div class="w-full pt-2 pl-1 text-left">
-                <div class="flex">
-                    <p class=" text-red-800"> {{message}}</p>
-                </div>
-            </div>
+        <h1 class="text-black text-xl text-center mt-6">Busca tu nombre de usuario</h1>
+        <h4 class="text-black text-sm text-center mt-3 mb-12">Introduce el correo electronico asociado a tu cuenta</h4>
+
+        <form [formGroup]="formGroup" class="pl-10 pr-10 text-right">
+            <input type="text"
+                class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none"
+                formControlName="email" [ngClass]="{ 'border-yellow-500':
+                formGroup.controls['email'].invalid &&
+                formGroup.controls['email'].touched}" placeholder="Correo electronico" />
+            <ul *ngIf="formGroup.controls['email'].invalid && formGroup.controls['email'].touched"
+                class="text-xs font-semibold">
+                <li *ngIf="formGroup.controls['email'].errors?.['required']" class="text-yellow-500 rounded-lg p-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su correo
+                </li>
+                <li *ngIf="formGroup.controls['email'].errors?.['email']" class="text-yellow-500 rounded-lg p-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i> El correo electrónico debe llevar un 
+                </li>
+            </ul>
             <div class="w-full text-left pl-1 pt-2 pb-5">
                 <a routerLink="/recover-phone" class="text-sky-600 text-sm">Probar otro método</a>
             </div>
-
-            <button class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 hover:bg-[#15213b]">
-                Siguiente
-            </button>
-        </div>
+            <div class="flex flex-wrap justify-center">
+                <a routerLink="/login"
+                    class="flex items-center font-semibold h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto hover:bg-blue-100">
+                    Cancelar
+                </a>
+                <button [disabled]="formGroup.invalid || cargando" (click)="recovery(formGroup.value['email'])"
+                    class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
+                    <p *ngIf="!cargando">Siguiente</p>
+                    <i *ngIf="cargando" class="fa-solid fa-spinner fa-spin-pulse"></i>
+                </button>
+            </div>
+        </form>
     </div>
 </div>
