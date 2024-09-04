@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit {
     this.requestUsernameVerification.userName = loginUser.userName;
     this.requestUsernameVerification.application = '';
 
-    const usernameverification: Observable<RestResponse<userNameVerificationResponse>> = this.authService.userNameVerification$(this.requestUsernameVerification)
-    usernameverification.subscribe({
-      next: (res) => {
+
+    this.authService.userNameVerification$(this.requestUsernameVerification)
+      .then(res => {
         if (res.success) {
           this.router.navigate(['pwd']);
           this.cookieService.set('basicData', JSON.stringify(res.data));
@@ -56,18 +56,15 @@ export class LoginComponent implements OnInit {
             text: res.message
           })
         }
-      },
-      error: (err) => {
+      })
+      .catch(err => {
         Swal.fire({
           icon: 'error',
-          title: MessageDefault.errorConexion,
-          text: err.toString()
+          title: 'Error no controlado',
+          text: MessageDefault.errorConexion
         });
-      },
-      complete: () => {
-        this.cargando = false;
-      }
-    });
+      })
+      .finally(() => this.cargando = false);
   }
 
 }

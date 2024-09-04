@@ -22,19 +22,40 @@ const httpOptions = {
 export class authServices {
     private api: string = new parametersConfig().url + 'auth';
 
-    constructor(private httpClient: HttpClient) { }
+    constructor() { }
 
-    userNameVerification$(verificationUserName: userNameVerificationRequest): Observable<RestResponse<userNameVerificationResponse>> {
-        return this.httpClient.post<RestResponse<userNameVerificationResponse>>(this.api + '/user', verificationUserName);
+    userNameVerification$(verificationUserName: userNameVerificationRequest): Promise<RestResponse<userNameVerificationResponse>> {
+        return fetch(`${this.api}/user`, {
+            method: 'POST',
+            body: JSON.stringify(verificationUserName),
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8'
+                }
+        }).then(response => response.json() as Promise<RestResponse<userNameVerificationResponse>>);
     }
 
-    login$(user: loginUserRequest): Observable<RestResponse<loginResponse>> {
-        return this.httpClient.post<RestResponse<loginResponse>>(this.api, user);
+    login$(user: loginUserRequest): Promise<RestResponse<loginResponse>> {
+        return fetch(`${this.api}`, {
+            method: 'POST',
+            body: JSON.stringify(user),
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8'
+                }
+        }).then(response => response.json() as Promise<RestResponse<loginResponse>>);
     }
 
-    recoveryByEmail$(email: string): Observable<RestResponse<boolean>> {
+    recoveryByEmail$(email: string): Promise<RestResponse<boolean>> {
         const recovery: recoveryByEmailRequest = new recoveryByEmailRequest();
         recovery.email = email;
-        return this.httpClient.post<RestResponse<boolean>>(this.api + '/recovery-by-email', recovery);
+        return fetch(
+            `${this.api}/recovery-by-email`,
+            {
+                method: 'POST',
+                body: JSON.stringify(recovery),
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8'
+                }
+            }
+        ).then(response => response.json() as Promise<RestResponse<boolean>>);
     }
 } 

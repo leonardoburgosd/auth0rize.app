@@ -35,9 +35,8 @@ export class RecoverEmailComponent implements OnInit {
 
   recovery = (email: string) => {
     this.cargando = true;
-    const verify: Observable<RestResponse<boolean>> = this.authService.recoveryByEmail$(email);
-    verify.subscribe({
-      next: (res) => {
+    this.authService.recoveryByEmail$(email)
+      .then(res => {
         if (res.success) {
           Swal.fire({
             icon: 'success',
@@ -51,18 +50,14 @@ export class RecoverEmailComponent implements OnInit {
             text: res.message
           })
         }
-      },
-      error: (err) => {
+      }).catch(err => {
         Swal.fire({
           icon: 'error',
-          title: MessageDefault.errorConexion,
-          text: err.toString()
+          title: 'Error no controlado',
+          text: MessageDefault.errorConexion
         });
-      },
-      complete: () => {
+      }).finally(() => {
         this.cargando = false;
-      }
-    },
-    )
+      });
   }
 }
