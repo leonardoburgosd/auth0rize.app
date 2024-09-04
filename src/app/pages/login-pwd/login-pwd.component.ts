@@ -50,9 +50,8 @@ export class LoginPwdComponent implements OnInit {
     this.loginUser.password = this.formGroup.get('password')?.value;
     this.loginUser.userName = this.userVerification.userName;
 
-    const login: Observable<RestResponse<loginResponse>> = this.authService.login$(this.loginUser);
-    login.subscribe({
-      next: (res: RestResponse<loginResponse>) => {
+    this.authService.login$(this.loginUser)
+      .then(res => {
         if (res.success) {
           if (res.data.doubleFactorCode == 0)
             this.router.navigate(['dashboard']);
@@ -65,18 +64,15 @@ export class LoginPwdComponent implements OnInit {
             text: res.message
           })
         }
-      },
-      error: (err) => {
+      })
+      .catch(err =>
         Swal.fire({
           icon: 'error',
           title: MessageDefault.errorConexion,
           text: err.toString()
-        });
-      },
-      complete: () => {
-        this.cargando = false;
-      }
-    });
+        })
+      )
+      .finally(() => this.cargando = false);
   }
 }
 
