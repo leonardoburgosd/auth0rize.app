@@ -16,10 +16,11 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 
 ## Funcionalidades
 
-- Login (50% implementado - renovado)
+- Login (90% implementado - renovado)
 - Registro (50% implementado - renovado)
-- Recuperación de contraseña (NUEVO!)
-- Doble factor de autenticación (NUEVO!)
+- Has olvidado tu nombre de usuario (80% implementado)
+- Recuperación de contraseña (50% implementado -:exclamation:NUEVO!)
+- Doble factor de autenticación (En planeamiento)
 - Administración de usuarios (Por implementar)
 - Administracion de dominios (Por implementar)
 - Administracion de roles (Por implementar)
@@ -33,31 +34,27 @@ Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos fo
 | Backend       | https://github.com/leonardoburgosd/auth0rize.api  |
 | SSO Frontend  | https://github.com/leonardoburgosd/authenticator.frontend |
 
-## Version 1 (desplegado)
+## Version 0.0.1 (desplegado)
 - https://auth0rize.leonardoburgosd.site
-## Version 1 (desplegada en firebase)
-- https://authdash-bcd10.web.app
+## ~~Version beta 0.0.1 (desplegada en firebase)~~
+- ~~https://authdash-bcd10.web.app~~
 
 
 ## Implementaciones
-|Funcionalidad      | Descripcion                                               | Realizado          | Desplegado       | 
-|-------------------|-----------------------------------------------------------|:------------------:|:----------------:|
-|Pantalla principal |Implementación de landing page principal                   | 90%                | :x:              |
-|Login (UI)         |Implementación de pantalla de autenticacion general        | 50%                |:white_check_mark:|
-|Registro (UI)      |Implementación de pantalla de registro general de usuario  | 50%                |:white_check_mark:|
+|Funcionalidad           | Descripcion                                                   | Realizado          | Desplegado       | 
+|------------------------|---------------------------------------------------------------|:------------------:|:----------------:|
+|Pantalla principal      |Implementación de landing page principal                       | 90%                |:white_check_mark:|
+|Login (UI, Backed)      |Implementación de pantalla de autenticacion general            | 90%                |:white_check_mark:|
+|Registro (UI, Backed)   |Implementación de pantalla de registro general de usuario      | 90%                |:white_check_mark:|
+|Recuperar nombre usuario|Implementación de recuperacion de nombre de usuario por email  | 90%                |:white_check_mark:|
 
 ## Usuario
 |Nombre de usuario | Password    |
 |------------------|-------------|
-|leburgos          |123456       |
-|agrodriguez       |g6Pt(*?6:1   |
-|vmendonza         |:wg>J8a2*0   |
-|dherrera          |qXd;118W     |
-|cmartinez         |wy7G;_%0t1   |
-|jperez            |$C238~qRJ8   |
+|testUser          |123456789    |
 
 ## Pantallas
-|Pantalla princiapl                                  |
+|Pantalla principal                                  |
 |----------------------------------------------------|
 |![PantallaPrincipal](/captures/principal.png)       |
 |Login nombre usuario                                |

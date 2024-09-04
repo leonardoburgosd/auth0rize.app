@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { CustomValidations, isAdult } from 'src/app/Data/common/validations';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { userServices } from 'src/app/Data/services/userServices';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-register',
@@ -57,7 +59,7 @@ export class UserRegisterComponent implements OnInit {
         ]),
       },
       {
-        validators: [CustomValidations.passwordConfirm('password','passwordConfirm'), isAdult()]
+        validators: [CustomValidations.passwordConfirm('password', 'passwordConfirm'), isAdult()]
       }
     );
   }
@@ -71,15 +73,17 @@ export class UserRegisterComponent implements OnInit {
 
   registerSuperUser(): boolean {
     let isAdd: boolean = false;
-    this.userServices.crear$(this.newUser).subscribe(
-      (resp: any) => {
+    this.userServices.crear$(this.newUser)
+      .then(res => {
         isAdd = true;
-      },
-      (err: any) => {
-        console.log(JSON.stringify(this.newUser));
-        console.log(err);
-      }
-    );
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error no controlado',
+          text: MessageDefault.errorConexion
+        })
+      });
     return isAdd;
   }
 

@@ -21,10 +21,16 @@ const httpOptions = {
 export class userServices {
     private api: string = new parametersConfig().url + 'user';
 
-    constructor(private httpClient: HttpClient) { }
+    constructor() { }
 
-    crear$(user: createUserResponse): Observable<RestResponse<registerSuperadminResponse>> {
-        return this.httpClient.post<RestResponse<registerSuperadminResponse>>(this.api, user);
+    crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
+        return fetch(this.api,{
+            method: 'POST',
+            body: JSON.stringify(user),
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8'
+                }
+        }).then(response => response.json() as Promise<RestResponse<registerSuperadminResponse>>);
     }
 
     listarUsuarios(application: string): any {

@@ -37,8 +37,15 @@
           class="text-xs font-semibold">
           <li *ngIf="formGroup.controls['email'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
               class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su correo.</li>
+          @if(formGroup.controls['email'].hasError('minlength')){
+          <li class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i>La cantidad de
+            caracteres no puede ser menor a 5.</li>
+          }
+          @if(formGroup.controls['email'].hasError('email')){
+          <li class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i>El formato del
+            correo es incorrecto.</li>
+          }
         </ul>
-
         <input type="password" formControlName="password"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Contraseña"
