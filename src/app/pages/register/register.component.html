@@ -41,29 +41,36 @@
 
         <input type="password" formControlName="password"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-          placeholder="Contraseña" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['password'].invalid &&
-                  formGroup.controls['password'].touched
-        }" />
+          placeholder="Contraseña"
+          [ngClass]="{ 'border-yellow-500': formGroup.controls['password'].invalid && formGroup.controls['password'].touched }" />
         <ul *ngIf="formGroup.controls['password'].invalid && formGroup.controls['password'].touched"
           class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['password'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su contraseña.</li>
+          @if(formGroup.controls['password'].hasError('required')){
+          <li class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su contraseña.
+          </li>
+          }
+          @if(formGroup.controls['password'].hasError('minlength')){
+          <li class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar al menos 9 caractéres.
+          </li>
+          }
         </ul>
-
 
         <input type="password" formControlName="passwordVerification"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-          placeholder="Confirmar contraseña" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['passwordVerification'].invalid &&
-                  formGroup.controls['passwordVerification'].touched
-        }" />
-        <ul
-          *ngIf="formGroup.controls['passwordVerification'].invalid && formGroup.controls['passwordVerification'].touched"
-          class="text-xs font-semibold">
+          placeholder="Confirmar contraseña"
+          [ngClass]="{ 'border-yellow-500': formGroup.controls['passwordVerification'].invalid && formGroup.controls['passwordVerification'].touched }" />
+        <ul *ngIf="formGroup.controls['passwordVerification'].touched" class="text-xs font-semibold">
           <li *ngIf="formGroup.controls['passwordVerification'].errors?.['required']"
-            class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar nuevamente 
-            su contraseña.</li>
+            class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar nuevamente su contraseña.
+          </li>
+          @if(formGroup.controls['passwordVerification'].hasError('minlength')){
+          <li class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar al menos 9 caractéres.
+          </li>
+          }
         </ul>
 
 
@@ -99,8 +106,9 @@
         }" />
         <ul *ngIf="formGroup.controls['motherLastName'].invalid && formGroup.controls['motherLastName'].touched"
           class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['motherLastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido materno.</li>
+          <li *ngIf="formGroup.controls['motherLastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido materno.
+          </li>
         </ul>
 
         <div class="flex flex-wrap justify-center pt-5 pb-16">

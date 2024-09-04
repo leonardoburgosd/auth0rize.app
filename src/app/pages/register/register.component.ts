@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
 import { registerSuperadminResponse } from 'src/app/Data/dto/user/response/registerSuperadminResponse';
+import { CustomValidations } from 'src/app/Data/common/validations';
 
 @Component({
   selector: 'app-register',
@@ -29,17 +30,20 @@ export class RegisterComponent implements OnInit {
     this.validationForm();
   }
 
-  private validationForm = () =>
-    this.formGroup = this.formBuilder.group({
-      userName: [this.newUser.userName, [Validators.required, Validators.min(3), Validators.max(30)]],
-      email: [this.newUser.email, [Validators.required, Validators.email, Validators.max(30)]],
-      password: [this.newUser.password, [Validators.required, Validators.min(9), Validators.max(100)]],
-      passwordVerification: [this.newUser.passwordConfirmation, [Validators.required, Validators.min(9), Validators.max(100)]],
-      name: [this.newUser.name, [Validators.required, Validators.min(2), Validators.max(150)]],
-      lastName: [this.newUser.lastName, [Validators.required, Validators.min(2), Validators.max(150)]],
-      motherLastName: [this.newUser.motherLastName, [Validators.required, Validators.min(2), Validators.max(150)]],
-    });
+  private validationForm = () => {
 
+    this.formGroup = this.formBuilder.group({
+      userName: [this.newUser.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      email: [this.newUser.email, [Validators.required, Validators.email, Validators.minLength(30)]],
+      password: [this.newUser.password, [Validators.required, Validators.minLength(9), Validators.maxLength(100)]],
+      passwordVerification: [this.newUser.passwordConfirmation, [Validators.required, Validators.minLength(9), Validators.maxLength(100)]],
+      name: [this.newUser.name, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      lastName: [this.newUser.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      motherLastName: [this.newUser.motherLastName, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+    }, {
+      validators: [CustomValidations.unambiguousRoleValidator]
+    });
+  }
   registerUser(user: createUserRequest) {
     this.cargando = true;
     const newUser: createUserResponse = {
@@ -77,5 +81,4 @@ export class RegisterComponent implements OnInit {
   }
 
   loginUserReload = () => this.router.navigate(['/']);
-
 }

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { isAdult, passwordConfirm } from 'src/app/Data/common/validations';
+import { CustomValidations, isAdult } from 'src/app/Data/common/validations';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { userServices } from 'src/app/Data/services/userServices';
 
@@ -57,7 +57,7 @@ export class UserRegisterComponent implements OnInit {
         ]),
       },
       {
-        validators: [passwordConfirm(), isAdult()]
+        validators: [CustomValidations.passwordConfirm('password','passwordConfirm'), isAdult()]
       }
     );
   }
