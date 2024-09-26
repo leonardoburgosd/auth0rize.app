@@ -1,25 +1,25 @@
 # Auth Dashboard
 
-Este proyecto esta creado en Angular version 14.2.1 y junto a otros proyectos forma parte de un entorno de autenticación y administración de usuarios.
+Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma parte de un entorno de autenticación y administración de usuarios.
 
-## Modo de uso
+## :rocket: Modo de uso
 
-- NodeJs compatible: 16.10
-- Version angular: 14.0
+- NodeJs compatible: 20.11.0
+- Version angular: 18.0
 - Modo de ejecucion: ng serve
 - Compilar proyecto: ng build
 
 ## Tecnologías utilizadas
 
-- :white_check_mark: Angular
-- :white_check_mark: Tailwind
+- :white_check_mark: Angular 18
+- :white_check_mark: Tailwind 3
 
 ## Funcionalidades
 
 - Login (90% implementado - renovado)
 - Registro (50% implementado - renovado)
 - Has olvidado tu nombre de usuario (80% implementado)
-- Recuperación de contraseña (50% implementado -:exclamation:NUEVO!)
+- Recuperación de contraseña (50% implementado -:exclamation:NUEVO)
 - Doble factor de autenticación (En planeamiento)
 - Administración de usuarios (Por implementar)
 - Administracion de dominios (Por implementar)

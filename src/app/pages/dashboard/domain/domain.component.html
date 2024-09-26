@@ -2,27 +2,23 @@
    <h1 class="text-3xl">Dominios</h1>
 </div>
 <div class="flex flex-wrap p-4">
-    <div
-        class="relative flex flex-col m-1 text-white bg-slate-800 shadow-md bg-clip-border rounded-xl w-96 p-3 justify-center">
-        <div class="p-6">
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+      <div
+         class="relative flex flex-col m-1 text-white bg-slate-800 hover:bg-slate-700 shadow-md bg-clip-border rounded-xl p-3 justify-center">
+         <div class="p-6">
             <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../assets/plus.jpg"
-                alt="Icono de aplicativo" />
+               alt="Icono de aplicativo" />
             <h5
-                class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                + Nuevo aplicativo
+               class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+               + Nuevo dominio
             </h5>
             <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                Registra un aplicativo nuevo
+               Registra un dominio nuevo
             </p>
-        </div>
-    </div>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
-    <domain-card></domain-card>
+         </div>
+      </div>
+      @for(domain of domains; track domain){
+      <domain-card [name]="domain.name" [id]="domain.id" [isDefault]="domain.default"></domain-card>
+      }
+   </div>
 </div>

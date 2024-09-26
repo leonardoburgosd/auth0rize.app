@@ -10,7 +10,7 @@ import { userNameVerificationResponse } from "../dto/user/response/userNameVerif
 import { recoveryByEmailRequest } from "../dto/user/request/recoveryByEmailRequest";
 const httpOptions = {
     headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
     }),
     Authorization: 'Bearer ',
 };
@@ -28,9 +28,9 @@ export class authServices {
         return fetch(`${this.api}/user`, {
             method: 'POST',
             body: JSON.stringify(verificationUserName),
-                headers: {
-                    'Content-type': 'application/json;charset=UTF-8'
-                }
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8'
+            }
         }).then(response => response.json() as Promise<RestResponse<userNameVerificationResponse>>);
     }
 
@@ -38,9 +38,9 @@ export class authServices {
         return fetch(`${this.api}`, {
             method: 'POST',
             body: JSON.stringify(user),
-                headers: {
-                    'Content-type': 'application/json;charset=UTF-8'
-                }
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8'
+            }
         }).then(response => response.json() as Promise<RestResponse<loginResponse>>);
     }
 

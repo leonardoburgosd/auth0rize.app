@@ -53,8 +53,10 @@ export class LoginPwdComponent implements OnInit {
     this.authService.login$(this.loginUser)
       .then(res => {
         if (res.success) {
-          if (res.data.doubleFactorCode == 0)
+          if (res.data.doubleFactorCode == 0) {
+            this.cookieService.set('token', res.data.token)
             this.router.navigate(['dashboard']);
+          }
           else
             this.router.navigate(['two-factor-phone']);
         } else {

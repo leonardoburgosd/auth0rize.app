@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit {
   }
 
   private validationForm = () => {
-
     this.formGroup = this.formBuilder.group({
       userName: [this.newUser.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       email: [this.newUser.email, [Validators.required, Validators.email, Validators.minLength(5)]],
@@ -45,6 +44,7 @@ export class RegisterComponent implements OnInit {
       validators: [CustomValidations.unambiguousRoleValidator]
     });
   }
+  
   registerUser(user: createUserRequest) {
     this.cargando = true;
     const newUser: createUserResponse = {

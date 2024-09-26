@@ -6,9 +6,6 @@ import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { userNameVerificationRequest } from 'src/app/Data/dto/user/request/userNameVerificationRequest';
 import { loginUserRequest } from 'src/app/Data/dto/user/request/loginUserRequest';
-import { Observable } from 'rxjs';
-import { RestResponse } from 'src/app/Data/common/restResponse';
-import { userNameVerificationResponse } from 'src/app/Data/dto/user/response/userNameVerificationResponse';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
 @Component({

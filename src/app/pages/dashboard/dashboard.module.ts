@@ -11,6 +11,11 @@ import { NavLeftComponent } from "../../means/large-items/nav/nav-left/nav-left.
 import { NavUpComponent } from "../../means/large-items/nav/nav-up/nav-up.component";
 import { NavSecLeftComponent } from "../../means/large-items/nav/nav-sec-left/nav-sec-left.component";
 import { DomainCardComponent } from "src/app/means/components/cards/domain-card/domain-card.component";
+import { ApplicationComponent } from "./application/application.component";
+import { ApplicationDetailComponent } from "./application/application-detail/application-detail.component";
+import { ApplicationCardComponent } from "src/app/means/components/cards/application-card/application-card.component";
+import { MenuComponent } from "./menu/menu.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -18,16 +23,21 @@ import { DomainCardComponent } from "src/app/means/components/cards/domain-card/
         AccountComponent,
         DomainComponent,
         UsersComponent,
+        ApplicationComponent,
+        MenuComponent,
+        ApplicationDetailComponent,
         AbstractComponent,
         NavUpComponent,
         NavLeftComponent,
         NavDownComponent,
         NavSecLeftComponent,
-        DomainCardComponent
+        DomainCardComponent,
+        ApplicationCardComponent
     ],
     imports: [
         CommonModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        ReactiveFormsModule
     ]
 })
 

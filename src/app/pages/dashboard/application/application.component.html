@@ -1,0 +1,88 @@
+<div class='px-2 py-4'>
+    <h1 class="text-3xl">Aplicación</h1>
+</div>
+<div class="flex flex-wrap p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+        <div (click)="openModalCreate()"
+            class="relative flex flex-col m-1 text-white bg-slate-800 hover:bg-slate-700 shadow-md bg-clip-border rounded-xl p-3 justify-center">
+            <div class="p-6">
+                <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../assets/plus.jpg"
+                    alt="Icono de aplicativo" />
+                <h5
+                    class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                    + Nuevo aplicativo
+                </h5>
+                <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                    Registra un aplicativo nuevo
+                </p>
+            </div>
+        </div>
+        @for (application of applications; track application){
+        <application-card 
+            [id]="application.id"
+            [code]="application.code" 
+            [name]="application.name"
+            [description]="application.description"
+            (onDelete)="deleted(application.id)"
+            ></application-card>
+        }
+        <!-- @empty {
+        <h1>There are not items.</h1>
+        } -->
+
+        @if(isModalCreateView){
+        <div
+            class="fixed rounded-md z-10 inset-0 overflow-y-auto bg-gray-900 bg-opacity-10 flex items-center justify-center text-black m-2">
+            <div class="bg-gray-900 rounded-lg text-white border border-slate-600">
+                <header class="mb-4 border-b border-gray-800 px-5 pt-6 pb-3 flex flex-col justify-between">
+                    <div class="flex">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Agregar aplicativo
+                        </h3>
+                        <button (click)="openModalCreate()"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            <i class="fa-solid fa-xmark"></i>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                </header>
+                <form [formGroup]="formGroup">
+                    <div class="px-12 pt-3 pb-6 flex flex-col text-sm">
+                        <input type="text" formControlName="name"
+                            class="ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-600 m-1"
+                            [ngClass]="{ 'border-yellow-500':
+          formGroup.controls['name'].invalid &&
+                  formGroup.controls['name'].touched
+        }" placeholder="Nombre" />
+                        <ul *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
+                            class="text-xs font-semibold">
+                            <li *ngIf="formGroup.controls['name'].errors?.['required']"
+                                class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i>
+                                Debe ingresar el nombre.</li>
+                        </ul>
+
+                        <textarea formControlName="description"
+                            class='ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-700 m-1'
+                            placeholder='Descripción'></textarea>
+                        <input
+                            class='ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-700 m-1'
+                            type="file" />
+                    </div>
+                    <footer class="border-t rounded-lg border-gray-800 bg-gray-900 p-5 flex justify-end">
+                        <div class="flex items-center">
+                            <button (click)="createApplication(formGroup.value)"
+                                [disabled]="formGroup.invalid || isLoadingCreate"
+                                class="text-white bg-teal-500 disabled:bg-teal-900 hover:bg-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                <p *ngIf="!isLoadingCreate">Agregar</p>
+                                <i *ngIf="isLoadingCreate" class="fa-solid fa-spinner fa-spin-pulse"></i>
+                            </button>
+                            <button (click)="openModalCreate()"
+                                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancelar</button>
+                        </div>
+                    </footer>
+                </form>
+            </div>
+        </div>
+        }
+    </div>
+</div>
