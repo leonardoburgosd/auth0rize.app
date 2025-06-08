@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { createApplicationRequest } from 'src/app/Data/dto/user/request/createApplicationRequest';
 import { getApplicationResponse } from 'src/app/Data/dto/user/response/getApplicationResponse';

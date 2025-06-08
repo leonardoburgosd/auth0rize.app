@@ -19,11 +19,12 @@ export class ApplicationCardComponent {
     constructor(private router: Router, private application: applicationServices) { }
 
     detail() {
-        this.router.navigate(['dashboard', 'application', 'detail'])
+        this.router.navigate(['dashboard', 'application', 'detail', this.id])
     }
 
     deleted(id: number) {
         this.onDelete.emit(id)
     }
+
 }
 

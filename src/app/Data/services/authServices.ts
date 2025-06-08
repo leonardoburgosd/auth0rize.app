@@ -8,6 +8,7 @@ import { RestResponse } from "../common/restResponse";
 import { loginResponse } from "../dto/user/response/loginResponse";
 import { userNameVerificationResponse } from "../dto/user/response/userNameVerificationResponse";
 import { recoveryByEmailRequest } from "../dto/user/request/recoveryByEmailRequest";
+import { HttpMethodString } from "../common/httpMethodString";
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json;charset=UTF-8',
@@ -26,7 +27,7 @@ export class authServices {
 
     userNameVerification$(verificationUserName: userNameVerificationRequest): Promise<RestResponse<userNameVerificationResponse>> {
         return fetch(`${this.api}/user`, {
-            method: 'POST',
+            method: HttpMethodString.post,
             body: JSON.stringify(verificationUserName),
             headers: {
                 'Content-type': 'application/json;charset=UTF-8'
@@ -36,7 +37,7 @@ export class authServices {
 
     login$(user: loginUserRequest): Promise<RestResponse<loginResponse>> {
         return fetch(`${this.api}`, {
-            method: 'POST',
+            method: HttpMethodString.post,
             body: JSON.stringify(user),
             headers: {
                 'Content-type': 'application/json;charset=UTF-8'
@@ -50,7 +51,7 @@ export class authServices {
         return fetch(
             `${this.api}/recovery-by-email`,
             {
-                method: 'POST',
+                method: HttpMethodString.post,
                 body: JSON.stringify(recovery),
                 headers: {
                     'Content-type': 'application/json;charset=UTF-8'
@@ -58,4 +59,4 @@ export class authServices {
             }
         ).then(response => response.json() as Promise<RestResponse<boolean>>);
     }
-} 
+}

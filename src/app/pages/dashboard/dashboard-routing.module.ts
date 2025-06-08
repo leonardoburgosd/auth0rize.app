@@ -16,11 +16,11 @@ const routes: Routes = [
     { path: 'domain/detail', component: DomainDetailComponent },
     { path: 'users', component: UsersComponent },
     { path: 'application', component: ApplicationComponent },
-    { path: 'application/detail', component: ApplicationDetailComponent },
+    { path: 'application/detail/:id', component: ApplicationDetailComponent },
     { path: 'menu', component: MenuComponent }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DashboardRoutingModule { } 
+export class DashboardRoutingModule { }

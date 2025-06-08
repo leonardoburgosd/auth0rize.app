@@ -6,6 +6,7 @@ import { RestResponse } from "../common/restResponse";
 import { createApplicationResponse } from "../dto/user/response/createApplicationResponse";
 import { getApplicationResponse } from "../dto/user/response/getApplicationResponse";
 import { CookieService } from "ngx-cookie-service";
+import { HttpMethodString } from "../common/httpMethodString";
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,7 @@ export class applicationServices {
     create$(application: createApplicationRequest): Promise<RestResponse<createApplicationResponse>> {
         const token = this.cookieService.get('token')
         return fetch(`${this.api}`, {
-            method: 'POST',
+            method: HttpMethodString.post,
             body: JSON.stringify(application),
             headers: {
                 'Content-Type': 'application/json',
@@ -37,14 +38,14 @@ export class applicationServices {
 
     get$(): Promise<RestResponse<getApplicationResponse[]>> {
         return fetch(`${this.api}`, {
-            method: 'GET',
+            method: HttpMethodString.get,
             headers: this.httpOptions()
         }).then(response => response.json() as Promise<RestResponse<getApplicationResponse[]>>);
     }
 
     deleted$(id: number): Promise<RestResponse<boolean>> {
         return fetch(`${this.api}/${id}`, {
-            method: 'DELETE',
+            method: HttpMethodString.delete,
             headers: this.httpOptions()
         }).then(response => response.json() as Promise<RestResponse<boolean>>);
     }

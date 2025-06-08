@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav-up',
@@ -6,11 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-up.component.scss']
 })
 export class NavUpComponent implements OnInit {
-  img:string='https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ';
-  name:string='James Smith';
-  constructor() { }
+  img: string = 'https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ';
+  name: string = 'James Smith';
+  constructor(private router: Router, private cookieService: CookieService) { }
+
 
   ngOnInit(): void {
   }
 
+  cerrarSesion() {
+    this.cookieService.deleteAll();
+    this.router.navigate(['login']);
+  }
 }

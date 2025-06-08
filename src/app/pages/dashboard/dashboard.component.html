@@ -1,4 +1,26 @@
-<div class="h-full relative">
+<div class="min-h-screen bg-slate-900 text-white flex flex-col">
+  <div class="flex flex-1 overflow-hidden">
+    <aside
+      class="bg-slate-800 w-64 fixed inset-y-0 left-0 transform translate-x-0 md:relative md:translate-x-0 transition duration-200 ease-in-out z-30 flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b border-slate-700">
+        <div class="flex items-center">
+          <img src="../../../assets/icon.png" class="h-8 rounded-full" alt="Auth0rizeLogo" />
+          <span class="ml-2 text-xl font-bold">[Auth0rize]</span>
+        </div>
+      </div>
+      <app-nav-left></app-nav-left>
+    </aside>
+
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-900 relative">
+      <app-nav-up></app-nav-up>
+      <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <router-outlet></router-outlet>
+      </div>
+
+    </main>
+  </div>
+</div>
+<!--<div class="h-full relative">
     <div
         class="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:insert-y-0 z-[80]">
         <app-nav-left></app-nav-left>
@@ -7,4 +29,4 @@
         <app-nav-up></app-nav-up>
         <router-outlet></router-outlet>
     </main>
-</div>
+</div>-->
