@@ -3,11 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { RestResponse } from 'src/app/Data/common/restResponse';
-import { Observable } from 'rxjs';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
-import { registerSuperadminResponse } from 'src/app/Data/dto/user/response/registerSuperadminResponse';
 import { CustomValidations } from 'src/app/Data/common/validations';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
@@ -44,7 +41,7 @@ export class RegisterComponent implements OnInit {
       validators: [CustomValidations.unambiguousRoleValidator]
     });
   }
-  
+
   registerUser(user: createUserRequest) {
     this.cargando = true;
     const newUser: createUserResponse = {

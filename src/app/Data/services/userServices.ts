@@ -25,7 +25,7 @@ export class userServices {
   constructor() { }
 
   crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
-    return fetch(this.api, {
+    return fetch(this.api+"/first-register", {
       method: HttpMethodString.post,
       body: JSON.stringify(user),
       headers: {
