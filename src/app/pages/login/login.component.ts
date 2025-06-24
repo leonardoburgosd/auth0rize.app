@@ -24,10 +24,11 @@ export class LoginComponent implements OnInit {
     private authService: authServices,
     private router: Router,
     private cookieService: CookieService
-  ) { }
+  ) { this.nuevoUsuario.userName = 'leburgosdiaz@gmail.com'; }
 
   ngOnInit(): void {
     this.validacionFormaulario();
+
   }
 
   private validacionFormaulario = () =>

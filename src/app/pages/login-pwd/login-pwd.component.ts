@@ -35,6 +35,7 @@ export class LoginPwdComponent implements OnInit {
 
   ngOnInit(): void {
     this.userVerification = JSON.parse(this.cookieService.get('basicData'));
+    this.loginUser.password = "123456789";
     this.validacionFormulario();
   }
 
@@ -48,7 +49,7 @@ export class LoginPwdComponent implements OnInit {
     this.cargando = true;
     this.loginUser.application = '';
     this.loginUser.password = this.formGroup.get('password')?.value;
-    this.loginUser.userName = this.userVerification.userName;
+    this.loginUser.userName = this.userVerification.email;
 
     this.authService.login$(this.loginUser)
       .then(res => {

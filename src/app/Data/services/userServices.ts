@@ -25,7 +25,7 @@ export class userServices {
   constructor() { }
 
   crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
-    return fetch(this.api+"/first-register", {
+    return fetch(this.api + "/first-register", {
       method: HttpMethodString.post,
       body: JSON.stringify(user),
       headers: {
@@ -38,4 +38,10 @@ export class userServices {
     // return this.httpClient.get(`${this.api}/${application}`, httpOptions);
   }
 
+  verification$(): Promise<RestResponse<boolean>> {
+    return fetch(this.api + "/verification", {
+      method: HttpMethodString.get,
+    })
+    .then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
 }
