@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+
+interface MenuItem {
+  icon: string
+  label: string
+  active: boolean,
+  ruta: string
+}
 
 @Component({
   selector: 'app-nav-left',
@@ -8,14 +15,36 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./nav-left.component.scss']
 })
 export class NavLeftComponent implements OnInit {
+  @Input() sidebarOpen: boolean = true;
+  //sidebarOpen = true
+  userName: string = '';
+  email: string = '';
 
-  constructor(private router: Router,private cookieService: CookieService) { }
+  menuItems: MenuItem[] = [
+    { icon: "fas fa-home", label: "Dashboard", active: true, ruta: "/dashboard" },
+    { icon: "fas fa-users", label: "Usuarios", active: false, ruta: "/dashboard/users" },
+    { icon: "fas fa-users", label: "Dominios", active: false, ruta: "/dashboard/domain" },
+  ]
 
-  ngOnInit(): void {
+  setActiveMenuItem(index: number): void {
+    this.menuItems.forEach((item, i) => {
+      item.active = i === index
+    })
   }
 
-  cerrarSesion(){
+  constructor(private router: Router, private cookieService: CookieService) { }
+
+  ngOnInit(): void {
+    this.userName = JSON.parse(this.cookieService.get("basicData")).userName;
+    this.email = JSON.parse(this.cookieService.get("basicData")).email;
+  }
+
+  cerrarSesion() {
     this.cookieService.deleteAll();
     this.router.navigate(['login']);
+  }
+
+  onProfileClick(): void {
+    console.log("Profile clicked")
   }
 }

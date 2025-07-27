@@ -6,40 +6,36 @@ import { getDomainResponse } from "../dto/user/response/getDomainResponse";
 import { HttpMethodString } from "../common/httpMethodString";
 import { createDomainRequest } from "../dto/user/request/createDomainRequest";
 import { createDomainResponse } from "../dto/user/response/createDomainResponse";
-
+import { getAuthHeaders } from "../common/getAuthHeaders";
 @Injectable({
   providedIn: 'root'
 })
 
 export class domainServices {
   private api: string = new parametersConfig().url + 'domain';
-  private httpOptions(): any {
-    const token = this.cookieService.get('token')
-    return {
-      'Content-type': 'application/json;charset=UTF-8',
-      'Authorization': `Bearer ${token}`,
-    };
-  }
   constructor(private cookieService: CookieService) { }
 
-  get$(): Promise<RestResponse<getDomainResponse[]>> {
-    return fetch(`${this.api}`, {
+  get$(code?: string, state?: string, page: number = 1, size: number = 10): Promise<RestResponse<getDomainResponse>> {
+    let url = `${this.api}?page=${page}&size=${size}`;
+    if (code) url += `&search=${encodeURIComponent(code)}`;
+    if (state) url += `&state=${encodeURIComponent(state)}`;
+    return fetch(url, {
       method: HttpMethodString.get,
-      headers: this.httpOptions()
-    }).then(response => response.json() as Promise<RestResponse<getDomainResponse[]>>);
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<getDomainResponse>>);
   }
 
-  delete$(id: number): Promise<RestResponse<boolean>> {
+  delete$(id: string): Promise<RestResponse<boolean>> {
     return fetch(`${this.api}/${id}`, {
       method: HttpMethodString.delete,
-      headers: this.httpOptions()
+      headers: getAuthHeaders(this.cookieService)
     }).then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 
   create$(domain: createDomainRequest): Promise<RestResponse<createDomainResponse>> {
     return fetch(`${this.api}`, {
       method: HttpMethodString.post,
-      headers: this.httpOptions(),
+      headers: getAuthHeaders(this.cookieService),
       body: JSON.stringify(domain)
     }).then(response => response.json() as Promise<RestResponse<createDomainResponse>>);
   }

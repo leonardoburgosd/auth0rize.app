@@ -6,23 +6,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  sidebarOpen = false;
-  darkMode = false;
+  sidebarOpen = true
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen
   }
 
-  toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-    if (this.darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+  onProfileClick(): void {
+    console.log("Profile clicked")
+  }
+
+  onSearch(event: Event): void {
+    const target = event.target as HTMLInputElement
+    console.log("Searching for:", target.value)
+  }
+
+  onNotificationClick(): void {
+    console.log("Notification clicked")
   }
 }

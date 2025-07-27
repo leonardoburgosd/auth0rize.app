@@ -1,6 +1,5 @@
 import { parametersConfig } from "../common/param-config";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { loginUserRequest } from "../dto/user/request/loginUserRequest";
 import { userNameVerificationRequest } from "../dto/user/request/userNameVerificationRequest";
@@ -9,12 +8,6 @@ import { loginResponse } from "../dto/user/response/loginResponse";
 import { userNameVerificationResponse } from "../dto/user/response/userNameVerificationResponse";
 import { recoveryByEmailRequest } from "../dto/user/request/recoveryByEmailRequest";
 import { HttpMethodString } from "../common/httpMethodString";
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json;charset=UTF-8',
-    }),
-    Authorization: 'Bearer ',
-};
 
 @Injectable({
     providedIn: 'root'

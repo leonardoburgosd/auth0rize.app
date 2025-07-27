@@ -15,7 +15,7 @@ import { ApplicationComponent } from "./application/application.component";
 import { ApplicationDetailComponent } from "./application/application-detail/application-detail.component";
 import { ApplicationCardComponent } from "src/app/means/components/cards/application-card/application-card.component";
 import { MenuComponent } from "./menu/menu.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -37,7 +37,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     imports: [
         CommonModule,
         DashboardRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule,
     ]
 })
 

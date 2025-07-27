@@ -46,3 +46,9 @@ Thumbs.db
 /firebase.json
 /.firebaserc
 /functions
+
+#ia tools
+.cursor
+.superdesign
+.windsurfrules
+CLAUDE.md

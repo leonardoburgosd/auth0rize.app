@@ -1,20 +1,14 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 import { parametersConfig } from "../common/param-config";
 import { RestResponse } from "../common/restResponse";
-import { Observable } from "rxjs";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
 import { createUserResponse } from "../dto/user/response/createUserResponse";
 import { HttpMethodString } from "../common/httpMethodString";
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-  Authorization: 'Bearer ',
-};
-
+import { getUserResponse } from "../dto/user/response/getUserResponse";
+import { CookieService } from "ngx-cookie-service";
+import { getAuthHeaders } from "../common/getAuthHeaders";
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +16,7 @@ const httpOptions = {
 export class userServices {
   private api: string = new parametersConfig().url + 'user';
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
     return fetch(this.api + "/first-register", {
@@ -34,14 +28,19 @@ export class userServices {
     }).then(response => response.json() as Promise<RestResponse<registerSuperadminResponse>>);
   }
 
-  listarUsuarios(application: string): any {
-    // return this.httpClient.get(`${this.api}/${application}`, httpOptions);
+  lista$(): Promise<RestResponse<getUserResponse>> {
+    console.log(getAuthHeaders(this.cookieService));
+    return fetch(this.api, {
+      method: HttpMethodString.get,
+      headers: getAuthHeaders(this.cookieService)
+    })
+      .then(response => response.json() as Promise<RestResponse<getUserResponse>>);
   }
 
   verification$(): Promise<RestResponse<boolean>> {
     return fetch(this.api + "/verification", {
       method: HttpMethodString.get,
     })
-    .then(response => response.json() as Promise<RestResponse<boolean>>);
+      .then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 }

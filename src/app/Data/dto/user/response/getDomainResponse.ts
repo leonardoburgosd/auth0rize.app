@@ -1,6 +1,16 @@
 export class getDomainResponse {
-    id!: number;
-    name!: string;
-    default!: boolean;
-    code!:string;
+  total!: number;
+  page!: number;
+  active!: number;
+  pending!: number;
+  deleted!: number;
+  domains!: domainListResponse[];
+}
+
+export class domainListResponse {
+  code!: string;
+  count!: number;
+  isActive!: boolean;
+  principalName!: string;
+  principalEmail!: string;
 }

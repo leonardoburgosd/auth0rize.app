@@ -1,76 +1,45 @@
-<nav class="flex-1 overflow-y-auto py-4">
-  <div class="px-4 space-y-2">
-    <a [routerLink]="['/dashboard']"
-      class="flex items-center text-sm px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition-colors duration-200">
-      <i class="fa-solid fa-house mr-2 h-4 w-4"></i>
-      Principal
-    </a>
-    <a [routerLink]="['/dashboard/domain']"
-      class="flex items-center text-sm px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition-colors duration-200">
-      <i class="fa-solid fa-users-gear mr-2 h-4 w-4"></i>
-      Dominios
-    </a>
-    <a [routerLink]="['/dashboard/application']"
-      class="flex items-center text-sm px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition-colors duration-200">
-      <i class="fa-solid fa-mobile-screen-button mr-2 h-4 w-4"></i>
-      Aplicaciones
-    </a>
-    <a [routerLink]="['/dashboard']"
-      class="flex items-center text-sm px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition-colors duration-200">
-      <i class="fa-solid fa-building-shield mr-2 h-4 w-4"></i>
-      Permisos
-    </a>
-    <a [routerLink]="['/dashboard/menu']"
-      class="flex items-center text-sm px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-md transition-colors duration-200">
-      <i class="fa-solid fa-list mr-2 h-4 w-4"></i>
-      Menú
-    </a>
-  </div>
-</nav>
+<nav class="flex-1 p-4">
+  <ul class="space-y-2">
+    <li *ngFor="let item of menuItems; let i = index">
+      <a *ngIf="sidebarOpen"
+      [routerLink]="item.ruta"
+        (click)="setActiveMenuItem(i); $event.preventDefault()"
+        [class]="'flex items-center p-3 rounded-lg transition-colors group relative ' +
+                 (item.active ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')"
+      >
+        <i [class]="item.icon + ' w-5 h-5 flex-shrink-0' "></i>
+        <span *ngIf="sidebarOpen" class="ml-3 font-medium">{{ item.label }}</span>
 
-<!--<div class="w-full dark:bg-gray-900 dark:text-zinc-500 h-screen p-5 pt-8 border-r border-solid border-gray-800">
-    <div class="inline-flex dark:text-zinc-500 justify-center">
-        <div class="fix fix-col">
-            <img src="../../../../../assets/icon.png" class="text-center p-4 font-semibold"
-                alt="Descripción de la imagen" />
-            <div class='flex justify-center'>
-                <h1 class="text-center mt-4 font-semibold text-xl text-teal-500">[Auth0rize]</h1>
-            </div>
+        <!-- Tooltip for collapsed sidebar -->
+        <div
+          *ngIf="!sidebarOpen"
+          class="absolute left-16 bg-slate-800 text-white px-2 py-1 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50"
+        >
+          {{ item.label }}
         </div>
+      </a>
+
+      <a *ngIf="!sidebarOpen"
+      [routerLink]="item.ruta"
+        (click)="setActiveMenuItem(i); $event.preventDefault()"
+        [class]="'flex items-center p-2 rounded-lg transition-colors group relative ' +
+                 (item.active ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')"
+      >
+        <i [class]="item.icon + ' w-5 flex-shrink-0' "></i>
+      </a>
+
+    </li>
+  </ul>
+</nav>
+<div class="p-4 border-t border-slate-700">
+  <div class="flex items-center cursor-pointer" (click)="onProfileClick()">
+    <div class="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
+      <i class="fas fa-user w-4 h-4"></i>
     </div>
-    <nav class="dark:text-fuchsia-50">
-        <ul>
-            <li class="flex flex-col">
-                <a [routerLink]="['/dashboard']" class="text-zinc-500 p-3 hover:text-teal-700">Dashboard</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="flex flex-col">
-                <a [routerLink]="['/dashboard/domain']" class="text-zinc-500 p-3 hover:text-teal-700">Dominios</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="flex flex-col">
-                <a [routerLink]="['/dashboard/application']" class="text-zinc-500 p-3 hover:text-teal-700">Aplicaciones</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="flex flex-col">
-                <a [routerLink]="['/dashboard']" class="text-zinc-500 p-3 hover:text-teal-700">Permisos</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="flex flex-col">
-                <a [routerLink]="['/dashboard/menu']" class="text-zinc-500 p-3 hover:text-teal-700">Menús</a>
-            </li>
-        </ul>
-    </nav>
-    <footer>
-        <ul>
-            <li>
-                <button (click)="cerrarSesion()" class="text-teal-500 p-3 font-bold hover:text-teal-700">Cerrar
-                    sesion</button>
-            </li>
-        </ul>
-    </footer>
-</div>-->
+    <div *ngIf="sidebarOpen" class="ml-3 flex-1">
+      <p class="text-sm font-medium">{{userName}}</p>
+      <p class="text-xs text-gray-400">{{email}}</p>
+    </div>
+    <i *ngIf="sidebarOpen" class="fas fa-chevron-down w-4 h-4 text-gray-400"></i>
+  </div>
+</div>

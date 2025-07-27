@@ -54,8 +54,9 @@ export class LoginPwdComponent implements OnInit {
     this.authService.login$(this.loginUser)
       .then(res => {
         if (res.success) {
+          this.cookieService.set('token', res.data.token)
           if (res.data.doubleFactorCode == 0) {
-            this.cookieService.set('token', res.data.token)
+            debugger
             this.router.navigate(['dashboard']);
           }
           else

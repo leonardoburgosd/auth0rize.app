@@ -1,100 +1,478 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-  <div class="bg-slate-800 border-slate-700 p-8 rounded-lg hover:bg-slate-700" (click)="openModalCreate()">
-    <div class="flex flex-col items-center space-y-4">
-      <div class="">
-        <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../assets/plus.jpg"
-          alt="New Feature" />
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h1 class="text-3xl font-bold text-slate-900">Dominios</h1>
+        <p class="text-gray-600 mt-1">Gestiona los dominios y sus usuarios asociados</p>
       </div>
-      <p class="text-center text-sm text-slate-400">
-        Registra un dominio nuevo
-      </p>
-      <Button class="">
-        <i class="fa-solid fa-plus mr-2 h-4 w-4"></i>
-        Nuevo dominio
-      </Button>
-    </div>
-  </div>
-  @for(domain of domains; track domain){
-  <domain-card (onDelete)="deleteDomain(domain.id)"
-               (onCopy)="copyCode(domain.code)"
-               [code]="domain.code"
-               [name]="domain.name"
-               [id]="domain.id"
-               [isDefault]="domain.default">
-  </domain-card>
-  }
-</div>
-
-
-<!--<div class='px-2 py-4'>
-  <h1 class="text-3xl">Dominios</h1>
-</div>
-<div class="flex flex-wrap p-4">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-     <div
-      class="relative flex flex-col m-1 text-white bg-slate-800 hover:bg-slate-700 shadow-md bg-clip-border rounded-xl p-3 justify-center">
-      <div class="p-6">
-        <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../assets/plus.jpg"
-          alt="Icono de aplicativo" />
-        <h5
-          class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-          + Nuevo dominio
-        </h5>
-        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-          Registra un dominio nuevo
-        </p>
-      </div>
-    </div>
-
-    @for(domain of domains; track domain){
-
-     <domain-card [name]="domain.name" [id]="domain.id" [isDefault]="domain.default"></domain-card>
-    }
-  </div>
-</div>-->
-@if(isModalCreateView){
-<div
-  class="fixed rounded-md z-10 inset-0 overflow-y-auto bg-gray-900 bg-opacity-10 flex items-center justify-center text-black m-2">
-  <div class="bg-gray-900 rounded-lg text-white border border-slate-600">
-    <header class="mb-4 border-b border-gray-800 px-5 pt-6 pb-3 flex flex-col justify-between">
-      <div class="flex">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-          Agregar aplicativo
-        </h3>
-        <button (click)="openModalCreate()"
-          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-          <i class="fa-solid fa-xmark"></i>
-          <span class="sr-only">Close modal</span>
+      <div class="flex space-x-3">
+        <button
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+        >
+          <i class="fas fa-download"></i>
+          <span>Exportar</span>
+        </button>
+        <button
+          (click)="openDomainModal()"
+          class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center space-x-2"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Nuevo Dominio</span>
         </button>
       </div>
-    </header>
-    <form [formGroup]="formGroup">
-      <div class="px-12 pt-3 pb-6 flex flex-col text-sm">
-        <input type="text" formControlName="name"
-          class="ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-600 m-1"
-          [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['name'].invalid &&
-          formGroup.controls['name'].touched
-        }" placeholder="Nombre" />
-        <ul *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
-          class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['name'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-              class="fa-solid fa-triangle-exclamation"></i>
-            Debe ingresar el nombre.</li>
-        </ul>
-      </div>
-      <footer class="border-t rounded-lg border-gray-800 bg-gray-900 p-5 flex justify-end">
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
         <div class="flex items-center">
-          <button [disabled]="formGroup.invalid || isLoadingCreate" (click)="createDomain(formGroup.value)"
-            class="text-white bg-teal-500 disabled:bg-teal-900 hover:bg-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-            <p *ngIf="!isLoadingCreate">Agregar</p>
-            <i *ngIf="isLoadingCreate" class="fa-solid fa-spinner fa-spin-pulse"></i>
-          </button>
-          <button (click)="openModalCreate()"
-            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancelar</button>
+          <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-globe text-teal-500"></i>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-600">Total Dominios</p>
+            <p class="text-2xl font-bold text-slate-900">{{ domains.length }}</p>
+          </div>
         </div>
-      </footer>
-    </form>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <div class="flex items-center">
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-check-circle text-green-500"></i>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-600">Activos</p>
+            <p class="text-2xl font-bold text-slate-900">{{ getActiveDomainsCount() }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <div class="flex items-center">
+          <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-pause-circle text-yellow-500"></i>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-600">Inactivos</p>
+            <p class="text-2xl font-bold text-slate-900">{{ getInactiveDomainsCount() }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <div class="flex items-center">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-users text-blue-500"></i>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-600">Total Usuarios</p>
+            <p class="text-2xl font-bold text-slate-900">{{ getTotalUsersCount() }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Search -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Buscar</label>
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input
+            type="text"
+            placeholder="Buscar por nombre, código o descripción..."
+            [(ngModel)]="filters.search"
+            (input)="onSearchChange($event)"
+            class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          />
+        </div>
+      </div>
+
+      <!-- Status Filter -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+        <select
+          [(ngModel)]="filters.status"
+          (change)="onFilterChange()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+        >
+          <option value="">Todos los estados</option>
+          <option *ngFor="let status of statuses" [value]="status">{{ getStatusText(status) }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center mt-4">
+      <button
+        (click)="clearFilters()"
+        class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+      >
+        Limpiar filtros
+      </button>
+      <div class="text-sm text-gray-600">
+        Mostrando {{ filteredDomains.length }} de {{ domains.length }} dominios
+      </div>
+    </div>
+  </div>
+
+  <!-- Domains Table -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Código
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Estado
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Usuarios
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Usuario Principal
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <ng-container *ngFor="let domain of domains">
+            <tr class="hover:bg-gray-50 transition-colors">
+              <!-- Codigo -->
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <button
+                    (click)="toggleDomainExpansion(1!)"
+                    class="mr-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <i [class]="isDomainExpanded(1!) ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
+                  </button>
+                  <div>
+                    <div class="text-sm font-medium text-gray-900">{{ domain.code }}</div>
+                  </div>
+                </div>
+              </td>
+              <!-- Estado -->
+              <td class="px-6 py-4">
+                <span [class]="'inline-flex px-2 py-1 text-xs font-semibold rounded-full ' + getStatusClass(domain.status!)">
+                  {{ getStatusText(domain.status!) }}
+                </span>
+              </td>
+              <!-- Cantidad de usuarios -->
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <span class="text-sm font-medium text-gray-900">{{ domain.count }}</span>
+                  <button
+                    (click)="openUsersModal(1!)"
+                    class="ml-2 text-teal-600 hover:text-teal-900 transition-colors"
+                    title="Gestionar usuarios"
+                  >
+                    <i class="fas fa-users text-sm"></i>
+                  </button>
+                </div>
+              </td>
+              <!-- Usuario Principal -->
+              <td class="px-6 py-4">
+                <div *ngIf="domain.name!='No encontrado'" class="flex items-center">
+                  <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                    <span class="text-xs font-medium text-teal-600">{{ domain.name }}</span>
+                  </div>
+                  <div class="ml-2">
+                    <div class="text-sm font-medium text-gray-900">{{ domain.name }}</div>
+                    <div class="text-xs text-gray-500">{{ domain.email }}</div>
+                  </div>
+                </div>
+                <div *ngIf="domain.name==='No encontrado'" class="text-sm text-red-600">
+                  Sin usuario principal
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm font-medium">
+                <div class="flex space-x-2">
+                  <button
+                    (click)="openDomainModal(domain)"
+                    class="text-teal-600 hover:text-teal-900 transition-colors"
+                    title="Editar"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button
+                    (click)="deleteDomain(domain.code)"
+                    class="text-red-600 hover:text-red-900 transition-colors"
+                    title="Eliminar"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Expanded Users Row -->
+            <tr *ngIf="isDomainExpanded(1)" class="bg-gray-50">
+              <td colspan="6" class="px-6 py-4">
+                <div class="ml-8">
+                  <h4 class="text-sm font-medium text-gray-900 mb-3">Usuarios Asociados</h4>
+                  <div class="space-y-2">
+                    <div
+                      *ngFor="let domainUser of getDomainUsers(domain.code)"
+                      class="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200"
+                    >
+                      <div class="flex items-center">
+                        <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                          <span class="text-xs font-medium text-teal-600">{{ domainUser.domainCode.toUpperCase() }}</span>
+                        </div>
+                        <div class="ml-3">
+                          <div class="flex items-center">
+                            <span class="text-sm font-medium text-gray-900">{{ domainUser.domainCode }}</span>
+                            <span *ngIf="domainUser.isPrincipal" class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
+                              Principal
+                            </span>
+                          </div>
+                          <div class="text-xs text-gray-500">{{ domainUser.domainCode }} • {{ domainUser.role }}</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-2">
+                        <button
+                          *ngIf="!domainUser.isPrincipal"
+                          (click)="setPrincipalUser(domainUser.userId)"
+                          class="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+                          title="Marcar como principal"
+                        >
+                          Hacer Principal
+                        </button>
+                        <button
+                          *ngIf="!domainUser.isPrincipal"
+                          (click)="removeUserFromDomain(domainUser.userId)"
+                          class="text-red-600 hover:text-red-900 transition-colors"
+                          title="Eliminar del dominio"
+                        >
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <p class="text-sm text-gray-700">
+            Mostrando
+            <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+            a
+            <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDomains.length) }}</span>
+            de
+            <span class="font-medium">{{ filteredDomains.length }}</span>
+            resultados
+          </p>
+        </div>
+        <div class="flex space-x-1">
+          <button
+            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage === 1"
+            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Anterior
+          </button>
+          <button
+            *ngFor="let page of getPageNumbers()"
+            (click)="changePage(page)"
+            [class]="'px-3 py-2 text-sm font-medium border-t border-b border-r border-gray-300 ' +
+                     (page === currentPage ? 'bg-teal-50 text-teal-600 border-teal-500' : 'bg-white text-gray-500 hover:bg-gray-50')"
+          >
+            {{ page }}
+          </button>
+          <button
+            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage === totalPages"
+            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-}
+
+<!-- Domain Modal -->
+<div *ngIf="showDomainModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-lg">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-slate-900">
+        {{ editingDomain ? 'Editar Dominio' : 'Nuevo Dominio' }}
+      </h3>
+      <button (click)="closeDomainModal()" class="text-gray-400 hover:text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+        <input
+          type="text"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          placeholder="Nombre del dominio"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Código (36 dígitos)</label>
+        <div class="flex">
+          <input
+            type="text"
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent font-mono text-sm"
+            placeholder="Código del dominio"
+            readonly
+          />
+          <button
+            class="px-3 py-2 bg-teal-500 text-white rounded-r-lg hover:bg-teal-600 transition-colors"
+            title="Generar código"
+          >
+            <i class="fas fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+        <textarea
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          rows="3"
+          placeholder="Descripción del dominio"
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+          <option value="active">Activo</option>
+          <option value="inactive">Inactivo</option>
+          <option value="suspended">Suspendido</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-3 mt-6">
+      <button
+        (click)="closeDomainModal()"
+        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+      >
+        Cancelar
+      </button>
+      <button
+        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+      >
+        {{ editingDomain ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Users Management Modal -->
+<div *ngIf="showUsersModal && managingDomainId" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-slate-900">
+        Gestionar Usuarios del Dominio
+      </h3>
+      <button (click)="closeUsersModal()" class="text-gray-400 hover:text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Usuarios Asignados -->
+      <div>
+        <h4 class="text-md font-medium text-gray-900 mb-3">Usuarios Asignados</h4>
+        <div class="space-y-2 max-h-60 overflow-y-auto">
+          <div
+            *ngFor="let domainUser of getDomainUsers('')"
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                <span class="text-xs font-medium text-teal-600">{{ domainUser.domainCode }}</span>
+              </div>
+              <div class="ml-3">
+                <div class="flex items-center">
+                  <span class="text-sm font-medium text-gray-900">{{ domainUser.domainCode }}</span>
+                  <span *ngIf="domainUser.isPrincipal" class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
+                    Principal
+                  </span>
+                </div>
+                <div class="text-xs text-gray-500">{{ domainUser.domainCode }}</div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-1">
+              <button
+                *ngIf="!domainUser.isPrincipal"
+                (click)="setPrincipalUser(domainUser.userId)"
+                class="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+              >
+                Principal
+              </button>
+              <button
+                *ngIf="!domainUser.isPrincipal"
+                (click)="removeUserFromDomain(domainUser.userId)"
+                class="text-red-600 hover:text-red-900 transition-colors"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usuarios Disponibles -->
+      <div>
+        <h4 class="text-md font-medium text-gray-900 mb-3">Usuarios Disponibles</h4>
+        <div class="space-y-2 max-h-60 overflow-y-auto">
+          <div
+            *ngFor="let user of getAvailableUsersForDomain('')"
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+          >
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                <span class="text-xs font-medium text-gray-600">{{ user.name.charAt(0).toUpperCase() }}</span>
+              </div>
+              <div class="ml-3">
+                <div class="text-sm font-medium text-gray-900">{{ user.name }}</div>
+                <div class="text-xs text-gray-500">{{ user.email }} • {{ user.department }}</div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-1">
+              <button
+                (click)="assignUserToDomain(user.id, '', getDomainUsers('').length === 0)"
+                class="text-xs px-2 py-1 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors"
+              >
+                Asignar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <button
+        (click)="closeUsersModal()"
+        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>

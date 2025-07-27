@@ -61,7 +61,6 @@ Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma 
 
 | Pantalla principal                            |
 | --------------------------------------------- |
-| ![PantallaPrincipal](/captures/principal.png) |
 | Login nombre usuario                          |
 | ![Login](/captures/login-username.png)        |
 | Login contraseña                              |
