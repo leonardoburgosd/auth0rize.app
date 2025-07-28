@@ -16,10 +16,10 @@ interface MenuItem {
 })
 export class NavLeftComponent implements OnInit {
   @Input() sidebarOpen: boolean = true;
-  //sidebarOpen = true
+
   userName: string = '';
   email: string = '';
-
+  profileMenuOpen: boolean = false;
   menuItems: MenuItem[] = [
     { icon: "fas fa-home", label: "Dashboard", active: true, ruta: "/dashboard" },
     { icon: "fas fa-users", label: "Usuarios", active: false, ruta: "/dashboard/users" },
@@ -39,12 +39,12 @@ export class NavLeftComponent implements OnInit {
     this.email = JSON.parse(this.cookieService.get("basicData")).email;
   }
 
-  cerrarSesion() {
+  closeSession() {
     this.cookieService.deleteAll();
     this.router.navigate(['login']);
   }
 
   onProfileClick(): void {
-    console.log("Profile clicked")
+    this.profileMenuOpen = !this.profileMenuOpen;
   }
 }

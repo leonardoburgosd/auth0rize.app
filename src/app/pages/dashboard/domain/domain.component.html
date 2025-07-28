@@ -8,22 +8,19 @@
       </div>
       <div class="flex space-x-3">
         <button
-          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
-        >
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2">
           <i class="fas fa-download"></i>
           <span>Exportar</span>
         </button>
-        <button
-          (click)="openDomainModal()"
-          class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center space-x-2"
-        >
+        <button (click)="openDomainModal()"
+          class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center space-x-2">
           <i class="fas fa-plus"></i>
           <span>Nuevo Dominio</span>
         </button>
       </div>
     </div>
 
-    <!-- Stats Cards -->
+    <!-- Cards superiores -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
       <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
         <div class="flex items-center">
@@ -32,7 +29,7 @@
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-600">Total Dominios</p>
-            <p class="text-2xl font-bold text-slate-900">{{ domains.length }}</p>
+            <p class="text-2xl font-bold text-slate-900">{{ total }}</p>
           </div>
         </div>
       </div>
@@ -43,7 +40,7 @@
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-600">Activos</p>
-            <p class="text-2xl font-bold text-slate-900">{{ getActiveDomainsCount() }}</p>
+            <p class="text-2xl font-bold text-slate-900">{{ active }}</p>
           </div>
         </div>
       </div>
@@ -54,7 +51,7 @@
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-600">Inactivos</p>
-            <p class="text-2xl font-bold text-slate-900">{{ getInactiveDomainsCount() }}</p>
+            <p class="text-2xl font-bold text-slate-900">{{ inactive }}</p>
           </div>
         </div>
       </div>
@@ -65,7 +62,7 @@
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-gray-600">Total Usuarios</p>
-            <p class="text-2xl font-bold text-slate-900">{{ getTotalUsersCount() }}</p>
+            <p class="text-2xl font-bold text-slate-900">{{ 0 }}</p>
           </div>
         </div>
       </div>
@@ -75,29 +72,22 @@
   <!-- Filters -->
   <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <!-- Search -->
+      <!-- Filtro por codigo -->
       <div class="md:col-span-2">
         <label class="block text-sm font-medium text-gray-700 mb-2">Buscar</label>
         <div class="relative">
           <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-          <input
-            type="text"
-            placeholder="Buscar por nombre, código o descripción..."
-            [(ngModel)]="filters.search"
+          <input type="text" placeholder="Buscar por nombre, código o descripción..." [(ngModel)]="filters.search"
             (input)="onSearchChange($event)"
-            class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-          />
+            class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
         </div>
       </div>
 
-      <!-- Status Filter -->
+      <!-- Filtro por estado -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-        <select
-          [(ngModel)]="filters.status"
-          (change)="onFilterChange()"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-        >
+        <select [(ngModel)]="filters.status" (change)="onFilterChange()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
           <option value="">Todos los estados</option>
           <option *ngFor="let status of statuses" [value]="status">{{ getStatusText(status) }}</option>
         </select>
@@ -105,10 +95,7 @@
     </div>
 
     <div class="flex justify-between items-center mt-4">
-      <button
-        (click)="clearFilters()"
-        class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-      >
+      <button (click)="clearFilters()" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
         Limpiar filtros
       </button>
       <div class="text-sm text-gray-600">
@@ -146,10 +133,8 @@
               <!-- Codigo -->
               <td class="px-6 py-4">
                 <div class="flex items-center">
-                  <button
-                    (click)="toggleDomainExpansion(1!)"
-                    class="mr-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
-                  >
+                  <button (click)="toggleDomainExpansion(1!)"
+                    class="mr-3 p-1 text-gray-400 hover:text-gray-600 transition-colors">
                     <i [class]="isDomainExpanded(1!) ? 'fas fa-chevron-down' : 'fas fa-chevron-right'"></i>
                   </button>
                   <div>
@@ -159,7 +144,8 @@
               </td>
               <!-- Estado -->
               <td class="px-6 py-4">
-                <span [class]="'inline-flex px-2 py-1 text-xs font-semibold rounded-full ' + getStatusClass(domain.status!)">
+                <span
+                  [class]="'inline-flex px-2 py-1 text-xs font-semibold rounded-full ' + getStatusClass(domain.status!)">
                   {{ getStatusText(domain.status!) }}
                 </span>
               </td>
@@ -167,11 +153,8 @@
               <td class="px-6 py-4">
                 <div class="flex items-center">
                   <span class="text-sm font-medium text-gray-900">{{ domain.count }}</span>
-                  <button
-                    (click)="openUsersModal(1!)"
-                    class="ml-2 text-teal-600 hover:text-teal-900 transition-colors"
-                    title="Gestionar usuarios"
-                  >
+                  <button (click)="openUsersModal(1!)" class="ml-2 text-teal-600 hover:text-teal-900 transition-colors"
+                    title="Gestionar usuarios">
                     <i class="fas fa-users text-sm"></i>
                   </button>
                 </div>
@@ -193,18 +176,12 @@
               </td>
               <td class="px-6 py-4 text-sm font-medium">
                 <div class="flex space-x-2">
-                  <button
-                    (click)="openDomainModal(domain)"
-                    class="text-teal-600 hover:text-teal-900 transition-colors"
-                    title="Editar"
-                  >
+                  <button (click)="openDomainModal(domain)" class="text-teal-600 hover:text-teal-900 transition-colors"
+                    title="Editar">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDomain(domain.code)"
-                    class="text-red-600 hover:text-red-900 transition-colors"
-                    title="Eliminar"
-                  >
+                  <button (click)="deleteDomain(domain.code)" class="text-red-600 hover:text-red-900 transition-colors"
+                    title="Eliminar">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
@@ -217,18 +194,18 @@
                 <div class="ml-8">
                   <h4 class="text-sm font-medium text-gray-900 mb-3">Usuarios Asociados</h4>
                   <div class="space-y-2">
-                    <div
-                      *ngFor="let domainUser of getDomainUsers(domain.code)"
-                      class="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200"
-                    >
+                    <div *ngFor="let domainUser of getDomainUsers(domain.code)"
+                      class="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200">
                       <div class="flex items-center">
                         <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
-                          <span class="text-xs font-medium text-teal-600">{{ domainUser.domainCode.toUpperCase() }}</span>
+                          <span class="text-xs font-medium text-teal-600">{{ domainUser.domainCode.toUpperCase()
+                            }}</span>
                         </div>
                         <div class="ml-3">
                           <div class="flex items-center">
                             <span class="text-sm font-medium text-gray-900">{{ domainUser.domainCode }}</span>
-                            <span *ngIf="domainUser.isPrincipal" class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
+                            <span *ngIf="domainUser.isPrincipal"
+                              class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
                               Principal
                             </span>
                           </div>
@@ -236,20 +213,13 @@
                         </div>
                       </div>
                       <div class="flex items-center space-x-2">
-                        <button
-                          *ngIf="!domainUser.isPrincipal"
-                          (click)="setPrincipalUser(domainUser.userId)"
+                        <button *ngIf="!domainUser.isPrincipal" (click)="setPrincipalUser(domainUser.userId)"
                           class="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
-                          title="Marcar como principal"
-                        >
+                          title="Marcar como principal">
                           Hacer Principal
                         </button>
-                        <button
-                          *ngIf="!domainUser.isPrincipal"
-                          (click)="removeUserFromDomain(domainUser.userId)"
-                          class="text-red-600 hover:text-red-900 transition-colors"
-                          title="Eliminar del dominio"
-                        >
+                        <button *ngIf="!domainUser.isPrincipal" (click)="removeUserFromDomain(domainUser.userId)"
+                          class="text-red-600 hover:text-red-900 transition-colors" title="Eliminar del dominio">
                           <i class="fas fa-times"></i>
                         </button>
                       </div>
@@ -278,26 +248,17 @@
           </p>
         </div>
         <div class="flex space-x-1">
-          <button
-            (click)="changePage(currentPage - 1)"
-            [disabled]="currentPage === 1"
-            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
             Anterior
           </button>
-          <button
-            *ngFor="let page of getPageNumbers()"
-            (click)="changePage(page)"
+          <button *ngFor="let page of getPageNumbers()" (click)="changePage(page)"
             [class]="'px-3 py-2 text-sm font-medium border-t border-b border-r border-gray-300 ' +
-                     (page === currentPage ? 'bg-teal-50 text-teal-600 border-teal-500' : 'bg-white text-gray-500 hover:bg-gray-50')"
-          >
+                     (page === currentPage ? 'bg-teal-50 text-teal-600 border-teal-500' : 'bg-white text-gray-500 hover:bg-gray-50')">
             {{ page }}
           </button>
-          <button
-            (click)="changePage(currentPage + 1)"
-            [disabled]="currentPage === totalPages"
-            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
             Siguiente
           </button>
         </div>
@@ -321,26 +282,19 @@
     <div class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
-        <input
-          type="text"
+        <input type="text"
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-          placeholder="Nombre del dominio"
-        />
+          placeholder="Nombre del dominio" />
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Código (36 dígitos)</label>
         <div class="flex">
-          <input
-            type="text"
+          <input type="text"
             class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent font-mono text-sm"
-            placeholder="Código del dominio"
-            readonly
-          />
-          <button
-            class="px-3 py-2 bg-teal-500 text-white rounded-r-lg hover:bg-teal-600 transition-colors"
-            title="Generar código"
-          >
+            placeholder="Código del dominio" readonly />
+          <button class="px-3 py-2 bg-teal-500 text-white rounded-r-lg hover:bg-teal-600 transition-colors"
+            title="Generar código">
             <i class="fas fa-refresh"></i>
           </button>
         </div>
@@ -350,14 +304,13 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
         <textarea
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-          rows="3"
-          placeholder="Descripción del dominio"
-        ></textarea>
+          rows="3" placeholder="Descripción del dominio"></textarea>
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+        <select
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
           <option value="active">Activo</option>
           <option value="inactive">Inactivo</option>
           <option value="suspended">Suspendido</option>
@@ -366,15 +319,11 @@
     </div>
 
     <div class="flex justify-end space-x-3 mt-6">
-      <button
-        (click)="closeDomainModal()"
-        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-      >
+      <button (click)="closeDomainModal()"
+        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
         Cancelar
       </button>
-      <button
-        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-      >
+      <button class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
         {{ editingDomain ? 'Actualizar' : 'Crear' }}
       </button>
     </div>
@@ -382,7 +331,8 @@
 </div>
 
 <!-- Users Management Modal -->
-<div *ngIf="showUsersModal && managingDomainId" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div *ngIf="showUsersModal && managingDomainId"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[80vh] overflow-y-auto">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-lg font-semibold text-slate-900">
@@ -398,10 +348,8 @@
       <div>
         <h4 class="text-md font-medium text-gray-900 mb-3">Usuarios Asignados</h4>
         <div class="space-y-2 max-h-60 overflow-y-auto">
-          <div
-            *ngFor="let domainUser of getDomainUsers('')"
-            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-          >
+          <div *ngFor="let domainUser of getDomainUsers('')"
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div class="flex items-center">
               <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
                 <span class="text-xs font-medium text-teal-600">{{ domainUser.domainCode }}</span>
@@ -409,7 +357,8 @@
               <div class="ml-3">
                 <div class="flex items-center">
                   <span class="text-sm font-medium text-gray-900">{{ domainUser.domainCode }}</span>
-                  <span *ngIf="domainUser.isPrincipal" class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
+                  <span *ngIf="domainUser.isPrincipal"
+                    class="ml-2 px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">
                     Principal
                   </span>
                 </div>
@@ -417,18 +366,12 @@
               </div>
             </div>
             <div class="flex items-center space-x-1">
-              <button
-                *ngIf="!domainUser.isPrincipal"
-                (click)="setPrincipalUser(domainUser.userId)"
-                class="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
-              >
+              <button *ngIf="!domainUser.isPrincipal" (click)="setPrincipalUser(domainUser.userId)"
+                class="text-xs px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors">
                 Principal
               </button>
-              <button
-                *ngIf="!domainUser.isPrincipal"
-                (click)="removeUserFromDomain(domainUser.userId)"
-                class="text-red-600 hover:text-red-900 transition-colors"
-              >
+              <button *ngIf="!domainUser.isPrincipal" (click)="removeUserFromDomain(domainUser.userId)"
+                class="text-red-600 hover:text-red-900 transition-colors">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -440,10 +383,8 @@
       <div>
         <h4 class="text-md font-medium text-gray-900 mb-3">Usuarios Disponibles</h4>
         <div class="space-y-2 max-h-60 overflow-y-auto">
-          <div
-            *ngFor="let user of getAvailableUsersForDomain('')"
-            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-          >
+          <div *ngFor="let user of getAvailableUsersForDomain('')"
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
             <div class="flex items-center">
               <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
                 <span class="text-xs font-medium text-gray-600">{{ user.name.charAt(0).toUpperCase() }}</span>
@@ -454,10 +395,8 @@
               </div>
             </div>
             <div class="flex items-center space-x-1">
-              <button
-                (click)="assignUserToDomain(user.id, '', getDomainUsers('').length === 0)"
-                class="text-xs px-2 py-1 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors"
-              >
+              <button (click)="assignUserToDomain(user.id, '', getDomainUsers('').length === 0)"
+                class="text-xs px-2 py-1 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors">
                 Asignar
               </button>
             </div>
@@ -467,10 +406,8 @@
     </div>
 
     <div class="flex justify-end mt-6">
-      <button
-        (click)="closeUsersModal()"
-        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-      >
+      <button (click)="closeUsersModal()"
+        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
         Cerrar
       </button>
     </div>

@@ -2,7 +2,6 @@ export class getDomainResponse {
   total!: number;
   page!: number;
   active!: number;
-  pending!: number;
   deleted!: number;
   domains!: domainListResponse[];
 }

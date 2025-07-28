@@ -10,7 +10,7 @@ interface Domain {
   code: string // 36 dígitos
   name: string
   status?: "active" | "inactive"
-  email:string;
+  email: string;
   count?: number
 }
 
@@ -48,6 +48,8 @@ export class DomainComponent implements OnInit {
   domains: Domain[] = [
 
   ]
+
+  private searchTimeout: any;
 
   domainUsers: DomainUser[] = [
 
@@ -117,7 +119,7 @@ export class DomainComponent implements OnInit {
     status: "",
   }
 
-  statuses = ["active", "inactive", "suspended"]
+  statuses = ["Activo", "Inactivo"]
 
   // Paginación
   currentPage = 1
@@ -134,7 +136,9 @@ export class DomainComponent implements OnInit {
   public formGroup!: FormGroup;
   public isModalCreateView: boolean = false;
   public isLoadingCreate: boolean = false;
-
+  public total: number = 0;
+  public active: number = 0;
+  public inactive: number = 0;
   constructor(private formBuilder: FormBuilder, private domain: domainServices) { }
 
   ngOnInit(): void {
@@ -148,9 +152,13 @@ export class DomainComponent implements OnInit {
       name: [this.newDomain.name, [Validators.required, Validators.min(20)]]
     });
 
-  getDomain() {
-    this.domain.get$().then(res => {
+  getDomain(search?: string, state: string = "active", page: number = 1, size: number = 10) {
+    this.domain.get$(search, state, page, size).then(res => {
       if (res.success) {
+        this.total = res.data.total;
+        this.active = res.data.active;
+        this.inactive = res.data.deleted;
+
         this.domains = res.data.domains.map(domain => ({
           code: domain.code,
           name: domain.principalName,
@@ -278,7 +286,11 @@ export class DomainComponent implements OnInit {
   onSearchChange(event: Event): void {
     const target = event.target as HTMLInputElement
     this.filters.search = target.value
-    this.applyFilters()
+    //Que despues de 3 segundos de no recibir ningun valor adicional se ejecute this.getdomain
+    clearTimeout(this.searchTimeout)
+    this.searchTimeout = setTimeout(() => {
+      this.getDomain(this.filters.search)
+    }, 3000)
   }
 
   onFilterChange(): void {
@@ -404,17 +416,6 @@ export class DomainComponent implements OnInit {
     return pages
   }
 
-  getActiveDomainsCount(): number {
-    return this.domains.filter((domain) => domain.status === "active").length
-  }
-
-  getInactiveDomainsCount(): number {
-    return this.domains.filter((domain) => domain.status === "inactive").length
-  }
-
-  getTotalUsersCount(): number {
-    return this.domainUsers.length
-  }
 
   // Gestión de usuarios del dominio
   getAvailableUsersForDomain(domainCode: string): User[] {
