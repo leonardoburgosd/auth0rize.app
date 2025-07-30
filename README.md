@@ -13,6 +13,7 @@ Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma 
 
 - :white_check_mark: Angular 18
 - :white_check_mark: Tailwind 3
+- :white_check_mark: ngx-charts
 
 ## Funcionalidades
 
