@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 interface Domain {
   code: string // 36 dígitos
   name: string
+  initial: string
   status?: "active" | "inactive"
   email: string;
   count?: number
@@ -162,6 +163,7 @@ export class DomainComponent implements OnInit {
         this.domains = res.data.domains.map(domain => ({
           code: domain.code,
           name: domain.principalName,
+          initial: domain.initial,
           status: domain.isActive === true ? "inactive" : "active",
           email: domain.principalEmail,
           count: domain.count,

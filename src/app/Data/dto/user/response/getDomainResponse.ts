@@ -11,5 +11,6 @@ export class domainListResponse {
   count!: number;
   isActive!: boolean;
   principalName!: string;
+  initial!: string;
   principalEmail!: string;
 }

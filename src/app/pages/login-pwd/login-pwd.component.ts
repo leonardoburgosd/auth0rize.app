@@ -35,7 +35,6 @@ export class LoginPwdComponent implements OnInit {
 
   ngOnInit(): void {
     this.userVerification = JSON.parse(this.cookieService.get('basicData'));
-    this.loginUser.password = "123456789";
     this.validacionFormulario();
   }
 
