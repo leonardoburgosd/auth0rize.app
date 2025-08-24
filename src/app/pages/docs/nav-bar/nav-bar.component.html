@@ -1,57 +1,34 @@
-<aside id="default-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-    aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        <ul class="space-y-2 font-medium">
-            <li>
-                <a routerLink="/"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <img src="../../../assets/icon.png" class="h-8 bg-white rounded-full" alt="Auth0rizeLogo" />
-
-                    <span class="ms-3">[Auth0rize]</span>
-                </a>
-            </li>
-            <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-yellow-500 hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    routerLink="/">
-                    <i class="fa-solid fa-globe"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">
-                        Inicio
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-yellow-500 hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    routerLink="/login">
-                    <i class="fa-solid fa-fingerprint"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">
-                        Login
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a routerLink="/docs/flows"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <i class="fa-solid fa-diagram-project"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Flujos</span>
-                </a>
-            </li>
-            <li>
-                <a routerLink="/docs/api"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <i class="fa-solid fa-dolly"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">API</span>
-                </a>
-            </li>
-
-            <li>
-                <a routerLink="/docs/terms"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <i class="fa-solid fa-file-signature"></i>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Terminos</span>
-                </a>
-            </li>
-
-        </ul>
+<aside class="w-full md:w-64 md:block">
+  <div class="sticky top-20">
+    <h2 class="text-lg font-semibold mb-4">Documentacion</h2>
+    <div class="mb-4">
+      <div class="relative">
+        <input type="text" placeholder="Buscar documento..."
+        class="w-full px-4 py-2 border rounded-md bg-slate-700 border-slate-600">
+        <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 h-5 w-5 text-gray-400"></i>
+      </div>
     </div>
+    <nav>
+      <ul class="space-y-2">
+        <li>
+          <a routerLink="/docs/flows" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Introducción</a>
+        </li>
+        <li>
+          <a routerLink="/docs/flows" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Instalación</a>
+        </li>
+        <li>
+          <a routerLink="/docs/flows" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Configuración</a>
+        </li>
+        <li>
+          <a routerLink="/docs/flows" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Flujos</a>
+        </li>
+        <li>
+          <a routerLink="/docs/api" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Rerefencias API</a>
+        </li>
+        <li>
+          <a routerLink="/docs/terms" class="block py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-150 ease-in-out">Terminos</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </aside>

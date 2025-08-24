@@ -1,63 +1,63 @@
-<div class="relative flex flex-col m-1 text-white bg-slate-800 shadow-md bg-clip-border rounded-xl w-96">
+<div class="bg-slate-800 border-slate-700 p-8 rounded-lg">
+  <div class="flex items-center justify-between space-y-0 pb-2">
+    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit italic">
+      {{code}}
+    </p>
+    <div class="flex">
+      <button class="p-1 hover:text-slate-400 active:text-slate-600" (click)="copy(code)">
+        <i class="fa-solid fa-copy"></i>
+      </button>
+      <div role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        Tooltip content
+        <div class="tooltip-arrow"></div>
+      </div>
+      @if(!isDefault){
+      <button class="text-red-600 p-1" (click)="deleted(id)">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+      }
+    </div>
+  </div>
+  <div class="flex flex-col items-center space-y-4">
+    <div class="">
+      <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../../assets/icon.png"
+        alt="New Feature" />
+    </div>
+    <p class="text-center text-sm text-slate-400">
+      {{name}}
+    </p>
+  </div>
+</div>
+
+<!--
+  <div class="relative flex flex-col m-1 text-white bg-slate-800 shadow-md bg-clip-border rounded-xl p-3 justify-center">
     <div class="p-6">
 
-        <img class="w-[40px] h-[40px] mr-4 object-contain rounded-full bg-white" src="../../../../../assets/icon.png"
-            alt="Icono de aplicativo" />
+      <img class="w-[40px] h-[40px] mr-4 object-contain rounded-full bg-white" src="../../../../../assets/icon.png"
+      alt="Icono de aplicativo" />
 
-        <div class='flex items-center'>
-            <h5
-                class="block mb-2 mr-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Intranet
-            </h5>
-            <i class="fa-solid fa-copy"></i>
-        </div>
-        <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-            Intranet es un aplicativo que permite la implementación de acceso a proyectos de CENS.
-        </p>
+      <div class='flex items-center'>
+        <h5
+        class="block mb-2 mr-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+        {{name}}
+      </h5>
     </div>
-    <div class="p-3 pt-0">
-        <div class="inline-block">
-            <button (click)="detail()"
-                class="flex items-center gap-2 px-4 py-2  text-xs font-bold text-center text-white uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-400/10 active:bg-gray-400/20"
-                type="button">
-                Editar
-            </button>
-        </div>
-    </div>
+    @if(isDefault){
+      <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit italic">
+        Dominio asociado a cuenta principal.
+      </p>
+    }
+  </div>
+  <div class="p-3 pt-0">
+    <div class="inline-block">
+      <button (click)="detail()"
+      class="flex items-center gap-2 px-4 py-2  text-xs font-bold text-center text-white uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-400/10 active:bg-gray-400/20"
+      type="button">
+      Editar
+    </button>
+  </div>
+</div>
 </div>
 
-
-
-<div *ngIf="false"
-    class="fixed z-10 inset-0 overflow-y-auto bg-gray-800 bg-opacity-10 flex items-center justify-center text-black">
-    <div class="bg-white rounded-lg">
-        <header class="mb-4 border-b border-white-200 px-12 pt-6 pb-3 flex flex-col justify-between">
-            <h2 class="text-lg font-bold">Actualizar aplicativo</h2>
-            <small>Actualiza datos de un aplicativo</small>
-        </header>
-        <div class="px-12 pt-3 pb-6 flex flex-col text-sm">
-            <label
-                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1 font-bold'>
-                AKSJDHKAJS-ASDKJASKD-ASDKJASKDJHAJKSD
-            </label>
-            <input type="text"
-                class="ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1" />
-            <textarea
-                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1'
-                value='' placeholder='Descripción'>
-                </textarea>
-            <input
-                class='ring-1 ring-gray-300 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-700 m-1'
-                type="file" />
-        </div>
-        <footer class="border-t border-white-200 bg-gray-50 p-3 flex justify-end">
-            <button class="text-sky-600 text-sm">
-                Cerrar
-            </button>
-            <button
-                class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b] disabled:bg-slate-600">
-                Guardar
-            </button>
-        </footer>
-    </div>
-</div>
+-->

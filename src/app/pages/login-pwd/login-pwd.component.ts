@@ -48,13 +48,16 @@ export class LoginPwdComponent implements OnInit {
     this.cargando = true;
     this.loginUser.application = '';
     this.loginUser.password = this.formGroup.get('password')?.value;
-    this.loginUser.userName = this.userVerification.userName;
+    this.loginUser.userName = this.userVerification.email;
 
     this.authService.login$(this.loginUser)
       .then(res => {
         if (res.success) {
-          if (res.data.doubleFactorCode == 0)
+          this.cookieService.set('token', res.data.token)
+          if (res.data.doubleFactorCode == 0) {
+            debugger
             this.router.navigate(['dashboard']);
+          }
           else
             this.router.navigate(['two-factor-phone']);
         } else {

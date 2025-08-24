@@ -7,12 +7,6 @@
     <h4 class="text-black text-sm text-center mt-3 mb-6">Ingresa tus datos y abre una cuenta</h4>
     <div class="pl-10 pr-10 ">
       <form [formGroup]="formGroup">
-        <div class="text-left pl-2 pr-2">
-          <ul class="text-xs font-semibold">
-            <!-- <li class="text-red-500 rounded-lg p-1"><i class="fa-solid fa-xmark"></i> Este es un mensaje de error mensaje de error mensaje de error.</li> -->
-            <!-- <li class="text-yellow-500 rounded-lg p-1"><i class="fa-solid fa-triangle-exclamation"></i> Este es un mensaje de alerta.</li> -->
-          </ul>
-        </div>
         <input type="text" formControlName="userName"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Nombre de usuario" [ngClass]="{ 'border-yellow-500':

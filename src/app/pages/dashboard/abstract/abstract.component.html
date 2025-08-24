@@ -1,1 +1,68 @@
-<p>abstract works!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div *ngFor="let card of statCards" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm font-medium text-gray-600">{{ card.title }}</p>
+        <p class="text-3xl font-bold text-slate-900">{{ card.value }}</p>
+      </div>
+      <div [class]="'w-8 h-8 rounded-lg relative ' + card.iconBg">
+        <i [class]="card.icon + ' w-6 h-6 ' + card.iconColor + ' absolute top-6 left-6 transform -translate-x-4 -translate-y-4'"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-lg font-semibold text-slate-900 mb-4">Sesiones del mes</h3>
+    <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+      <p class="text-gray-500">Gráfico de sesiones del mes</p>
+    </div>
+  </div>
+
+  <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-lg font-semibold text-slate-900 mb-4">Usuarios registrados</h3>
+    <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+      <p class="text-gray-500">Gráfico de usuarios aquí</p>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-sm border border-gray-200">
+  <div class="p-6 border-b border-gray-200">
+    <h3 class="text-lg font-semibold text-slate-900">Actividad Reciente</h3>
+  </div>
+  <div class="p-6">
+    <div class="space-y-4">
+      <div *ngFor="let activity of recentActivities"
+        class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer">
+        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+          <i class="fas fa-user w-5 h-5 text-teal-500"></i>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm font-medium text-slate-900">{{ activity.user }} {{ activity.action }}</p>
+          <p class="text-xs text-gray-500">{{ activity.time }}</p>
+        </div>
+        <div class="text-xs text-gray-400">{{ activity.timestamp }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-8 space-y-6">
+  <div *ngFor="let section of sections" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-lg font-semibold text-slate-900 mb-4">Sección {{ section }}</h3>
+    <p class="text-gray-600 mb-4">
+      Esta es una sección adicional para demostrar el scroll vertical. El contenido se puede desplazar
+      mientras el menú lateral permanece fijo.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div *ngFor="let card of cards" class="p-4 bg-gray-50 rounded-lg">
+        <h4 class="font-medium text-slate-900 mb-2">Tarjeta {{ card }}</h4>
+        <p class="text-sm text-gray-600">
+          Contenido de ejemplo para la tarjeta {{ card }} en la sección {{ section }}.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

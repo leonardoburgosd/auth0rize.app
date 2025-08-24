@@ -1,0 +1,44 @@
+/* Estilos adicionales para la lista de usuarios */
+.transition-colors {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Hover effects para las filas de la tabla */
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Estilos para checkboxes */
+input[type="checkbox"]:checked {
+  background-color: #14b8a6;
+  border-color: #14b8a6;
+}
+
+/* Animaciones para modales */
+.modal-enter {
+  animation: modalEnter 0.3s ease-out;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grid-cols-1.md\\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-1.md\\:grid-cols-5 {
+    grid-template-columns: 1fr;
+  }
+}
