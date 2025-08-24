@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
-import { parametersConfig } from "../common/param-config";
 import { RestResponse } from "../common/restResponse";
 import { HttpMethodString } from "../common/httpMethodString";
 import { getTypeResponse } from "../dto/user/response/getTypeResponse";
 import { CookieService } from "ngx-cookie-service";
+import { environment } from "src/environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class typeServices {
-    private api: string = new parametersConfig().url + 'type';
+    private api: string = `${environment.url}type`;
     private httpOptions(): any {
         const token = this.cookieService.get('token')
         return {
