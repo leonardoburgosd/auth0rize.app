@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { parametersConfig } from "../common/param-config";
 import { CookieService } from "ngx-cookie-service";
 import { RestResponse } from "../common/restResponse";
 import { getDomainResponse } from "../dto/user/response/getDomainResponse";
@@ -7,12 +6,13 @@ import { HttpMethodString } from "../common/httpMethodString";
 import { createDomainRequest } from "../dto/user/request/createDomainRequest";
 import { createDomainResponse } from "../dto/user/response/createDomainResponse";
 import { getAuthHeaders } from "../common/getAuthHeaders";
+import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 
 export class domainServices {
-  private api: string = new parametersConfig().url + 'domain';
+  private api: string = `${environment.url}domain`;
   constructor(private cookieService: CookieService) { }
 
   get$(code?: string, state?: string, page: number = 1, size: number = 10): Promise<RestResponse<getDomainResponse>> {

@@ -1,5 +1,3 @@
-import { HttpHeaders } from "@angular/common/http";
-import { parametersConfig } from "../common/param-config";
 import { Injectable } from "@angular/core";
 import { createApplicationRequest } from "../dto/user/request/createApplicationRequest";
 import { RestResponse } from "../common/restResponse";
@@ -7,46 +5,47 @@ import { createApplicationResponse } from "../dto/user/response/createApplicatio
 import { getApplicationResponse } from "../dto/user/response/getApplicationResponse";
 import { CookieService } from "ngx-cookie-service";
 import { HttpMethodString } from "../common/httpMethodString";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class applicationServices {
-    private api: string = new parametersConfig().url + 'Application';
-    private httpOptions(): any {
-        const token = this.cookieService.get('token')
-        return {
-            'Content-type': 'application/json;charset=UTF-8',
-            'Authorization': `Bearer ${token}`,
-        };
-    }
+  private api: string = `${environment.url}Application`;
+  private httpOptions(): any {
+    const token = this.cookieService.get('token')
+    return {
+      'Content-type': 'application/json;charset=UTF-8',
+      'Authorization': `Bearer ${token}`,
+    };
+  }
 
-    constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService) { }
 
-    create$(application: createApplicationRequest): Promise<RestResponse<createApplicationResponse>> {
-        const token = this.cookieService.get('token')
-        return fetch(`${this.api}`, {
-            method: HttpMethodString.post,
-            body: JSON.stringify(application),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(response => response.json() as Promise<RestResponse<createApplicationResponse>>);
-    }
+  create$(application: createApplicationRequest): Promise<RestResponse<createApplicationResponse>> {
+    const token = this.cookieService.get('token')
+    return fetch(`${this.api}`, {
+      method: HttpMethodString.post,
+      body: JSON.stringify(application),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }).then(response => response.json() as Promise<RestResponse<createApplicationResponse>>);
+  }
 
-    get$(): Promise<RestResponse<getApplicationResponse[]>> {
-        return fetch(`${this.api}`, {
-            method: HttpMethodString.get,
-            headers: this.httpOptions()
-        }).then(response => response.json() as Promise<RestResponse<getApplicationResponse[]>>);
-    }
+  get$(): Promise<RestResponse<getApplicationResponse[]>> {
+    return fetch(`${this.api}`, {
+      method: HttpMethodString.get,
+      headers: this.httpOptions()
+    }).then(response => response.json() as Promise<RestResponse<getApplicationResponse[]>>);
+  }
 
-    deleted$(id: number): Promise<RestResponse<boolean>> {
-        return fetch(`${this.api}/${id}`, {
-            method: HttpMethodString.delete,
-            headers: this.httpOptions()
-        }).then(response => response.json() as Promise<RestResponse<boolean>>);
-    }
+  deleted$(id: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/${id}`, {
+      method: HttpMethodString.delete,
+      headers: this.httpOptions()
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
 }

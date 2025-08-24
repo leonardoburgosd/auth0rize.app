@@ -1,7 +1,4 @@
 import { Injectable } from "@angular/core";
-import { HttpHeaders } from '@angular/common/http';
-
-import { parametersConfig } from "../common/param-config";
 import { RestResponse } from "../common/restResponse";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
 import { createUserResponse } from "../dto/user/response/createUserResponse";
@@ -9,12 +6,13 @@ import { HttpMethodString } from "../common/httpMethodString";
 import { getUserResponse } from "../dto/user/response/getUserResponse";
 import { CookieService } from "ngx-cookie-service";
 import { getAuthHeaders } from "../common/getAuthHeaders";
+import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 
 export class userServices {
-  private api: string = new parametersConfig().url + 'user';
+  private api: string = `${environment.url}user`;
 
   constructor(private cookieService: CookieService) { }
 

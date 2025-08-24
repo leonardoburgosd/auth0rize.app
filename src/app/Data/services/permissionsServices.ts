@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { parametersConfig } from "../common/param-config";
+import { environment } from "src/environments/environment";
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -14,7 +14,7 @@ const httpOptions = {
 })
 
 export class permissionsServices {
-    private api: string = new parametersConfig().url + '/permissions';
+    private api: string = `${environment.url}permissions`;
     constructor(private httpClient: HttpClient) { }
 
     crear(permission: any): any {
