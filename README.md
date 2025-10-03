@@ -37,7 +37,7 @@ Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma 
 
 ## Version 0.0.1 (desplegado)
 
-- https://auth0rize.leonardoburgosd.site
+- https://auth.leonardoburgos.site
 
 ## ~~Version beta 0.0.1 (desplegada en firebase)~~
 
