@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  //url : 'https://localhost:44325/api/v1/'
-  url: 'https://auth.api.leonardoburgos.site/api/v1/'
+  url : 'https://localhost:44325/api/v1/'
 };
 
 /*
