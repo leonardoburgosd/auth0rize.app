@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
-import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
+import { createUserRequest, createUserValidationRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { CustomValidations } from 'src/app/Data/common/validations';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
@@ -14,7 +13,7 @@ import { MessageDefault } from 'src/app/Data/common/messageDefault';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  public newUser: createUserRequest = new createUserRequest();
+  public newUser: createUserValidationRequest = new createUserValidationRequest();
   public formGroup!: FormGroup;
   public cargando: boolean = false;
 
@@ -44,9 +43,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  registerUser(user: createUserRequest) {
+  registerUser(user: createUserValidationRequest) {
     this.cargando = true;
-    const newUser: createUserResponse = {
+    const newUser: createUserRequest = {
       email: user.email,
       lastName: user.lastName,
       motherLastName: user.motherLastName,
@@ -55,7 +54,7 @@ export class RegisterComponent implements OnInit {
       userName: user.userName
     };
 
-    this.userService.crear$(newUser)
+    this.userService.createFirst$(newUser)
       .then(res => {
         if (res.success) {
           this.loginUserReload;

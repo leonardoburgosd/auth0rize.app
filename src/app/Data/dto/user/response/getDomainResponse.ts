@@ -14,3 +14,9 @@ export class domainListResponse {
   initial!: string;
   principalEmail!: string;
 }
+
+export class usersDomainResponse {
+  id!: number;
+  name!: string;
+  email!: string;
+}

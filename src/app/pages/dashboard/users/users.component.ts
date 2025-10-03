@@ -39,11 +39,12 @@ export class UsersComponent implements OnInit {
     private typeServices: typeServices) { }
 
   users: User[] = []
+  userNew: User | null = null;
   usersTotal: number = 0;
   usersActive: number = 0;
   usersDeleted: number = 0;
   usersPending: number = 0;
-  
+
   filteredUsers: User[] = []
   selectedUsers: number[] = []
   showUserModal = false
@@ -58,7 +59,6 @@ export class UsersComponent implements OnInit {
 
   roles: Type[] = []
   statuses = ["active", "inactive", "pending"]
-  departments = ["IT", "Ventas", "Marketing", "HR", "Finanzas", "Operaciones"]
 
   // Paginación
   currentPage = 1

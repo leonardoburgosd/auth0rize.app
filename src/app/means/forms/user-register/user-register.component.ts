@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { CustomValidations, isAdult } from 'src/app/Data/common/validations';
-import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
+import { createUserRequest, createUserValidationRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class UserRegisterComponent implements OnInit {
   @Input('isSuperUser')
   public isSuperUser: boolean = false;
-  newUser: createUserRequest = new createUserRequest();
+  newUser: createUserValidationRequest = new createUserValidationRequest();
 
   @Output() isAddNewUser: EventEmitter<boolean> = new EventEmitter();
 
@@ -73,7 +73,7 @@ export class UserRegisterComponent implements OnInit {
 
   registerSuperUser(): boolean {
     let isAdd: boolean = false;
-    this.userServices.crear$(this.newUser)
+    this.userServices.createFirst$(this.newUser)
       .then(res => {
         isAdd = true;
       })

@@ -164,7 +164,7 @@ export class DomainComponent implements OnInit {
           code: domain.code,
           name: domain.principalName,
           initial: domain.initial,
-          status: domain.isActive === true ? "inactive" : "active",
+          status: domain.isActive ? "active" : "inactive",
           email: domain.principalEmail,
           count: domain.count,
         }));

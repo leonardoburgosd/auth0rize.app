@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import { RestResponse } from "../common/restResponse";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
-import { createUserResponse } from "../dto/user/response/createUserResponse";
 import { HttpMethodString } from "../common/httpMethodString";
 import { getUserResponse } from "../dto/user/response/getUserResponse";
 import { CookieService } from "ngx-cookie-service";
 import { getAuthHeaders } from "../common/getAuthHeaders";
 import { environment } from "src/environments/environment";
+import { createInteranUserRequest } from "../dto/user/request/createInteralUserRequest";
+import { createUserRequest } from "../dto/user/request/createUserRequest";
+import { userCreateResponse } from "../dto/user/response/userCreateResponse";
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +18,7 @@ export class userServices {
 
   constructor(private cookieService: CookieService) { }
 
-  crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
+  createFirst$(user: createUserRequest): Promise<RestResponse<registerSuperadminResponse>> {
     return fetch(this.api + "/first-register", {
       method: HttpMethodString.post,
       body: JSON.stringify(user),
@@ -24,6 +26,14 @@ export class userServices {
         'Content-type': 'application/json;charset=UTF-8'
       }
     }).then(response => response.json() as Promise<RestResponse<registerSuperadminResponse>>);
+  }
+
+  create$(user: createInteranUserRequest): Promise<RestResponse<userCreateResponse>> {
+    return fetch(this.api, {
+      method: HttpMethodString.post,
+      body: JSON.stringify(user),
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<userCreateResponse>>);
   }
 
   lista$(): Promise<RestResponse<getUserResponse>> {
