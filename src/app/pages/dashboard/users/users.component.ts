@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
 
   users: User[] = []
   userNewForm!: FormGroup;
+  userEditForm!: FormGroup;
   usersTotal: number = 0;
   usersActive: number = 0;
   usersDeleted: number = 0;
@@ -75,6 +76,13 @@ export class UsersComponent implements OnInit {
       motherLastName: new FormControl(null, Validators.required),
       username: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
+      type: new FormControl(null, Validators.required),
+    });
+
+    this.userEditForm = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
+      motherLastName: new FormControl(null, Validators.required),
       type: new FormControl(null, Validators.required),
     });
     this.obtenerRoles()
@@ -305,13 +313,13 @@ export class UsersComponent implements OnInit {
   createUser() {
     const formValues = this.userNewForm.value;
     const user: createInteranUserRequest = {
-      name: `${formValues.name} ${formValues.lastName} ${formValues.motherLastName}`,
+      name: formValues.name,
+      lastName: formValues.lastName,
+      motherLastName: formValues.motherLastName,
       email: formValues.email,
       userName: formValues.username,
       password: 'DefaultPassword123!', // Asigna una contraseña por defecto o genera una
       typeUserId: formValues.type,
-      lastName: formValues.lastName,
-      motherLastName: formValues.motherLastName,
       domainId: 1 // Asigna un domainId por defecto o según tu lógica
     };
 
@@ -340,5 +348,18 @@ export class UsersComponent implements OnInit {
         text: MessageDefault.errorConexion
       });
     });
+  }
+
+  editUser() {
+    const formValues = this.userNewForm.value;
+    // const user: createInteranUserRequest = {
+    //   name: formValues.name,
+    //   email: formValues.email,
+    //   userName: formValues.username,
+    //   typeUserId: formValues.type,
+    //   lastName: formValues.lastName,
+    //   motherLastName: formValues.motherLastName,
+    //   domainId: 1
+    // };
   }
 }

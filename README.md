@@ -72,5 +72,9 @@ Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma 
 | ![Register](/captures/recover-account.png)    |
 | Alternativa de recuperacion                   |
 | ![Register](/captures/another-recover.png)    |
+| Administración de usuarios                    |
+| ![Dashboard](/captures/users-list.png)        |
+| Administración de dominios                    |
+| ![Dashboard](/captures/domain-list.png)       |
 
  
