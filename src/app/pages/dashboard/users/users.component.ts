@@ -5,6 +5,7 @@ import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { typeServices } from '../../../Data/services/typeServices';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createInteranUserRequest } from 'src/app/Data/dto/user/request/createInteralUserRequest';
+import { generatePassword } from 'src/app/Data/common/passwordGenerate';
 
 interface User {
   id: number
@@ -42,6 +43,8 @@ export class UsersComponent implements OnInit {
   users: User[] = []
   userNewForm!: FormGroup;
   userEditForm!: FormGroup;
+  passwordGenerated:string = '';
+
   usersTotal: number = 0;
   usersActive: number = 0;
   usersDeleted: number = 0;
@@ -69,8 +72,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     //this.userNewForm debe ser un formgroup pero los parametros debe ser iguales a la interface user
-
-    this.userNewForm = new FormGroup({
+    this.userEditForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       motherLastName: new FormControl(null, Validators.required),
@@ -79,10 +81,12 @@ export class UsersComponent implements OnInit {
       type: new FormControl(null, Validators.required),
     });
 
-    this.userEditForm = new FormGroup({
+    this.userNewForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       motherLastName: new FormControl(null, Validators.required),
+      username: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       type: new FormControl(null, Validators.required),
     });
     this.obtenerRoles()
@@ -313,13 +317,13 @@ export class UsersComponent implements OnInit {
   createUser() {
     const formValues = this.userNewForm.value;
     const user: createInteranUserRequest = {
-      name: formValues.name,
-      lastName: formValues.lastName,
-      motherLastName: formValues.motherLastName,
+      name: `${formValues.name} ${formValues.lastName} ${formValues.motherLastName}`,
       email: formValues.email,
       userName: formValues.username,
       password: 'DefaultPassword123!', // Asigna una contraseña por defecto o genera una
       typeUserId: formValues.type,
+      lastName: formValues.lastName,
+      motherLastName: formValues.motherLastName,
       domainId: 1 // Asigna un domainId por defecto o según tu lógica
     };
 
@@ -332,7 +336,7 @@ export class UsersComponent implements OnInit {
           text: 'El usuario se ha creado correctamente.',
           icon: 'success',
           confirmButtonText: 'Aceptar'
-        })
+        });
       } else {
         Swal.fire({
           title: 'Error',
@@ -350,16 +354,9 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  editUser() {
-    const formValues = this.userNewForm.value;
-    // const user: createInteranUserRequest = {
-    //   name: formValues.name,
-    //   email: formValues.email,
-    //   userName: formValues.username,
-    //   typeUserId: formValues.type,
-    //   lastName: formValues.lastName,
-    //   motherLastName: formValues.motherLastName,
-    //   domainId: 1
-    // };
+  newPassword() {
+    this.passwordGenerated = generatePassword();
   }
+
+  editUser() { }
 }
