@@ -41,4 +41,11 @@ export class userServices {
     })
       .then(response => response.json() as Promise<RestResponse<boolean>>);
   }
+
+  verificacionUserName$(userName:string): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/username/${userName}`, {
+      method: HttpMethodString.get,
+    })
+      .then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
 }

@@ -7,18 +7,60 @@
     <h4 class="text-black text-sm text-center mt-3 mb-6">Ingresa tus datos y abre una cuenta</h4>
     <div class="pl-10 pr-10 ">
       <form [formGroup]="formGroup">
+        <!-- Nombres -->
+        <input type="text" formControlName="name"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Nombres" [ngClass]="{ 'border-yellow-500':
+          formGroup.controls['name'].invalid &&
+                  formGroup.controls['name'].touched
+        }" />
+        <ul *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
+          class="text-xs font-semibold">
+          <li *ngIf="formGroup.controls['name'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre.</li>
+        </ul>
+
+        <!-- Apellido paterno -->
+        <input type="text" formControlName="lastName"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Apellido paterno" [ngClass]="{ 'border-yellow-500':
+          formGroup.controls['lastName'].invalid &&
+                  formGroup.controls['lastName'].touched
+        }" />
+        <ul *ngIf="formGroup.controls['lastName'].invalid && formGroup.controls['lastName'].touched"
+          class="text-xs font-semibold">
+          <li *ngIf="formGroup.controls['lastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
+              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido paterno.</li>
+        </ul>
+
+        <!-- Apellido materno -->
+        <input type="text" formControlName="motherLastName"
+          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
+          placeholder="Apellido materno" [ngClass]="{ 'border-yellow-500':
+          formGroup.controls['motherLastName'].invalid &&
+                  formGroup.controls['motherLastName'].touched
+        }" />
+        <ul *ngIf="formGroup.controls['motherLastName'].invalid && formGroup.controls['motherLastName'].touched"
+          class="text-xs font-semibold">
+          <li *ngIf="formGroup.controls['motherLastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1">
+            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido materno.
+          </li>
+        </ul>
+
+        <!-- Nombre de usuario -->
         <input type="text" formControlName="userName"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Nombre de usuario" [ngClass]="{ 'border-yellow-500':
           formGroup.controls['userName'].invalid &&
                   formGroup.controls['userName'].touched
-        }" />
+        }" readonly />
         <ul *ngIf="formGroup.controls['userName'].invalid && formGroup.controls['userName'].touched"
           class="text-xs font-semibold">
           <li *ngIf="formGroup.controls['userName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
               class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario</li>
         </ul>
 
+        <!-- Correo -->
         <input type="email" formControlName="email" [ngClass]="{ 'border-yellow-500':
         formGroup.controls['email'].invalid &&
                 formGroup.controls['email'].touched
@@ -40,6 +82,8 @@
             correo es incorrecto.</li>
           }
         </ul>
+
+        <!-- Contraseña -->
         <input type="password" formControlName="password"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Contraseña"
@@ -58,6 +102,7 @@
           }
         </ul>
 
+        <!-- Verificación de contraseña -->
         <input type="password" formControlName="passwordVerification"
           class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
           placeholder="Confirmar contraseña"
@@ -72,44 +117,6 @@
             <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar al menos 9 caractéres.
           </li>
           }
-        </ul>
-
-
-        <input type="text" formControlName="name"
-          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-          placeholder="Nombres" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['name'].invalid &&
-                  formGroup.controls['name'].touched
-        }" />
-        <ul *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
-          class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['name'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre.</li>
-        </ul>
-
-        <input type="text" formControlName="lastName"
-          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-          placeholder="Apellido paterno" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['lastName'].invalid &&
-                  formGroup.controls['lastName'].touched
-        }" />
-        <ul *ngIf="formGroup.controls['lastName'].invalid && formGroup.controls['lastName'].touched"
-          class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['lastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-              class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido paterno.</li>
-        </ul>
-
-        <input type="text" formControlName="motherLastName"
-          class="bg-white border border-neutral-150 px-4 py-2 m-2 w-full ring-1 rounded-md outline-none"
-          placeholder="Apellido materno" [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['motherLastName'].invalid &&
-                  formGroup.controls['motherLastName'].touched
-        }" />
-        <ul *ngIf="formGroup.controls['motherLastName'].invalid && formGroup.controls['motherLastName'].touched"
-          class="text-xs font-semibold">
-          <li *ngIf="formGroup.controls['motherLastName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1">
-            <i class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su apellido materno.
-          </li>
         </ul>
 
         <div class="flex flex-wrap justify-center pt-5 pb-16">

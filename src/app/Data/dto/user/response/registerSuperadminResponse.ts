@@ -1,3 +1,8 @@
 export class registerSuperadminResponse {
-    token!: string;
+    id!: number;
+    userName!: string;
+    email!: string;
+    names!: string;
+    lastName!: string;
+    motherLastName!: string;
 }

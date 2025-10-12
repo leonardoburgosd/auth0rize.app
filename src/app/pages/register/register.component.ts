@@ -7,6 +7,8 @@ import { createUserRequest } from 'src/app/Data/dto/user/request/createUserReque
 import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
 import { CustomValidations } from 'src/app/Data/common/validations';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
+import { userNameGenerate } from 'src/app/Data/common/userNameGenerate';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -17,17 +19,17 @@ export class RegisterComponent implements OnInit {
   public newUser: createUserRequest = new createUserRequest();
   public formGroup!: FormGroup;
   public cargando: boolean = false;
-
+  public userName: string = '';
   constructor(
     private formBuilder: FormBuilder,
     private userService: userServices,
-    private router: Router
+    private router: Router,
+
   ) { }
 
   ngOnInit(): void {
-
-
     this.validationForm();
+    this.verificationUsername();
   }
 
   private validationForm = () => {
@@ -58,7 +60,7 @@ export class RegisterComponent implements OnInit {
     this.userService.crear$(newUser)
       .then(res => {
         if (res.success) {
-          this.loginUserReload;
+          this.router.navigate(['/login']);
         } else {
           Swal.fire({
             icon: 'error',
@@ -77,5 +79,30 @@ export class RegisterComponent implements OnInit {
       .finally(() => this.cargando = false);
   }
 
-  loginUserReload = () => this.router.navigate(['/']);
+  verificationUsername() {
+    const nameCtrl = this.formGroup.get('name');
+    const lastCtrl = this.formGroup.get('lastName');
+    const motherCtrl = this.formGroup.get('motherLastName');
+
+    merge(
+      nameCtrl!.valueChanges,
+      lastCtrl!.valueChanges,
+      motherCtrl!.valueChanges
+    ).subscribe(() => {
+      const name = this.formGroup.get('name')?.value || '';
+      const lastName = this.formGroup.get('lastName')?.value || '';
+      const motherLastName = this.formGroup.get('motherLastName')?.value || '';
+
+      if (name.length > 1 && lastName.length > 1) {
+        const userName = userNameGenerate(name, lastName, motherLastName)
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+
+        this.formGroup.get('userName')?.setValue(userName, { emitEvent: false });
+      }
+
+    });
+
+  }
 }

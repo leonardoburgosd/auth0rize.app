@@ -8,14 +8,14 @@
 
     <form [formGroup]="formGroup" class="pl-10 pr-10 text-right">
       <input class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none" type="text"
-        placeholder="Nombre de usuario" formControlName="userName" [ngClass]="{ 'border-yellow-500':
+        placeholder="Nombre de usuario o correo" formControlName="userName" [ngClass]="{ 'border-yellow-500':
         formGroup.controls['userName'].invalid &&
                 formGroup.controls['userName'].touched
       }" />
       <ul *ngIf="formGroup.controls['userName'].invalid && formGroup.controls['userName'].touched"
         class="text-xs font-semibold">
         <li *ngIf="formGroup.controls['userName'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-            class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario</li>
+            class="fa-solid fa-triangle-exclamation"></i> Debe ingresar su nombre de usuario o correo</li>
       </ul>
       <div class="w-full text-left pl-1 pt-2 pb-5">
         <a routerLink="/recover-username" class="text-sky-600 text-sm">¿Has olvidado tu nombre de usuario?</a>

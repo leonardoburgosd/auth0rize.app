@@ -1,6 +1,6 @@
 import {
   AbstractControl,
-  FormControl, ValidationErrors, ValidatorFn
+  ValidationErrors, ValidatorFn
 } from '@angular/forms';
 
 export function isAdult(): ValidatorFn {
