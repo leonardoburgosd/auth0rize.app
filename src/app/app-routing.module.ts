@@ -10,11 +10,13 @@ import { RecoverEmailByPhoneComponent } from './pages/recover-email-by-phone/rec
 import { TwoFactorEmailComponent } from './pages/two-factor-email/two-factor-email.component';
 import { TwoFactorSmsComponent } from './pages/two-factor-sms/two-factor-sms.component';
 import { DocsComponent } from './pages/docs/docs.component';
+import { VerificationAccountComponent } from './pages/verification-account/verification-account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent, loadChildren: () => import(`./pages/dashboard/dashboard.module`).then(m => m.DashboardModule) },
   { path: 'login', component: LoginComponent },
+  { path: 'verification-account', component: VerificationAccountComponent },
   { path: 'pwd', component: LoginPwdComponent },
   { path: 'recover-username', component: RecoverEmailComponent },
   { path: 'recover-phone', component: RecoverEmailByPhoneComponent },
