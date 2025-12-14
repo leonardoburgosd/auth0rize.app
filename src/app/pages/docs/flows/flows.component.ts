@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-flows',
-  templateUrl: './flows.component.html',
-  styleUrls: ['./flows.component.scss']
+    selector: 'app-flows',
+    templateUrl: './flows.component.html',
+    styleUrls: ['./flows.component.scss'],
+    standalone: false
 })
 export class FlowsComponent implements OnInit {
 

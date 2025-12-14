@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 
 @Component({
     selector: 'application-card',
-    templateUrl: './application-card.component.html'
+    templateUrl: './application-card.component.html',
+    standalone: false
 })
 
 export class ApplicationCardComponent {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-nav-sec-left',
-  templateUrl: './nav-sec-left.component.html',
-  styleUrls: ['./nav-sec-left.component.scss']
+    selector: 'app-nav-sec-left',
+    templateUrl: './nav-sec-left.component.html',
+    styleUrls: ['./nav-sec-left.component.scss'],
+    standalone: false
 })
 export class NavSecLeftComponent implements OnInit {
 

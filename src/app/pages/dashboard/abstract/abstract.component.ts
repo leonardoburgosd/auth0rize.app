@@ -6,9 +6,10 @@ import { StatCard } from './statCard.interface';
 import { ActivityItem } from './activityItem.interface';
 
 @Component({
-  selector: 'app-abstract',
-  templateUrl: './abstract.component.html',
-  styleUrls: ['./abstract.component.scss']
+    selector: 'app-abstract',
+    templateUrl: './abstract.component.html',
+    styleUrls: ['./abstract.component.scss'],
+    standalone: false
 })
 export class AbstractComponent implements OnInit {
   statCards: StatCard[] = []

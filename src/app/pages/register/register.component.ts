@@ -11,9 +11,10 @@ import { userNameGenerate } from 'src/app/Data/common/userNameGenerate';
 import { merge } from 'rxjs';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent implements OnInit {
   public newUser: createUserRequest = new createUserRequest();

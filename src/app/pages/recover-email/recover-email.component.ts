@@ -7,9 +7,10 @@ import { authServices } from 'src/app/Data/services/authServices';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-recover-email',
-  templateUrl: './recover-email.component.html',
-  styleUrls: ['./recover-email.component.scss']
+    selector: 'app-recover-email',
+    templateUrl: './recover-email.component.html',
+    styleUrls: ['./recover-email.component.scss'],
+    standalone: false
 })
 export class RecoverEmailComponent implements OnInit {
   public formGroup!: FormGroup;

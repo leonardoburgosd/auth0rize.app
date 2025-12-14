@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'angular-icon',
-    templateUrl: './angular.icon.html'
+    templateUrl: './angular.icon.html',
+    standalone: false
 })
 
 export class AngularIcon {

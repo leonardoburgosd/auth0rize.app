@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-two-factor-email',
-  templateUrl: './two-factor-email.component.html',
-  styleUrls: ['./two-factor-email.component.scss']
+    selector: 'app-two-factor-email',
+    templateUrl: './two-factor-email.component.html',
+    styleUrls: ['./two-factor-email.component.scss'],
+    standalone: false
 })
 export class TwoFactorEmailComponent implements OnInit {
   databasic: any;

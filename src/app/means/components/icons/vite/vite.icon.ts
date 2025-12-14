@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'vite-icon',
-    templateUrl: './vite.icon.html'
+    templateUrl: './vite.icon.html',
+    standalone: false
 })
 
 export class ViteIcon {

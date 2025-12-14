@@ -9,9 +9,10 @@ import { loginUserRequest } from 'src/app/Data/dto/user/request/loginUserRequest
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;

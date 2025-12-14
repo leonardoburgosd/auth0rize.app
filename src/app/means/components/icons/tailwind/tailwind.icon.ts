@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'tailwind-icon',
-    templateUrl: './tailwind.icon.html'
+    templateUrl: './tailwind.icon.html',
+    standalone: false
 })
 
 export class TailwindIcon {

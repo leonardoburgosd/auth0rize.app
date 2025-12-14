@@ -39,9 +39,10 @@ interface FilterOptions {
 }
 
 @Component({
-  selector: 'app-domain',
-  templateUrl: './domain.component.html',
-  styleUrls: ['./domain.component.scss']
+    selector: 'app-domain',
+    templateUrl: './domain.component.html',
+    styleUrls: ['./domain.component.scss'],
+    standalone: false
 })
 export class DomainComponent implements OnInit {
 

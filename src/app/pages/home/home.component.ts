@@ -5,9 +5,10 @@ import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   public mensaje: string = "Cargando...";

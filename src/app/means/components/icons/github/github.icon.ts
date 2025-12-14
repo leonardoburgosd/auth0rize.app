@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'github-icon',
-    templateUrl: './github.icon.html'
+    templateUrl: './github.icon.html',
+    standalone: false
 })
 
 export class GithubIcon {

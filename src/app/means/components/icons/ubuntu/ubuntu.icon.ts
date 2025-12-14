@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'ubuntu-icon',
-    templateUrl: './ubuntu.icon.html'
+    templateUrl: './ubuntu.icon.html',
+    standalone: false
 })
 
 export class UbuntuIcon {

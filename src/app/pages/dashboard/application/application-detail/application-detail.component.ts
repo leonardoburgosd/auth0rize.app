@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-application-detail',
-  templateUrl: './application-detail.component.html',
-  styleUrls: ['./application-detail.component.scss']
+    selector: 'app-application-detail',
+    templateUrl: './application-detail.component.html',
+    styleUrls: ['./application-detail.component.scss'],
+    standalone: false
 })
 export class ApplicationDetailComponent implements OnInit {
   applicationId: number = 0;

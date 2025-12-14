@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-nav-down',
-  templateUrl: './nav-down.component.html',
-  styleUrls: ['./nav-down.component.scss']
+    selector: 'app-nav-down',
+    templateUrl: './nav-down.component.html',
+    styleUrls: ['./nav-down.component.scss'],
+    standalone: false
 })
 export class NavDownComponent implements OnInit {
 

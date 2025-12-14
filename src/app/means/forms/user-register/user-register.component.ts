@@ -7,9 +7,10 @@ import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.scss'],
+    selector: 'app-user-register',
+    templateUrl: './user-register.component.html',
+    styleUrls: ['./user-register.component.scss'],
+    standalone: false
 })
 export class UserRegisterComponent implements OnInit {
   @Input('isSuperUser')

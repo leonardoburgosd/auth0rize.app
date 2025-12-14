@@ -3,8 +3,9 @@ import { Router } from "@angular/router";
 import { domainServices } from "src/app/Data/services/domainServices";
 
 @Component({
-  selector: 'domain-card',
-  templateUrl: './domain-card.component.html'
+    selector: 'domain-card',
+    templateUrl: './domain-card.component.html',
+    standalone: false
 })
 
 export class DomainCardComponent {

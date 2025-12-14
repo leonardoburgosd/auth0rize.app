@@ -2,7 +2,8 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'penpot-icon',
-    templateUrl: './penpot.icon.html'
+    templateUrl: './penpot.icon.html',
+    standalone: false
 })
 
 export class PenpotIcon {

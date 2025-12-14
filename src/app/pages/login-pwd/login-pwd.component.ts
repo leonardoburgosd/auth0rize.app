@@ -16,9 +16,10 @@ import { Observable } from 'rxjs';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 
 @Component({
-  selector: 'app-login-pwd',
-  templateUrl: './login-pwd.component.html',
-  styleUrls: ['./login-pwd.component.scss']
+    selector: 'app-login-pwd',
+    templateUrl: './login-pwd.component.html',
+    styleUrls: ['./login-pwd.component.scss'],
+    standalone: false
 })
 export class LoginPwdComponent implements OnInit {
   public formGroup!: FormGroup;
