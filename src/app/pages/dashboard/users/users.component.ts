@@ -28,10 +28,10 @@ interface Type {
 }
 
 @Component({
-    selector: 'app-users',
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
-    standalone: false
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
+  standalone: false
 })
 export class UsersComponent implements OnInit {
 
@@ -44,7 +44,17 @@ export class UsersComponent implements OnInit {
   usersActive: number = 0;
   usersDeleted: number = 0;
   usersPending: number = 0;
-  
+
+  userForm = {
+    name: '',
+    lastName: '',
+    motherLastName: '',
+    userName: '',
+    email: '',
+    password: '',
+    type: 0
+  }
+
   filteredUsers: User[] = []
   selectedUsers: number[] = []
   showUserModal = false
@@ -71,7 +81,7 @@ export class UsersComponent implements OnInit {
     this.obtenerUsuarios()
   }
 
-  obtenerRoles(){
+  obtenerRoles() {
     this.typeServices.lista$().then((response) => {
       if (response.success) {
         this.roles = response.data;
@@ -91,7 +101,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  obtenerUsuarios(){
+  obtenerUsuarios() {
     this.userServices.lista$().then((response) => {
       if (response.success) {
         this.usersTotal = response.data.total;
@@ -204,12 +214,70 @@ export class UsersComponent implements OnInit {
 
   openUserModal(user?: User): void {
     this.editingUser = user || null
+    if (user) {
+      this.userForm = {
+        name: user.name,
+        lastName: '',
+        motherLastName: '',
+        userName: '',
+        email: user.email,
+        password: this.generatePassword(),
+        type: this.roles.find(r => r.name === user.role)?.id || 0
+      }
+    } else {
+      this.userForm = {
+        name: '',
+        lastName: '',
+        motherLastName: '',
+        userName: '',
+        email: '',
+        password: this.generatePassword(),
+        type: 0
+      }
+    }
     this.showUserModal = true
   }
 
   closeUserModal(): void {
     this.showUserModal = false
     this.editingUser = null
+    this.userForm = {
+      name: '',
+      lastName: '',
+      motherLastName: '',
+      userName: '',
+      email: '',
+      password: '',
+      type: 0
+    }
+  }
+
+  generatePassword(): string {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+      const randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
+    return password;
+  }
+
+  regeneratePassword(): void {
+    this.userForm.password = this.generatePassword();
+  }
+
+  generateUserName(): void {
+    const name = this.userForm.name || '';
+    const lastName = this.userForm.lastName || '';
+    const motherLastName = this.userForm.motherLastName || '';
+
+    if (name && lastName) {
+      const p1 = name.substring(0, 3);
+      const p2 = lastName.split(' ')[0];
+      const p3 = motherLastName ? motherLastName.substring(0, 1) : '';
+
+      this.userForm.userName = (p1 + p2 + p3).toLowerCase().replace(/\s/g, '');
+    }
   }
 
   deleteUser(userId: number): void {
