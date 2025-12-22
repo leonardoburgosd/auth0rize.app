@@ -215,15 +215,37 @@ export class UsersComponent implements OnInit {
   openUserModal(user?: User): void {
     this.editingUser = user || null
     if (user) {
+      // Inicializar con datos básicos de la tabla mientras carga
       this.userForm = {
         name: user.name,
         lastName: '',
         motherLastName: '',
         userName: '',
         email: user.email,
-        password: this.generatePassword(),
+        password: '', // Contraseña oculta en edición
         type: this.roles.find(r => r.name === user.role)?.id || 0
       }
+
+      // Consultar servicio para obtener detalles completos
+      this.userServices.obtenerPorId$(user.id.toString()).then((response: any) => {
+        if (response.success && response.data) {
+          const userData = response.data;
+          this.userForm.name = userData.name || userData.names || this.userForm.name;
+          this.userForm.lastName = userData.lastName || '';
+          this.userForm.motherLastName = userData.motherLastName || '';
+          this.userForm.userName = userData.userName || '';
+          this.userForm.email = userData.email || this.userForm.email;
+
+          if (userData.type) {
+            // Intentar mapear si viene como ID o nombre
+            if (typeof userData.type === 'number') {
+              this.userForm.type = userData.type;
+            } else if (typeof userData.type === 'string') {
+              this.userForm.type = this.roles.find(r => r.name === userData.type)?.id || this.userForm.type;
+            }
+          }
+        }
+      });
     } else {
       this.userForm = {
         name: '',

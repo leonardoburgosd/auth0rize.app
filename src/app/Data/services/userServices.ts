@@ -56,4 +56,12 @@ export class userServices {
     })
       .then(response => response.json() as Promise<RestResponse<boolean>>);
   }
+
+  obtenerPorId$(id: string): Promise<RestResponse<getUserResponse>> {
+    return fetch(`${this.api}/${id}`, {
+      method: HttpMethodString.get,
+      headers: getAuthHeaders(this.cookieService)
+    })
+      .then(response => response.json() as Promise<RestResponse<getUserResponse>>);
+  }
 }
