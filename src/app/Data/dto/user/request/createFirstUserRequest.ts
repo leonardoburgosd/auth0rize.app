@@ -1,4 +1,4 @@
-export class createUserResponse {
+export class createFirstUserRequest {
     name!: string;
     lastName!: string;
     motherLastName!: string;

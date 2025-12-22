@@ -16,7 +16,7 @@ Este proyecto esta creado en Angular version 18 y junto a otros proyectos forma 
 - :white_check_mark: ngx-charts
 
 ## Ejecucion de proyectos
-- Produccion: npx ng serve --configuration production
+- Produccion: ng serve --configuration production
 - Desarrollo: ng serve
 ## Funcionalidades
 

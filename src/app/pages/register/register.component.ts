@@ -4,17 +4,17 @@ import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
-import { createUserResponse } from 'src/app/Data/dto/user/response/createUserResponse';
+import { createFirstUserRequest } from 'src/app/Data/dto/user/request/createFirstUserRequest';
 import { CustomValidations } from 'src/app/Data/common/validations';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { userNameGenerate } from 'src/app/Data/common/userNameGenerate';
 import { merge } from 'rxjs';
 
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.scss'],
-    standalone: false
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
+  standalone: false
 })
 export class RegisterComponent implements OnInit {
   public newUser: createUserRequest = new createUserRequest();
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
 
   registerUser(user: createUserRequest) {
     this.cargando = true;
-    const newUser: createUserResponse = {
+    const newUser: createFirstUserRequest = {
       email: user.email,
       lastName: user.lastName,
       motherLastName: user.motherLastName,
@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
       userName: user.userName
     };
 
-    this.userService.crear$(newUser)
+    this.userService.crearPrimero$(newUser)
       .then(res => {
         if (res.success) {
           this.router.navigate(['/login']);

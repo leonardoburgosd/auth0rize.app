@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { RestResponse } from "../common/restResponse";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
-import { createUserResponse } from "../dto/user/response/createUserResponse";
+import { createFirstUserRequest } from "../dto/user/request/createFirstUserRequest";
 import { HttpMethodString } from "../common/httpMethodString";
 import { getUserResponse } from "../dto/user/response/getUserResponse";
 import { CookieService } from "ngx-cookie-service";
@@ -16,7 +16,7 @@ export class userServices {
 
   constructor(private cookieService: CookieService) { }
 
-  crear$(user: createUserResponse): Promise<RestResponse<registerSuperadminResponse>> {
+  crearPrimero$(user: createFirstUserRequest): Promise<RestResponse<registerSuperadminResponse>> {
     return fetch(this.api + "/first-register", {
       method: HttpMethodString.post,
       body: JSON.stringify(user),
@@ -24,6 +24,14 @@ export class userServices {
         'Content-type': 'application/json;charset=UTF-8'
       }
     }).then(response => response.json() as Promise<RestResponse<registerSuperadminResponse>>);
+  }
+
+  crear$() {
+    return fetch(this.api, {
+      method: HttpMethodString.post,
+      headers: getAuthHeaders(this.cookieService)
+    })
+      .then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 
   lista$(): Promise<RestResponse<getUserResponse>> {
@@ -42,7 +50,7 @@ export class userServices {
       .then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 
-  verificacionUserName$(userName:string): Promise<RestResponse<boolean>> {
+  verificacionUserName$(userName: string): Promise<RestResponse<boolean>> {
     return fetch(`${this.api}/username/${userName}`, {
       method: HttpMethodString.get,
     })

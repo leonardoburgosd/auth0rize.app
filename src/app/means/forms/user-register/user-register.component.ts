@@ -2,15 +2,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { CustomValidations, isAdult } from 'src/app/Data/common/validations';
+import { createFirstUserRequest } from 'src/app/Data/dto/user/request/createFirstUserRequest';
 import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 import { userServices } from 'src/app/Data/services/userServices';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-user-register',
-    templateUrl: './user-register.component.html',
-    styleUrls: ['./user-register.component.scss'],
-    standalone: false
+  selector: 'app-user-register',
+  templateUrl: './user-register.component.html',
+  styleUrls: ['./user-register.component.scss'],
+  standalone: false
 })
 export class UserRegisterComponent implements OnInit {
   @Input('isSuperUser')
@@ -74,7 +75,14 @@ export class UserRegisterComponent implements OnInit {
 
   registerSuperUser(): boolean {
     let isAdd: boolean = false;
-    this.userServices.crear$(this.newUser)
+    let newFirstUser: createFirstUserRequest = new createFirstUserRequest();
+    newFirstUser.email = this.newUser.email;
+    newFirstUser.password = this.newUser.password;
+    newFirstUser.name = this.newUser.name;
+    newFirstUser.lastName = this.newUser.lastName;
+    newFirstUser.userName = this.newUser.userName;
+    newFirstUser.motherLastName = this.newUser.motherLastName;
+    this.userServices.crearPrimero$(newFirstUser)
       .then(res => {
         isAdd = true;
       })
