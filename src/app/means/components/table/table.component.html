@@ -1,0 +1,144 @@
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <!-- Search Bar (Optional based on searchFields) -->
+    <div *ngIf="searchFields.length > 0" class="p-4 border-b border-gray-200">
+        <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" [placeholder]="searchPlaceholder" [(ngModel)]="searchTerm" (input)="onSearchChange()"
+                class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+        </div>
+    </div>
+
+    <!-- Bulk Actions Info -->
+    <div *ngIf="selectedItems.length > 0"
+        class="bg-teal-50 border-b border-teal-200 p-3 flex items-center justify-between">
+        <span class="text-sm font-medium text-teal-800">
+            {{ selectedItems.length }} elemento(s) seleccionado(s)
+        </span>
+        <ng-content select="[bulk-actions]"></ng-content>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <!-- Checkbox Header -->
+                    <th *ngIf="selectable" class="px-6 py-3 text-left w-10">
+                        <input type="checkbox" [checked]="areAllSelected()" (change)="toggleSelectAll()"
+                            class="rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer" />
+                    </th>
+
+                    <!-- Columns Headers -->
+                    <th *ngFor="let col of columns"
+                        [class]="'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ' + (col.class || '')">
+                        {{ col.header }}
+                    </th>
+
+                    <!-- Actions Header -->
+                    <th *ngIf="actions.length > 0"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let item of getPaginatedData()" class="hover:bg-gray-50 transition-colors">
+                    <!-- Checkbox Cell -->
+                    <td *ngIf="selectable" class="px-6 py-4">
+                        <input type="checkbox" [checked]="isItemSelected(item)" (change)="toggleSelection(item)"
+                            class="rounded border-gray-300 text-teal-600 focus:ring-teal-500 cursor-pointer" />
+                    </td>
+
+                    <!-- Dynamic Cells -->
+                    <td *ngFor="let col of columns" class="px-6 py-4">
+                        <!-- User/Profile Type -->
+                        <div *ngIf="col.type === 'user'" class="flex items-center">
+                            <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                                <span class="text-sm font-medium text-teal-600">{{ getValue(item,
+                                    col.key).charAt(0).toUpperCase() }}</span>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">{{ getValue(item, col.key) }}</div>
+                                <div *ngIf="item.email" class="text-sm text-gray-500">{{ item.email }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Badge Type -->
+                        <span *ngIf="col.type === 'badge'"
+                            [class]="'inline-flex px-2 py-1 text-xs font-semibold rounded-full ' + (col.badgeConfig ? col.badgeConfig(getValue(item, col.key)) : 'bg-gray-100 text-gray-800')">
+                            {{ getValue(item, col.key) }}
+                        </span>
+
+                        <!-- Text/Default Type -->
+                        <span *ngIf="!col.type || col.type === 'text'" class="text-sm text-gray-500">
+                            {{ getValue(item, col.key) }}
+                        </span>
+
+                        <!-- Custom Template Placeholder (can be expanded with ngTemplateOutlet if needed) -->
+                        <ng-container *ngIf="col.type === 'custom'">
+                            <!-- Logic for custom rendering could be added here -->
+                        </ng-container>
+                    </td>
+
+                    <!-- Actions Cell -->
+                    <td *ngIf="actions.length > 0" class="px-6 py-4 text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button *ngFor="let action of actions" (click)="onAction(action.id, item)"
+                                [class]="action.class + ' transition-colors'" [title]="action.title || ''">
+                                <i [class]="action.icon"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Empty State -->
+                <tr *ngIf="filteredData.length === 0">
+                    <td [attr.colspan]="columns.length + (selectable ? 1 : 0) + (actions.length > 0 ? 1 : 0)"
+                        class="px-6 py-8 text-center text-gray-500">
+                        No se encontraron resultados
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="filteredData.length > 0" class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+        <div class="flex items-center justify-between">
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700">
+                        Mostrando
+                        <span class="font-medium">{{ getDisplayFrom(currentPage, itemsPerPage) }}</span>
+                        a
+                        <span class="font-medium">{{ getDisplayTo(currentPage, itemsPerPage, filteredData.length)
+                            }}</span>
+                        de
+                        <span class="font-medium">{{ filteredData.length }}</span>
+                        resultados
+                    </p>
+                </div>
+                <div>
+                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span class="sr-only">Anterior</span>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+
+                        <button *ngFor="let page of getPageNumbers()" (click)="changePage(page)"
+                            [class]="'relative inline-flex items-center px-4 py-2 border text-sm font-medium ' +
+                     (page === currentPage ? 'z-10 bg-teal-50 border-teal-500 text-teal-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50')">
+                            {{ page }}
+                        </button>
+
+                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span class="sr-only">Siguiente</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -69,12 +69,22 @@ export class UsersComponent implements OnInit {
 
   roles: Type[] = []
   statuses = ["active", "inactive", "pending"]
-  departments = ["IT", "Ventas", "Marketing", "HR", "Finanzas", "Operaciones"]
-
   // Paginación
   currentPage = 1
   itemsPerPage = 5
   totalPages = 0
+
+  tableColumns: any[] = [
+    { key: 'name', header: 'Usuario', type: 'user' },
+    { key: 'role', header: 'Tipo', type: 'badge', badgeConfig: (role: string) => this.getRoleClass(role) },
+    { key: 'status', header: 'Estado', type: 'badge', badgeConfig: (status: string) => this.getStatusClass(status) },
+    { key: 'lastLogin', header: 'Último acceso' }
+  ];
+
+  tableActions: any[] = [
+    { id: 'edit', icon: 'fas fa-edit', class: 'text-teal-600 hover:text-teal-900', title: 'Editar' },
+    { id: 'delete', icon: 'fas fa-trash', class: 'text-red-600 hover:text-red-900', title: 'Eliminar' }
+  ];
 
   ngOnInit(): void {
     this.obtenerRoles()
@@ -116,6 +126,7 @@ export class UsersComponent implements OnInit {
           status: user.deleted ? "inactive" : "active",
           lastLogin: user.lastLogin,
         }));
+        this.applyFilters();
       } else {
         Swal.fire({
           icon: 'warning',
@@ -380,6 +391,18 @@ export class UsersComponent implements OnInit {
 
   getMinValue(a: number, b: number): number {
     return Math.min(a, b)
+  }
+
+  handleTableAction(event: { actionId: string, item: any }): void {
+    if (event.actionId === 'edit') {
+      this.openUserModal(event.item);
+    } else if (event.actionId === 'delete') {
+      this.deleteUser(event.item.id);
+    }
+  }
+
+  handleSelectionChange(selected: any[]): void {
+    this.selectedUsers = selected.map(item => item.id);
   }
 
 }
