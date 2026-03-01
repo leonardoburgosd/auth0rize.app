@@ -39,10 +39,10 @@ interface FilterOptions {
 }
 
 @Component({
-    selector: 'app-domain',
-    templateUrl: './domain.component.html',
-    styleUrls: ['./domain.component.scss'],
-    standalone: false
+  selector: 'app-domain',
+  templateUrl: './domain.component.html',
+  styleUrls: ['./domain.component.scss'],
+  standalone: false
 })
 export class DomainComponent implements OnInit {
 
@@ -130,6 +130,18 @@ export class DomainComponent implements OnInit {
 
   // Math disponible en template
   Math = Math
+
+  tableColumns: any[] = [
+    { key: 'code', header: 'Código' },
+    { key: 'status', header: 'Estado', type: 'badge', badgeConfig: (status: string) => this.getStatusClass(status) },
+    { key: 'count', header: 'Usuarios' },
+    { key: 'name', header: 'Usuario Principal', type: 'user' }
+  ];
+
+  tableActions: any[] = [
+    { id: 'edit', icon: 'fas fa-edit', class: 'text-teal-600 hover:text-teal-900', title: 'Editar' },
+    { id: 'delete', icon: 'fas fa-trash', class: 'text-red-600 hover:text-red-900', title: 'Eliminar' }
+  ];
   //#endregion
 
 
@@ -491,6 +503,14 @@ export class DomainComponent implements OnInit {
 
     // Marcar el nuevo principal
     domainUser.isPrincipal = true
+  }
+
+  handleTableAction(event: { actionId: string, item: any }): void {
+    if (event.actionId === 'edit') {
+      this.openDomainModal(event.item);
+    } else if (event.actionId === 'delete') {
+      this.deleteDomain(event.item.code);
+    }
   }
   //#endregion
 }

@@ -17,6 +17,7 @@ import { ApplicationCardComponent } from "src/app/means/components/cards/applica
 import { MenuComponent } from "./menu/menu.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TableComponent } from "../../means/components/table/table.component";
+import { TableAccordionComponent } from "../../means/components/table-accordion/table-accordion.component";
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { TableComponent } from "../../means/components/table/table.component";
         NavSecLeftComponent,
         DomainCardComponent,
         ApplicationCardComponent,
-        TableComponent
+        TableComponent,
+        TableAccordionComponent
     ],
     imports: [
         CommonModule,
