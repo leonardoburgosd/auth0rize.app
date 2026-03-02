@@ -1,23 +1,30 @@
 <nav class="flex-1 p-4">
   <ul class="space-y-2">
-    <li *ngFor="let item of menuItems; let i = index">
-      <a *ngIf="sidebarOpen" [routerLink]="item.ruta" (click)="setActiveMenuItem(i); $event.preventDefault()" [class]="'flex items-center p-3 rounded-lg transition-colors group relative ' +
-                 (item.active ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')">
-        <i [class]="item.icon + ' w-5 h-5 flex-shrink-0' "></i>
-        <span *ngIf="sidebarOpen" class="ml-3 font-medium">{{ item.label }}</span>
+    <li *ngFor="let item of menuItems">
 
-        <div *ngIf="!sidebarOpen"
-          class="absolute left-16 bg-slate-800 text-white px-2 py-1 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+      <!-- Sidebar abierto -->
+      <a *ngIf="sidebarOpen" (click)="navigate(item)"
+        [class]="'flex items-center p-3 rounded-lg transition-colors group relative cursor-pointer ' +
+                 (isActive(item.ruta) ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')">
+        <i [class]="item.icon + ' w-5 h-5 flex-shrink-0'"></i>
+        <span class="ml-3 font-medium">{{ item.label }}</span>
+      </a>
+
+      <!-- Sidebar cerrado (solo icono + tooltip) -->
+      <a *ngIf="!sidebarOpen" (click)="navigate(item)"
+        [class]="'flex items-center p-2 rounded-lg transition-colors group relative cursor-pointer ' +
+                 (isActive(item.ruta) ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')">
+        <i [class]="item.icon + ' w-5 flex-shrink-0'"></i>
+        <div
+          class="absolute left-14 bg-slate-800 text-white px-2 py-1 rounded-md text-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
           {{ item.label }}
         </div>
       </a>
-      <a *ngIf="!sidebarOpen" [routerLink]="item.ruta" (click)="setActiveMenuItem(i); $event.preventDefault()" [class]="'flex items-center p-2 rounded-lg transition-colors group relative ' +
-                 (item.active ? 'bg-teal-500 text-white' : 'text-gray-300 hover:bg-slate-800 hover:text-white')">
-        <i [class]="item.icon + ' w-5 flex-shrink-0' "></i>
-      </a>
+
     </li>
   </ul>
 </nav>
+
 <div class="p-4 border-t border-slate-700">
   <div class="flex items-center cursor-pointer" (click)="onProfileClick()">
     <div class="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">

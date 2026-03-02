@@ -19,6 +19,7 @@ import { ConfigComponent } from "./config/config.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TableComponent } from "../../means/components/table/table.component";
 import { TableAccordionComponent } from "../../means/components/table-accordion/table-accordion.component";
+import { MeansModule } from "../../means/means.module";
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import { TableAccordionComponent } from "../../means/components/table-accordion/
     imports: [
         CommonModule,
         DashboardRoutingModule,
+        MeansModule,
         ReactiveFormsModule,
         FormsModule,
     ]

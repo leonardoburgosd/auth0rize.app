@@ -245,7 +245,16 @@ export class DomainComponent implements OnInit {
     this.domain.create$(domain)
       .then(res => {
         if (res.success) {
-          //this.domainsR.push({ id: res.data.id, default: false, name: domain.name, code: res.data.code });
+          const createdDomain: Domain = {
+            code: res.data.code,
+            name: domain.name,
+            initial: domain.name.substring(0, 2).toUpperCase(),
+            status: "active",
+            email: "N/A",
+            count: 0
+          };
+          this.domains.push(createdDomain);
+          this.applyFilters();
         } else {
           Swal.fire({
             icon: 'error',

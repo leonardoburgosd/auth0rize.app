@@ -15,9 +15,9 @@
 
         <!-- Avatar -->
         <div class="relative inline-block mb-4">
-          <div class="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-teal-600 mx-auto flex items-center justify-center shadow-md">
-            <img *ngIf="profile.avatar" [src]="profile.avatar" alt="Avatar"
-              class="w-full h-full object-cover" />
+          <div
+            class="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-teal-600 mx-auto flex items-center justify-center shadow-md">
+            <img *ngIf="profile.avatar" [src]="profile.avatar" alt="Avatar" class="w-full h-full object-cover" />
             <span *ngIf="!profile.avatar" class="text-white text-3xl font-bold">{{ initials }}</span>
           </div>
           <!-- Botón cambiar avatar -->
@@ -38,8 +38,8 @@
           <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-700">
             <i class="fas fa-shield-alt mr-1"></i>
             {{ (userTypes | slice:0).length > 0 && profile.userType > 0
-                ? (userTypes | slice:0)[profile.userType - 1]?.name ?? 'Sin rol'
-                : 'Sin rol asignado' }}
+            ? (userTypes | slice:0)[profile.userType - 1]?.name ?? 'Sin rol'
+            : 'Sin rol asignado' }}
           </span>
         </div>
 
@@ -94,14 +94,8 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Nombres <span class="text-red-500">*</span>
               </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                  <i class="fas fa-user text-sm"></i>
-                </span>
-                <input type="text" [(ngModel)]="profile.firstName" (input)="autoGenerateUserName()"
-                  placeholder="Ej. Juan Carlos"
-                  class="pl-10 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
-              </div>
+              <input-text [(texto)]="profile.firstName" (textoChange)="autoGenerateUserName()"
+                placeholder="Ej. Juan Carlos"></input-text>
             </div>
 
             <!-- Apellido Paterno -->
@@ -109,17 +103,14 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Apellido Paterno <span class="text-red-500">*</span>
               </label>
-              <input type="text" [(ngModel)]="profile.fatherLastName" (input)="autoGenerateUserName()"
-                placeholder="Ej. Pérez"
-                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+              <input-text [(texto)]="profile.fatherLastName" (textoChange)="autoGenerateUserName()"
+                placeholder="Ej. Pérez"></input-text>
             </div>
 
             <!-- Apellido Materno -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Apellido Materno</label>
-              <input type="text" [(ngModel)]="profile.motherLastName"
-                placeholder="Ej. González"
-                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+              <input-text [(texto)]="profile.motherLastName" placeholder="Ej. González"></input-text>
             </div>
 
           </div>
@@ -144,12 +135,7 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Nombre de Usuario <span class="text-red-500">*</span>
               </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 text-sm">&#64;</span>
-                <input type="text" [(ngModel)]="profile.userName"
-                  placeholder="nombre_usuario"
-                  class="pl-8 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
-              </div>
+              <input-text [(texto)]="profile.userName" placeholder="nombre_usuario"></input-text>
               <p class="text-xs text-gray-400 mt-1">Se genera automáticamente, puedes editarlo</p>
             </div>
 
@@ -158,14 +144,7 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Correo Electrónico <span class="text-red-500">*</span>
               </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                  <i class="fas fa-envelope text-sm"></i>
-                </span>
-                <input type="email" [(ngModel)]="profile.email"
-                  placeholder="ejemplo@correo.com"
-                  class="pl-10 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
-              </div>
+              <input-text [(texto)]="profile.email" placeholder="ejemplo@correo.com"></input-text>
             </div>
 
             <!-- Tipo de usuario -->
@@ -193,11 +172,11 @@
 
         <!-- Botones de acción -->
         <div class="flex justify-end space-x-3">
-          <button class="px-5 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+          <button
+            class="px-5 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
             Cancelar
           </button>
-          <button (click)="saveProfile()"
-            [disabled]="isSaving"
+          <button (click)="saveProfile()" [disabled]="isSaving"
             class="px-5 py-2.5 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm font-medium flex items-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed">
             <i *ngIf="isSaving" class="fas fa-circle-notch fa-spin"></i>
             <i *ngIf="!isSaving" class="fas fa-save"></i>
@@ -247,8 +226,7 @@
             <button (click)="toggleTwoFactor()"
               class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ml-4"
               [class]="profile.twoFactorAuth ? 'bg-teal-500' : 'bg-gray-200'"
-              [attr.aria-checked]="profile.twoFactorAuth"
-              role="switch">
+              [attr.aria-checked]="profile.twoFactorAuth" role="switch">
               <span
                 class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition duration-200 ease-in-out"
                 [class]="profile.twoFactorAuth ? 'translate-x-5' : 'translate-x-0'">
@@ -283,8 +261,7 @@
 
         <!-- Botones de acción -->
         <div class="flex justify-end space-x-3">
-          <button (click)="saveProfile()"
-            [disabled]="isSaving"
+          <button (click)="saveProfile()" [disabled]="isSaving"
             class="px-5 py-2.5 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm font-medium flex items-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed">
             <i *ngIf="isSaving" class="fas fa-circle-notch fa-spin"></i>
             <i *ngIf="!isSaving" class="fas fa-save"></i>

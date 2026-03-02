@@ -166,7 +166,7 @@
     <div class="space-y-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
-        <input type="text"
+        <input type="text" [(ngModel)]="newDomain.name"
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           placeholder="Nombre del dominio" />
       </div>
@@ -175,12 +175,8 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">Código (36 dígitos)</label>
         <div class="flex">
           <input type="text"
-            class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent font-mono text-sm"
-            placeholder="Código del dominio" readonly />
-          <button class="px-3 py-2 bg-teal-500 text-white rounded-r-lg hover:bg-teal-600 transition-colors"
-            title="Generar código">
-            <i class="fas fa-refresh"></i>
-          </button>
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent font-mono text-sm"
+            placeholder="Generado automáticamente" readonly />
         </div>
       </div>
 
@@ -207,7 +203,8 @@
         class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
         Cancelar
       </button>
-      <button class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
+      <button (click)="createDomain(newDomain)"
+        class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
         {{ editingDomain ? 'Actualizar' : 'Crear' }}
       </button>
     </div>

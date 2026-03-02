@@ -15,7 +15,7 @@ import { RecoverPasswordComponent } from './pages/recover-password/recover-passw
 import { RecoverEmailByPhoneComponent } from './pages/recover-email-by-phone/recover-email-by-phone.component';
 import { TwoFactorSmsComponent } from './pages/two-factor-sms/two-factor-sms.component';
 import { TwoFactorEmailComponent } from './pages/two-factor-email/two-factor-email.component';
-import { InputTextComponent } from './means/components/inputText/input-text.component';
+import { MeansModule } from './means/means.module';
 import { TailwindIcon } from './means/components/icons/tailwind/tailwind.icon';
 import { GithubIcon } from './means/components/icons/github/github.icon';
 import { AngularIcon } from './means/components/icons/angular/angular.icon';
@@ -35,7 +35,7 @@ import { FlowsComponent } from './pages/docs/flows/flows.component';
     LoginComponent,
     RegisterComponent,
     UserRegisterComponent,
-    InputTextComponent,
+    UserRegisterComponent,
     LoginPwdComponent,
     RecoverEmailComponent,
     RecoverPasswordComponent,
@@ -57,6 +57,7 @@ import { FlowsComponent } from './pages/docs/flows/flows.component';
   exports: [],
   bootstrap: [AppComponent], imports: [BrowserModule,
     AppRoutingModule,
+    MeansModule,
     FormsModule,
     ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())]
 })
