@@ -1,0 +1,299 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-slate-900">Configuración de Perfil</h1>
+    <p class="text-gray-600 mt-1">Administra tu información personal y preferencias de seguridad</p>
+  </div>
+
+  <!-- Layout principal -->
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+    <!-- Sidebar de perfil -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
+
+        <!-- Avatar -->
+        <div class="relative inline-block mb-4">
+          <div class="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-teal-600 mx-auto flex items-center justify-center shadow-md">
+            <img *ngIf="profile.avatar" [src]="profile.avatar" alt="Avatar"
+              class="w-full h-full object-cover" />
+            <span *ngIf="!profile.avatar" class="text-white text-3xl font-bold">{{ initials }}</span>
+          </div>
+          <!-- Botón cambiar avatar -->
+          <label for="avatarInput"
+            class="absolute -bottom-1 -right-1 w-8 h-8 bg-teal-500 hover:bg-teal-600 text-white rounded-full flex items-center justify-center cursor-pointer shadow transition-colors"
+            title="Cambiar foto">
+            <i class="fas fa-camera text-xs"></i>
+          </label>
+          <input id="avatarInput" type="file" accept="image/*" class="hidden" (change)="onAvatarChange($event)" />
+        </div>
+
+        <h2 class="text-lg font-semibold text-slate-900 truncate">{{ fullName }}</h2>
+        <p class="text-sm text-gray-500 mt-1 truncate">&#64;{{ profile.userName || 'nombre_usuario' }}</p>
+        <p class="text-sm text-gray-400 mt-1 truncate">{{ profile.email || 'correo@ejemplo.com' }}</p>
+
+        <!-- Badge tipo usuario -->
+        <div class="mt-3 flex justify-center">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-700">
+            <i class="fas fa-shield-alt mr-1"></i>
+            {{ (userTypes | slice:0).length > 0 && profile.userType > 0
+                ? (userTypes | slice:0)[profile.userType - 1]?.name ?? 'Sin rol'
+                : 'Sin rol asignado' }}
+          </span>
+        </div>
+
+        <!-- Botón quitar avatar -->
+        <button *ngIf="profile.avatar" (click)="removeAvatar()"
+          class="mt-4 text-xs text-red-500 hover:text-red-700 transition-colors">
+          <i class="fas fa-trash mr-1"></i>Quitar foto
+        </button>
+      </div>
+
+      <!-- Tabs de navegación -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 mt-4 overflow-hidden">
+        <button (click)="setTab('profile')"
+          [class]="activeTab === 'profile'
+            ? 'w-full text-left px-5 py-3 text-sm font-medium text-teal-600 bg-teal-50 border-l-4 border-teal-500 flex items-center space-x-3'
+            : 'w-full text-left px-5 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 border-l-4 border-transparent flex items-center space-x-3 transition-colors'">
+          <i class="fas fa-user w-4"></i>
+          <span>Información Personal</span>
+        </button>
+        <button (click)="setTab('security')"
+          [class]="activeTab === 'security'
+            ? 'w-full text-left px-5 py-3 text-sm font-medium text-teal-600 bg-teal-50 border-l-4 border-teal-500 flex items-center space-x-3'
+            : 'w-full text-left px-5 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 border-l-4 border-transparent flex items-center space-x-3 transition-colors'">
+          <i class="fas fa-lock w-4"></i>
+          <span>Seguridad</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="lg:col-span-3 space-y-6">
+
+      <!-- ── TAB: Información Personal ── -->
+      <div *ngIf="activeTab === 'profile'">
+
+        <!-- Sección: Datos personales -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="flex items-center mb-5 pb-4 border-b border-gray-100">
+            <div class="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-id-card text-teal-600 text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">Datos Personales</h3>
+              <p class="text-xs text-gray-500">Tu información de identificación</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <!-- Nombres -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Nombres <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                  <i class="fas fa-user text-sm"></i>
+                </span>
+                <input type="text" [(ngModel)]="profile.firstName" (input)="autoGenerateUserName()"
+                  placeholder="Ej. Juan Carlos"
+                  class="pl-10 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+              </div>
+            </div>
+
+            <!-- Apellido Paterno -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Apellido Paterno <span class="text-red-500">*</span>
+              </label>
+              <input type="text" [(ngModel)]="profile.fatherLastName" (input)="autoGenerateUserName()"
+                placeholder="Ej. Pérez"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+            </div>
+
+            <!-- Apellido Materno -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Apellido Materno</label>
+              <input type="text" [(ngModel)]="profile.motherLastName"
+                placeholder="Ej. González"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sección: Datos de cuenta -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="flex items-center mb-5 pb-4 border-b border-gray-100">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-at text-blue-600 text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">Datos de Cuenta</h3>
+              <p class="text-xs text-gray-500">Credenciales y acceso al sistema</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <!-- Nombre de usuario -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Nombre de Usuario <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 text-sm">&#64;</span>
+                <input type="text" [(ngModel)]="profile.userName"
+                  placeholder="nombre_usuario"
+                  class="pl-8 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+              </div>
+              <p class="text-xs text-gray-400 mt-1">Se genera automáticamente, puedes editarlo</p>
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Correo Electrónico <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                  <i class="fas fa-envelope text-sm"></i>
+                </span>
+                <input type="email" [(ngModel)]="profile.email"
+                  placeholder="ejemplo@correo.com"
+                  class="pl-10 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm" />
+              </div>
+            </div>
+
+            <!-- Tipo de usuario -->
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Tipo de Usuario <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                  <i class="fas fa-user-tag text-sm"></i>
+                </span>
+                <select [(ngModel)]="profile.userType"
+                  class="pl-10 w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-sm appearance-none bg-white">
+                  <option [value]="0" disabled>Selecciona un tipo de usuario</option>
+                  <option *ngFor="let type of userTypes" [value]="type.id">{{ type.name }}</option>
+                </select>
+                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 pointer-events-none">
+                  <i class="fas fa-chevron-down text-xs"></i>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex justify-end space-x-3">
+          <button class="px-5 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+            Cancelar
+          </button>
+          <button (click)="saveProfile()"
+            [disabled]="isSaving"
+            class="px-5 py-2.5 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm font-medium flex items-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed">
+            <i *ngIf="isSaving" class="fas fa-circle-notch fa-spin"></i>
+            <i *ngIf="!isSaving" class="fas fa-save"></i>
+            <span>{{ isSaving ? 'Guardando...' : 'Guardar cambios' }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── TAB: Seguridad ── -->
+      <div *ngIf="activeTab === 'security'">
+
+        <!-- Doble factor de autenticación -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div class="flex items-center mb-5 pb-4 border-b border-gray-100">
+            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-shield-alt text-yellow-600 text-sm"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">Seguridad de la Cuenta</h3>
+              <p class="text-xs text-gray-500">Protege tu cuenta con capas adicionales de seguridad</p>
+            </div>
+          </div>
+
+          <!-- Toggle 2FA -->
+          <div class="flex items-start justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <div class="flex items-start space-x-4">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                [class]="profile.twoFactorAuth ? 'bg-green-100' : 'bg-gray-200'">
+                <i class="fas fa-mobile-alt text-sm"
+                  [class]="profile.twoFactorAuth ? 'text-green-600' : 'text-gray-400'"></i>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-slate-900">Autenticación de Doble Factor (2FA)</p>
+                <p class="text-xs text-gray-500 mt-1">
+                  Añade una capa extra de seguridad. Cada vez que inicies sesión deberás confirmar
+                  tu identidad con un código enviado a tu dispositivo.
+                </p>
+                <span class="inline-flex items-center mt-2 px-2.5 py-0.5 rounded-full text-xs font-medium"
+                  [class]="profile.twoFactorAuth ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'">
+                  <i class="fas fa-circle mr-1 text-xs"></i>
+                  {{ profile.twoFactorAuth ? 'Activado' : 'Desactivado' }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Switch toggle -->
+            <button (click)="toggleTwoFactor()"
+              class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 ml-4"
+              [class]="profile.twoFactorAuth ? 'bg-teal-500' : 'bg-gray-200'"
+              [attr.aria-checked]="profile.twoFactorAuth"
+              role="switch">
+              <span
+                class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition duration-200 ease-in-out"
+                [class]="profile.twoFactorAuth ? 'translate-x-5' : 'translate-x-0'">
+              </span>
+            </button>
+          </div>
+
+          <!-- Info adicional sobre 2FA -->
+          <div *ngIf="profile.twoFactorAuth"
+            class="mt-4 p-4 bg-teal-50 border border-teal-200 rounded-lg flex items-start space-x-3">
+            <i class="fas fa-info-circle text-teal-500 mt-0.5"></i>
+            <div>
+              <p class="text-sm font-medium text-teal-800">2FA habilitado correctamente</p>
+              <p class="text-xs text-teal-600 mt-1">
+                Tu cuenta está protegida. Recibirás un código de verificación en tu correo electrónico
+                o aplicación autenticadora cada vez que inicies sesión.
+              </p>
+            </div>
+          </div>
+
+          <div *ngIf="!profile.twoFactorAuth"
+            class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start space-x-3">
+            <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5"></i>
+            <div>
+              <p class="text-sm font-medium text-yellow-800">Tu cuenta no tiene 2FA activado</p>
+              <p class="text-xs text-yellow-600 mt-1">
+                Te recomendamos habilitar el doble factor de autenticación para mayor seguridad.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex justify-end space-x-3">
+          <button (click)="saveProfile()"
+            [disabled]="isSaving"
+            class="px-5 py-2.5 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors text-sm font-medium flex items-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed">
+            <i *ngIf="isSaving" class="fas fa-circle-notch fa-spin"></i>
+            <i *ngIf="!isSaving" class="fas fa-save"></i>
+            <span>{{ isSaving ? 'Guardando...' : 'Guardar cambios' }}</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

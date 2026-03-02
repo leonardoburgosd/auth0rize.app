@@ -177,10 +177,11 @@ export class DomainComponent implements OnInit {
           code: domain.code,
           name: domain.principalName,
           initial: domain.initial,
-          status: domain.isActive === true ? "inactive" : "active",
+          status: domain.isActive === true ? "active" : "inactive",
           email: domain.principalEmail,
           count: domain.count,
         }));
+        this.applyFilters();
       } else {
         Swal.fire({
           icon: 'error',
@@ -231,7 +232,10 @@ export class DomainComponent implements OnInit {
             title: 'Error no controlado',
             text: MessageDefault.errorConexion
           })
-        }).finally(() => this.domains = this.domains.filter(d => d.code !== id));
+        }).finally(() => {
+          this.domains = this.domains.filter(d => d.code !== id);
+          this.applyFilters();
+        });
       }
     });
   }

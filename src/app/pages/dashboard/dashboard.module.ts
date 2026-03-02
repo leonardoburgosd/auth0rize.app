@@ -15,6 +15,7 @@ import { ApplicationComponent } from "./application/application.component";
 import { ApplicationDetailComponent } from "./application/application-detail/application-detail.component";
 import { ApplicationCardComponent } from "src/app/means/components/cards/application-card/application-card.component";
 import { MenuComponent } from "./menu/menu.component";
+import { ConfigComponent } from "./config/config.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TableComponent } from "../../means/components/table/table.component";
 import { TableAccordionComponent } from "../../means/components/table-accordion/table-accordion.component";
@@ -27,6 +28,7 @@ import { TableAccordionComponent } from "../../means/components/table-accordion/
         UsersComponent,
         ApplicationComponent,
         MenuComponent,
+        ConfigComponent,
         ApplicationDetailComponent,
         AbstractComponent,
         NavUpComponent,

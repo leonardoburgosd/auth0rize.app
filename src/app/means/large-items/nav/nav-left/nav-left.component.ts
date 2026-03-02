@@ -10,10 +10,10 @@ interface MenuItem {
 }
 
 @Component({
-    selector: 'app-nav-left',
-    templateUrl: './nav-left.component.html',
-    styleUrls: ['./nav-left.component.scss'],
-    standalone: false
+  selector: 'app-nav-left',
+  templateUrl: './nav-left.component.html',
+  styleUrls: ['./nav-left.component.scss'],
+  standalone: false
 })
 export class NavLeftComponent implements OnInit {
   @Input() sidebarOpen: boolean = true;
@@ -24,7 +24,7 @@ export class NavLeftComponent implements OnInit {
   menuItems: MenuItem[] = [
     { icon: "fas fa-home", label: "Dashboard", active: true, ruta: "/dashboard" },
     { icon: "fas fa-users", label: "Usuarios", active: false, ruta: "/dashboard/users" },
-    { icon: "fas fa-users", label: "Dominios", active: false, ruta: "/dashboard/domain" },
+    { icon: "fas fa-globe", label: "Dominios", active: false, ruta: "/dashboard/domain" },
   ]
 
   setActiveMenuItem(index: number): void {
@@ -47,5 +47,10 @@ export class NavLeftComponent implements OnInit {
 
   onProfileClick(): void {
     this.profileMenuOpen = !this.profileMenuOpen;
+  }
+
+  goToConfig(): void {
+    this.profileMenuOpen = false;
+    this.router.navigate(['/dashboard/config']);
   }
 }

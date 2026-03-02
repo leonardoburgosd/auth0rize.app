@@ -27,11 +27,12 @@
       <p class="text-sm font-medium">{{userName}}</p>
       <p class="text-xs text-gray-400">{{email}}</p>
     </div>
-    <i *ngIf="sidebarOpen" class="fas fa-chevron-down w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': profileMenuOpen}"></i>
+    <i *ngIf="sidebarOpen" class="fas fa-chevron-down w-4 h-4 text-gray-400"
+      [ngClass]="{'rotate-180': profileMenuOpen}"></i>
   </div>
   <ul *ngIf="profileMenuOpen" class="mt-2 rounded-md py-2 text-sm text-white"
     [ngClass]="{'ml-11': !sidebarOpen, 'ml-0': sidebarOpen}">
-    <li class="px-4 py-2 hover:text-slate-400 cursor-pointer">Configuracion</li>
+    <li class="px-4 py-2 hover:text-slate-400 cursor-pointer" (click)="goToConfig()">Configuración</li>
     <li class="px-4 py-2 hover:text-slate-400 cursor-pointer" (click)="closeSession()">Cerrar sesión</li>
   </ul>
 </div>

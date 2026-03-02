@@ -8,6 +8,7 @@ import { DomainDetailComponent } from './domain/domain-detail/domain-detail.comp
 import { ApplicationComponent } from './application/application.component';
 import { ApplicationDetailComponent } from './application/application-detail/application-detail.component';
 import { MenuComponent } from './menu/menu.component';
+import { ConfigComponent } from './config/config.component';
 
 const routes: Routes = [
     { path: '', component: AbstractComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
     { path: 'users', component: UsersComponent },
     { path: 'application', component: ApplicationComponent },
     { path: 'application/detail/:id', component: ApplicationDetailComponent },
-    { path: 'menu', component: MenuComponent }
+    { path: 'menu', component: MenuComponent },
+    { path: 'config', component: ConfigComponent }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
