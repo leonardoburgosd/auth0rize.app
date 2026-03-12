@@ -1,80 +1,160 @@
-<div class="flex flex-wrap p-4">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-    <div class="bg-slate-800 border-slate-700 p-8 rounded-lg hover:bg-slate-700" (click)="openModalCreate()">
-      <div class="flex flex-col items-center space-y-4">
-        <div class="">
-          <img class="w-14 h-14 object-contain rounded-full bg-white" src="../../../../assets/plus.jpg"
-            alt="New Feature" />
-        </div>
-        <p class="text-center text-sm text-slate-400">
-          Registra un dominio nuevo
-        </p>
-        <div class="">
-          <i class="fa-solid fa-plus mr-2 h-4 w-4"></i>
-          Nuevo dominio
-        </div>
-      </div>
-    </div>
-    @for (application of applications; track application){
-    <application-card [id]="application.id" [code]="application.code" [name]="application.name"
-      [description]="application.description" (onDelete)="deleted(application.id)"></application-card>
-    }
-    <!-- @empty {
-        <h1>There are not items.</h1>
-        } -->
+<div class="p-6 bg-gray-50 min-h-screen">
 
-    @if(isModalCreateView){
-    <div
-      class="fixed rounded-md z-10 inset-0 overflow-y-auto bg-gray-900 bg-opacity-10 flex items-center justify-center text-black m-2">
-      <div class="bg-gray-900 rounded-lg text-white border border-slate-600">
-        <header class="mb-4 border-b border-gray-800 px-5 pt-6 pb-3 flex flex-col justify-between">
-          <div class="flex">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-              Agregar aplicativo
-            </h3>
-            <button (click)="openModalCreate()"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-              <i class="fa-solid fa-xmark"></i>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-        </header>
-        <form [formGroup]="formGroup">
-          <div class="px-12 pt-3 pb-6 flex flex-col text-sm">
-            <input type="text" formControlName="name"
-              class="ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-600 m-1"
-              [ngClass]="{ 'border-yellow-500':
-          formGroup.controls['name'].invalid &&
-                  formGroup.controls['name'].touched
-        }" placeholder="Nombre" />
-            <ul *ngIf="formGroup.controls['name'].invalid && formGroup.controls['name'].touched"
-              class="text-xs font-semibold">
-              <li *ngIf="formGroup.controls['name'].errors?.['required']" class="text-yellow-500 rounded-lg p-1"><i
-                  class="fa-solid fa-triangle-exclamation"></i>
-                Debe ingresar el nombre.</li>
-            </ul>
-
-            <textarea formControlName="description"
-              class='ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-700 m-1'
-              placeholder='Descripción'></textarea>
-            <input
-              class='ring-1 bg-gray-800 w-full rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-gray-700 m-1'
-              type="file" />
-          </div>
-          <footer class="border-t rounded-lg border-gray-800 bg-gray-900 p-5 flex justify-end">
-            <div class="flex items-center">
-              <button (click)="createApplication(formGroup.value)" [disabled]="formGroup.invalid || isLoadingCreate"
-                class="text-white bg-teal-500 disabled:bg-teal-900 hover:bg-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                <p *ngIf="!isLoadingCreate">Agregar</p>
-                <i *ngIf="isLoadingCreate" class="fa-solid fa-spinner fa-spin-pulse"></i>
-              </button>
-              <button (click)="openModalCreate()"
-                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancelar</button>
-            </div>
-          </footer>
-        </form>
-      </div>
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Aplicaciones</h1>
+      <p class="text-gray-500 mt-1 text-sm">Gestiona todas las aplicaciones registradas en el sistema</p>
     </div>
-    }
+    <button (click)="openCreate()"
+      class="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+      <i class="fas fa-plus"></i>
+      Nueva Aplicación
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex items-center justify-center py-20 bg-white rounded-2xl shadow-sm border border-gray-200">
+    <div class="flex flex-col items-center gap-3 text-gray-400">
+      <i class="fas fa-circle-notch fa-spin text-3xl text-teal-500"></i>
+      <span class="text-sm">Cargando aplicaciones...</span>
+    </div>
+  </div>
+
+  <!-- Tabla Reutilizable -->
+  <app-table *ngIf="!isLoading" [data]="applications" [columns]="tableColumns" [actions]="tableActions"
+    [searchFields]="['name', 'description', 'code']" searchPlaceholder="Buscar por nombre, descripción o código..."
+    [itemsPerPage]="10" (actionClick)="onTableAction($event)">
+  </app-table>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  MODAL: CREAR APLICACIÓN                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div *ngIf="showCreateModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fade-in">
+
+    <!-- Header modal -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-teal-100 rounded-xl flex items-center justify-center">
+          <i class="fas fa-cube text-teal-600 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Nueva Aplicación</h2>
+      </div>
+      <button (click)="closeCreate()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body modal -->
+    <div class="px-6 py-5 space-y-4">
+
+      <!-- Nombre -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+          Nombre <span class="text-red-500">*</span>
+        </label>
+        <input type="text" [(ngModel)]="newApp.name" placeholder="Ej. Sistema de RR.HH."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">Descripción</label>
+        <textarea [(ngModel)]="newApp.description" rows="3" placeholder="Breve descripción de la aplicación..."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all resize-none"></textarea>
+      </div>
+
+      <!-- Avatar URL -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">URL del Avatar</label>
+        <input type="text" [(ngModel)]="newApp.avatar" placeholder="https://ejemplo.com/logo.png"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+      </div>
+
+    </div>
+
+    <!-- Footer modal -->
+    <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50">
+      <button (click)="closeCreate()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-all">
+        Cancelar
+      </button>
+      <button (click)="createApplication()" [disabled]="!newApp.name.trim() || isCreating"
+        class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-teal-500 hover:bg-teal-600 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+        <i *ngIf="isCreating" class="fas fa-circle-notch fa-spin"></i>
+        <i *ngIf="!isCreating" class="fas fa-plus"></i>
+        <span>{{ isCreating ? 'Creando...' : 'Crear' }}</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  MODAL: EDITAR APLICACIÓN                                     -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div *ngIf="showEditModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fade-in">
+
+    <!-- Header modal -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center">
+          <i class="fas fa-pen text-blue-600 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Editar Aplicación</h2>
+      </div>
+      <button (click)="closeEdit()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body modal -->
+    <div class="px-6 py-5 space-y-4">
+
+      <!-- Nombre -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+          Nombre <span class="text-red-500">*</span>
+        </label>
+        <input type="text" [(ngModel)]="editApp.name" placeholder="Ej. Sistema de RR.HH."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">Descripción</label>
+        <textarea [(ngModel)]="editApp.description" rows="3" placeholder="Breve descripción de la aplicación..."
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all resize-none"></textarea>
+      </div>
+
+      <!-- Avatar URL -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">URL del Avatar</label>
+        <input type="text" [(ngModel)]="editApp.avatar" placeholder="https://ejemplo.com/logo.png"
+          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+      </div>
+
+    </div>
+
+    <!-- Footer modal -->
+    <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50">
+      <button (click)="closeEdit()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-all">
+        Cancelar
+      </button>
+      <button (click)="updateApplication()" [disabled]="!editApp.name.trim() || isUpdating"
+        class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+        <i *ngIf="isUpdating" class="fas fa-circle-notch fa-spin"></i>
+        <i *ngIf="!isUpdating" class="fas fa-save"></i>
+        <span>{{ isUpdating ? 'Guardando...' : 'Guardar cambios' }}</span>
+      </button>
+    </div>
+
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { userServices } from 'src/app/Data/services/userServices';
 
 interface UserProfile {
     firstName: string;
@@ -46,8 +47,45 @@ export class ConfigComponent implements OnInit {
     avatarPreview: string = '';
     activeTab: 'profile' | 'security' = 'profile';
 
+    constructor(private userService: userServices) { }
+
     ngOnInit(): void {
-        this.avatarPreview = this.getInitialsAvatar();
+        this.loadUserInfo();
+    }
+
+    loadUserInfo(): void {
+        this.userService.info$().then(response => {
+            if (response.success && response.data) {
+                const data = response.data;
+                this.profile = {
+                    firstName: data.firstName,
+                    fatherLastName: data.lastName,
+                    motherLastName: data.motherLastName,
+                    userName: data.userName,
+                    email: data.email,
+                    avatar: data.avatar,
+                    userType: this.mapUserType(data.userType),
+                    twoFactorAuth: data.isDoubleFactorActive
+                };
+                if (this.profile.avatar && this.profile.avatar !== 'default.png') {
+                    // Assuming avatar is a URL or we need to prefix it
+                    this.avatarPreview = this.profile.avatar;
+                } else {
+                    this.avatarPreview = this.getInitialsAvatar();
+                }
+            }
+        });
+    }
+
+    mapUserType(type: string): number {
+        const types: { [key: string]: number } = {
+            'admin': 1,
+            'superadmin': 1,
+            'moderator': 2,
+            'user': 3,
+            'guest': 4
+        };
+        return types[type.toLowerCase()] || 0;
     }
 
     get fullName(): string {
@@ -97,10 +135,39 @@ export class ConfigComponent implements OnInit {
 
     saveProfile(): void {
         this.isSaving = true;
-        // Simula guardado
-        setTimeout(() => {
-            this.isSaving = false;
-        }, 1500);
+
+        if (this.activeTab === 'profile') {
+            const request = {
+                firstName: this.profile.firstName,
+                lastName: this.profile.fatherLastName,
+                motherLastName: this.profile.motherLastName,
+                userName: this.profile.userName,
+                email: this.profile.email,
+                typeId: this.profile.userType
+            };
+
+            this.userService.actualizar$(request).then(response => {
+                this.isSaving = false;
+                if (response.success) {
+                    console.log('Información personal guardada correctamente');
+                    // Recargar información si es necesario
+                    this.loadUserInfo();
+                }
+            }).catch(error => {
+                this.isSaving = false;
+                console.error('Error al guardar información personal', error);
+            });
+        } else if (this.activeTab === 'security') {
+            this.userService.doubleFactor$(this.profile.twoFactorAuth).then(response => {
+                this.isSaving = false;
+                if (response.success) {
+                    console.log('Configuración de seguridad guardada');
+                }
+            }).catch(error => {
+                this.isSaving = false;
+                console.error('Error al guardar configuración de seguridad', error);
+            });
+        }
     }
 
     setTab(tab: 'profile' | 'security'): void {

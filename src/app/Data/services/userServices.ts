@@ -2,8 +2,10 @@ import { Injectable } from "@angular/core";
 import { RestResponse } from "../common/restResponse";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
 import { createFirstUserRequest } from "../dto/user/request/createFirstUserRequest";
+import { updateUserRequest } from "../dto/user/request/updateUserRequest";
 import { HttpMethodString } from "../common/httpMethodString";
 import { getUserResponse } from "../dto/user/response/getUserResponse";
+import { getUserInfoResponse } from "../dto/user/response/getUserInfoResponse";
 import { CookieService } from "ngx-cookie-service";
 import { getAuthHeaders } from "../common/getAuthHeaders";
 import { environment } from "src/environments/environment";
@@ -63,5 +65,29 @@ export class userServices {
       headers: getAuthHeaders(this.cookieService)
     })
       .then(response => response.json() as Promise<RestResponse<getUserResponse>>);
+  }
+
+  info$(): Promise<RestResponse<getUserInfoResponse>> {
+    return fetch(`${this.api}/info`, {
+      method: HttpMethodString.get,
+      headers: getAuthHeaders(this.cookieService)
+    })
+      .then(response => response.json() as Promise<RestResponse<getUserInfoResponse>>);
+  }
+
+  doubleFactor$(active: boolean): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/double-factor`, {
+      method: HttpMethodString.put,
+      body: JSON.stringify(active),
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
+
+  actualizar$(user: updateUserRequest): Promise<RestResponse<boolean>> {
+    return fetch(this.api, {
+      method: HttpMethodString.put,
+      body: JSON.stringify(user),
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 }

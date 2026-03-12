@@ -29,6 +29,7 @@ export class NavLeftComponent implements OnInit, OnDestroy {
     { icon: "fas fa-home", label: "Dashboard", ruta: "/dashboard" },
     { icon: "fas fa-users", label: "Usuarios", ruta: "/dashboard/users" },
     { icon: "fas fa-globe", label: "Dominios", ruta: "/dashboard/domain" },
+    { icon: "fas fa-cubes", label: "Aplicaciones", ruta: "/dashboard/application" },
   ]
 
   constructor(private router: Router, private cookieService: CookieService) { }

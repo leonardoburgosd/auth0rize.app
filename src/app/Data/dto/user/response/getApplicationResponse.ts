@@ -1,6 +1,15 @@
-export class getApplicationResponse {
+export class ApplicationItemResponse {
     id!: number;
-    code!: string;
     name!: string;
+    code!: string;
     description!: string;
+    avatar!: string;
+    isDeleted!: boolean;
+    registrationDate!: string;
+}
+
+export class getApplicationResponse {
+    total!: number;
+    page!: number;
+    applications!: ApplicationItemResponse[];
 }
