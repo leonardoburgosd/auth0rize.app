@@ -61,4 +61,29 @@ export class applicationServices {
       headers: this.headers
     }).then(response => response.json() as Promise<RestResponse<boolean>>);
   }
+
+  // GET /api/v1/Application/{id}/companies
+  getAssignedCompanies$(id: number): Promise<RestResponse<any>> {
+    return fetch(`${this.api}/${id}/companies`, {
+      method: HttpMethodString.get,
+      headers: this.headers
+    }).then(response => response.json());
+  }
+
+  // POST /api/v1/Application/{id}/companies
+  assignCompany$(appId: number, companyId: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/${appId}/companies`, {
+      method: HttpMethodString.post,
+      body: JSON.stringify({ companyId }),
+      headers: this.headers
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
+
+  // DELETE /api/v1/Application/{id}/companies/{companyId}
+  unassignCompany$(appId: number, companyId: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/${appId}/companies/${companyId}`, {
+      method: HttpMethodString.delete,
+      headers: this.headers
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
 }

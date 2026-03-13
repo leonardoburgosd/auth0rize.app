@@ -52,9 +52,11 @@
                     <td *ngFor="let col of columns" class="px-6 py-4">
                         <!-- User/Profile Type -->
                         <div *ngIf="col.type === 'user'" class="flex items-center">
-                            <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
-                                <span class="text-sm font-medium text-teal-600">{{ getValue(item,
-                                    col.key).charAt(0).toUpperCase() }}</span>
+                            <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
+                                <img *ngIf="item.avatar" [src]="item.avatar" class="w-full h-full object-cover" />
+                                <span *ngIf="!item.avatar" class="text-sm font-medium text-teal-600">
+                                    {{ getValue(item, col.key) ? getValue(item, col.key).charAt(0).toUpperCase() : '' }}
+                                </span>
                             </div>
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">{{ getValue(item, col.key) }}</div>

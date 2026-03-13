@@ -158,3 +158,94 @@
 
   </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--  MODAL: ASIGNAR NEGOCIO                                       -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div *ngIf="showAssignModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-fade-in">
+
+    <!-- Header modal -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-indigo-100 rounded-xl flex items-center justify-center">
+          <i class="fas fa-briefcase text-indigo-600 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Gestionar Negocios</h2>
+      </div>
+      <button (click)="closeAssign()" class="text-gray-400 hover:text-gray-600 transition-colors">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Body modal -->
+    <div class="px-6 py-5 flex flex-col gap-6">
+      
+      <!-- Buscador para Asignar -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Asignar nuevo negocio
+        </label>
+        <app-search-select 
+            endpoint="Company"
+            searchParam="search"
+            resultPath="data.companies"
+            displayField="name"
+            valueField="id"
+            subtextField="registrationDate"
+            placeholder="Buscar por nombre de negocio..."
+            (itemSelected)="onNegocioSelected($event)"
+            [(ngModel)]="selectedCompanyId">
+        </app-search-select>
+        <p class="text-[10px] text-gray-400 mt-2 italic px-1">
+          * La asignación se realiza automáticamente al seleccionar un elemento de la lista.
+        </p>
+      </div>
+
+      <!-- Lista de Negocios Asignados -->
+      <div class="flex flex-col">
+        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 px-1">
+          Negocios vinculados ({{ assignedNegocios.length }})
+        </label>
+        
+        <div class="max-h-52 overflow-y-auto pr-1 custom-scrollbar">
+          <!-- Empty state -->
+          <div *ngIf="assignedNegocios.length === 0" class="py-10 border-2 border-dashed border-gray-100 rounded-xl flex flex-col items-center justify-center text-gray-300">
+             <i class="fas fa-link-slash text-2xl mb-2"></i>
+             <span class="text-xs font-medium">No hay negocios asignados</span>
+          </div>
+
+          <!-- List -->
+          <ul class="space-y-2">
+            <li *ngFor="let negocio of assignedNegocios" class="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-white border border-gray-100 flex items-center justify-center overflow-hidden flex-shrink-0">
+                  <img *ngIf="negocio.avatar" [src]="negocio.avatar" class="w-full h-full object-cover" />
+                  <span *ngIf="!negocio.avatar" class="text-xs font-bold text-indigo-600">{{ negocio.name.substring(0,2).toUpperCase() }}</span>
+                </div>
+                <div class="flex flex-col min-w-0">
+                  <span class="text-sm font-semibold text-slate-800 truncate">{{ negocio.name }}</span>
+                  <span class="text-[10px] text-gray-400 truncate">{{ negocio.domainCode }}</span>
+                </div>
+              </div>
+              <button (click)="removeAssignment(negocio.id)" class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all" title="Eliminar asignación">
+                <i class="fas fa-trash-alt text-xs"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer modal -->
+    <div class="flex items-center justify-end px-6 py-4 border-t border-gray-100 bg-gray-50">
+      <button (click)="closeAssign()"
+        class="px-6 py-2 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-900 rounded-xl transition-all shadow-sm">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+</div>
