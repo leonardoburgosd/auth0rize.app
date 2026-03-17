@@ -15,7 +15,7 @@ const routes: Routes = [
     { path: '', component: AbstractComponent },
     { path: 'account', component: AccountComponent },
     { path: 'domain', component: DomainComponent },
-    { path: 'domain/detail', component: DomainDetailComponent },
+    { path: 'domain/detail/:code', component: DomainDetailComponent },
     { path: 'users', component: UsersComponent },
     { path: 'application', component: ApplicationComponent },
     { path: 'application/detail/:id', component: ApplicationDetailComponent },

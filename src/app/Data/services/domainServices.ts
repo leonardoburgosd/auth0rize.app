@@ -39,4 +39,19 @@ export class domainServices {
       body: JSON.stringify(domain)
     }).then(response => response.json() as Promise<RestResponse<createDomainResponse>>);
   }
+
+  assignUser$(domainCode: string, userId: number, roleId: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/${domainCode}/users`, {
+      method: HttpMethodString.post,
+      headers: getAuthHeaders(this.cookieService),
+      body: JSON.stringify({ userId, roleId })
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
+
+  removeUser$(domainCode: string, userId: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/${domainCode}/users/${userId}`, {
+      method: HttpMethodString.delete,
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
 }

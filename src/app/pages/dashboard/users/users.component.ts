@@ -4,6 +4,7 @@ import { userServices } from '../../../Data/services/userServices';
 import Swal from 'sweetalert2';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { typeServices } from '../../../Data/services/typeServices';
+import { createUserRequest } from 'src/app/Data/dto/user/request/createUserRequest';
 
 interface User {
   id: number
@@ -52,8 +53,11 @@ export class UsersComponent implements OnInit {
     userName: '',
     email: '',
     password: '',
-    type: 0
+    type: 0,
+    domainId: 0
   }
+
+  isCreating: boolean = false;
 
   filteredUsers: User[] = []
   selectedUsers: number[] = []
@@ -233,8 +237,9 @@ export class UsersComponent implements OnInit {
         motherLastName: '',
         userName: '',
         email: user.email,
-        password: '', // Contraseña oculta en edición
-        type: this.roles.find(r => r.name === user.role)?.id || 0
+        password: '',
+        type: this.roles.find(r => r.name === user.role)?.id || 0,
+        domainId: 0
       }
 
       // Consultar servicio para obtener detalles completos
@@ -265,7 +270,8 @@ export class UsersComponent implements OnInit {
         userName: '',
         email: '',
         password: this.generatePassword(),
-        type: 0
+        type: 0,
+        domainId: 0
       }
     }
     this.showUserModal = true
@@ -281,7 +287,8 @@ export class UsersComponent implements OnInit {
       userName: '',
       email: '',
       password: '',
-      type: 0
+      type: 0,
+      domainId: 0
     }
   }
 
@@ -311,6 +318,34 @@ export class UsersComponent implements OnInit {
 
       this.userForm.userName = (p1 + p2 + p3).toLowerCase().replace(/\s/g, '');
     }
+  }
+
+  createUser(): void {
+    const { name, lastName, motherLastName, userName, email, password, type, domainId } = this.userForm;
+    if (!name.trim() || !lastName.trim() || !userName.trim() || !email.trim() || !password.trim() || !type) {
+      Swal.fire({ icon: 'warning', title: 'Atención', text: 'Completa todos los campos requeridos.' });
+      return;
+    }
+
+    const request: createUserRequest = {
+      name, lastName, motherLastName, userName, email, password,
+      typeUserId: type,
+      domainId: domainId || 0
+    };
+
+    this.isCreating = true;
+    this.userServices.crear$(request)
+      .then(res => {
+        if (res.success) {
+          Swal.fire({ icon: 'success', title: 'Éxito', text: 'Usuario creado correctamente.', timer: 2000, showConfirmButton: false });
+          this.closeUserModal();
+          this.obtenerUsuarios();
+        } else {
+          Swal.fire({ icon: 'warning', title: 'Atención', text: res.message });
+        }
+      })
+      .catch(() => Swal.fire({ icon: 'error', title: 'Error', text: MessageDefault.errorConexion }))
+      .finally(() => this.isCreating = false);
   }
 
   deleteUser(userId: number): void {

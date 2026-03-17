@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { RestResponse } from "../common/restResponse";
 import { registerSuperadminResponse } from "../dto/user/response/registerSuperadminResponse";
 import { createFirstUserRequest } from "../dto/user/request/createFirstUserRequest";
+import { createUserRequest } from "../dto/user/request/createUserRequest";
 import { updateUserRequest } from "../dto/user/request/updateUserRequest";
 import { HttpMethodString } from "../common/httpMethodString";
 import { getUserResponse } from "../dto/user/response/getUserResponse";
@@ -28,16 +29,15 @@ export class userServices {
     }).then(response => response.json() as Promise<RestResponse<registerSuperadminResponse>>);
   }
 
-  crear$() {
+  crear$(user: createUserRequest): Promise<RestResponse<boolean>> {
     return fetch(this.api, {
       method: HttpMethodString.post,
-      headers: getAuthHeaders(this.cookieService)
-    })
-      .then(response => response.json() as Promise<RestResponse<boolean>>);
+      headers: getAuthHeaders(this.cookieService),
+      body: JSON.stringify(user)
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
   }
 
   lista$(): Promise<RestResponse<getUserResponse>> {
-    console.log(getAuthHeaders(this.cookieService));
     return fetch(this.api, {
       method: HttpMethodString.get,
       headers: getAuthHeaders(this.cookieService)
@@ -87,6 +87,20 @@ export class userServices {
     return fetch(this.api, {
       method: HttpMethodString.put,
       body: JSON.stringify(user),
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<boolean>>);
+  }
+
+  listByDomain$(domainCode: string): Promise<RestResponse<getUserResponse>> {
+    return fetch(`${this.api}/domain/${domainCode}`, {
+      method: HttpMethodString.get,
+      headers: getAuthHeaders(this.cookieService)
+    }).then(response => response.json() as Promise<RestResponse<getUserResponse>>);
+  }
+
+  removeFromDomain$(domainCode: string, userId: number): Promise<RestResponse<boolean>> {
+    return fetch(`${this.api}/domain/${domainCode}/${userId}`, {
+      method: HttpMethodString.delete,
       headers: getAuthHeaders(this.cookieService)
     }).then(response => response.json() as Promise<RestResponse<boolean>>);
   }

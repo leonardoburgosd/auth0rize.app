@@ -44,6 +44,8 @@ export class ApplicationComponent implements OnInit {
     editApp: createApplicationRequest = new createApplicationRequest();
     editAppId: number = 0;
 
+    selectedApplications: number[] = [];
+
     // ── Modal Asignar Negocio ─────────────────────────────────────
     showAssignModal: boolean = false;
     isAssigning: boolean = false;
@@ -178,8 +180,8 @@ export class ApplicationComponent implements OnInit {
         this.appService.getAssignedCompanies$(app.id)
             .then(res => {
                 if (res.success && res.data) {
-                    // Si el backend devuelve el array directamente en data o en una propiedad
-                    this.assignedNegocios = Array.isArray(res.data) ? res.data : (res.data.companies || []);
+                    const raw = Array.isArray(res.data) ? res.data : (res.data.companies || []);
+                    this.assignedNegocios = raw.map((n: any) => ({ ...n, id: n.id ?? n.Id ?? n.companyId }));
                 }
             })
             .catch(() => this.showError());
@@ -192,18 +194,26 @@ export class ApplicationComponent implements OnInit {
     // Gestionar la selección del search-select
     onNegocioSelected(negocio: any): void {
         if (!negocio) return;
-        
-        if (this.assignedNegocios.find(n => n.id === negocio.id)) {
+
+        // Normalizar id: el backend puede devolver 'Id' (Pascal) o 'id' (camel)
+        const negocioId: number = negocio.id ?? negocio.Id ?? negocio.companyId;
+
+        if (!negocioId) {
+            this.showError();
+            return;
+        }
+
+        if (this.assignedNegocios.find(n => n.id === negocioId)) {
             Swal.fire({ icon: 'info', text: 'Este negocio ya está asignado.' });
             this.selectedCompanyId = null;
             return;
         }
 
         this.isAssigning = true;
-        this.appService.assignCompany$(this.assignAppId, negocio.id)
+        this.appService.assignCompany$(this.assignAppId, negocioId)
             .then(res => {
                 if (res.success) {
-                    this.assignedNegocios.push(negocio);
+                    this.assignedNegocios.push({ ...negocio, id: negocioId });
                     this.showSuccess('Negocio asignado correctamente.');
                     this.selectedCompanyId = null;
                 } else {
@@ -300,5 +310,41 @@ export class ApplicationComponent implements OnInit {
 
     private showError(): void {
         Swal.fire({ icon: 'error', title: 'Error', text: MessageDefault.errorConexion });
+    }
+
+    handleSelectionChange(selected: any[]): void {
+        this.selectedApplications = selected.map(item => item.id);
+    }
+
+    deleteSelectedApplications(): void {
+        if (this.selectedApplications.length === 0) return;
+        Swal.fire({
+            title: `¿Eliminar ${this.selectedApplications.length} aplicación(es)?`,
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'px-6 py-2.5 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all',
+                cancelButton: 'px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all'
+            }
+        }).then(result => {
+            if (!result.isConfirmed) return;
+            const ids = [...this.selectedApplications];
+            Promise.all(ids.map(id => this.appService.deleted$(id)))
+                .then(results => {
+                    const failed = results.filter(r => !r.success).length;
+                    this.applications = this.applications.filter(a => !ids.includes(a.id));
+                    this.selectedApplications = [];
+                    if (failed > 0) {
+                        this.showWarning(`${failed} aplicación(es) no pudieron eliminarse.`);
+                    } else {
+                        this.showSuccess(`${ids.length} aplicación(es) eliminada(s) correctamente.`);
+                    }
+                })
+                .catch(() => this.showError());
+        });
     }
 }

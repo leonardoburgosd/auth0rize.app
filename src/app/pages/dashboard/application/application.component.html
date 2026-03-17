@@ -13,18 +13,18 @@
     </button>
   </div>
 
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="flex items-center justify-center py-20 bg-white rounded-2xl shadow-sm border border-gray-200">
-    <div class="flex flex-col items-center gap-3 text-gray-400">
-      <i class="fas fa-circle-notch fa-spin text-3xl text-teal-500"></i>
-      <span class="text-sm">Cargando aplicaciones...</span>
-    </div>
-  </div>
-
   <!-- Tabla Reutilizable -->
-  <app-table *ngIf="!isLoading" [data]="applications" [columns]="tableColumns" [actions]="tableActions"
+  <app-table [data]="applications" [columns]="tableColumns" [actions]="tableActions"
     [searchFields]="['name', 'description', 'code']" searchPlaceholder="Buscar por nombre, descripción o código..."
-    [itemsPerPage]="10" (actionClick)="onTableAction($event)">
+    [itemsPerPage]="10" (actionClick)="onTableAction($event)"
+    (selectionChange)="handleSelectionChange($event)">
+
+    <div bulk-actions class="flex space-x-2">
+      <button (click)="deleteSelectedApplications()"
+        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors">
+        Eliminar seleccionados
+      </button>
+    </div>
   </app-table>
 
 </div>
@@ -181,13 +181,13 @@
 
     <!-- Body modal -->
     <div class="px-6 py-5 flex flex-col gap-6">
-      
+
       <!-- Buscador para Asignar -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
           Asignar nuevo negocio
         </label>
-        <app-search-select 
+        <app-search-select
             endpoint="Company"
             searchParam="search"
             resultPath="data.companies"
@@ -208,7 +208,7 @@
         <label class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 px-1">
           Negocios vinculados ({{ assignedNegocios.length }})
         </label>
-        
+
         <div class="max-h-52 overflow-y-auto pr-1 custom-scrollbar">
           <!-- Empty state -->
           <div *ngIf="assignedNegocios.length === 0" class="py-10 border-2 border-dashed border-gray-100 rounded-xl flex flex-col items-center justify-center text-gray-300">

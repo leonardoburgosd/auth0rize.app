@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { createDomainRequest } from 'src/app/Data/dto/user/request/createDomainRequest';
 import { getDomainResponse } from 'src/app/Data/dto/user/response/getDomainResponse';
+import { userListResponse } from 'src/app/Data/dto/user/response/getUserResponse';
+import { getTypeResponse } from 'src/app/Data/dto/user/response/getTypeResponse';
 import { domainServices } from 'src/app/Data/services/domainServices';
+import { userServices } from 'src/app/Data/services/userServices';
+import { typeServices } from 'src/app/Data/services/typeServices';
 import Swal from 'sweetalert2';
 
 interface Domain {
@@ -139,6 +144,7 @@ export class DomainComponent implements OnInit {
   ];
 
   tableActions: any[] = [
+    { id: 'design', icon: 'fas fa-paint-brush', class: 'text-purple-600 hover:text-purple-900', title: 'Diseñar' },
     { id: 'edit', icon: 'fas fa-edit', class: 'text-teal-600 hover:text-teal-900', title: 'Editar' },
     { id: 'delete', icon: 'fas fa-trash', class: 'text-red-600 hover:text-red-900', title: 'Eliminar' }
   ];
@@ -153,7 +159,22 @@ export class DomainComponent implements OnInit {
   public total: number = 0;
   public active: number = 0;
   public inactive: number = 0;
-  constructor(private formBuilder: FormBuilder, private domain: domainServices) { }
+  // ── Modal Asignar Usuarios ───────────────────────────────────
+  showAddUsersModal: boolean = false;
+  addUsersDomainCode: string = '';
+  availableUsersList: userListResponse[] = [];
+  roles: getTypeResponse[] = [];
+  selectedUserIds: Set<number> = new Set();
+  selectedRoleId: number = 0;
+  isAssigningUsers: boolean = false;
+  isLoadingUsers: boolean = false;
+
+  // ── Usuarios por dominio (expanded) ─────────────────────────
+  domainUsersMap: Map<string, userListResponse[]> = new Map();
+  domainUsersLoadingMap: Map<string, boolean> = new Map();
+  domainUsersFilterMap: Map<string, string> = new Map();
+
+  constructor(private formBuilder: FormBuilder, private domain: domainServices, private userSvc: userServices, private typeSvc: typeServices, private router: Router) { }
 
   ngOnInit(): void {
     this.applyFilters();
@@ -519,11 +540,150 @@ export class DomainComponent implements OnInit {
   }
 
   handleTableAction(event: { actionId: string, item: any }): void {
-    if (event.actionId === 'edit') {
+    if (event.actionId === 'design') {
+      this.router.navigate(['/dashboard/domain/detail', event.item.code]);
+    } else if (event.actionId === 'edit') {
       this.openDomainModal(event.item);
     } else if (event.actionId === 'delete') {
       this.deleteDomain(event.item.code);
     }
+  }
+
+  // ── Usuarios expandidos por dominio ──────────────────────────
+  loadDomainUsers(domainCode: string): void {
+    if (this.domainUsersMap.has(domainCode)) return; // ya cargado
+    this.domainUsersLoadingMap.set(domainCode, true);
+    this.userSvc.listByDomain$(domainCode)
+      .then(res => {
+        if (res.success) {
+          this.domainUsersMap.set(domainCode, res.data.users ?? []);
+        } else {
+          this.domainUsersMap.set(domainCode, []);
+        }
+      })
+      .catch(() => this.domainUsersMap.set(domainCode, []))
+      .finally(() => this.domainUsersLoadingMap.set(domainCode, false));
+  }
+
+  getDomainUsersFiltered(domainCode: string): userListResponse[] {
+    const users = this.domainUsersMap.get(domainCode) ?? [];
+    const filter = (this.domainUsersFilterMap.get(domainCode) ?? '').toLowerCase();
+    if (!filter) return users;
+    return users.filter(u =>
+      u.name.toLowerCase().includes(filter) ||
+      u.email.toLowerCase().includes(filter)
+    );
+  }
+
+  isDomainUsersLoading(domainCode: string): boolean {
+    return this.domainUsersLoadingMap.get(domainCode) ?? false;
+  }
+
+  getDomainUserFilter(domainCode: string): string {
+    return this.domainUsersFilterMap.get(domainCode) ?? '';
+  }
+
+  setDomainUserFilter(domainCode: string, value: string): void {
+    this.domainUsersFilterMap.set(domainCode, value);
+  }
+
+  reloadDomainUsers(domainCode: string): void {
+    this.domainUsersMap.delete(domainCode);
+    this.loadDomainUsers(domainCode);
+  }
+
+  removeUserFromDomainApi(domainCode: string, userId: number): void {
+    Swal.fire({
+      title: '¿Eliminar usuario?',
+      text: 'El usuario dejará de estar vinculado a este dominio.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      heightAuto: false,
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'px-6 py-2.5 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all',
+        cancelButton: 'px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all'
+      }
+    }).then(result => {
+      if (!result.isConfirmed) return;
+      this.userSvc.removeFromDomain$(domainCode, userId)
+        .then(res => {
+          if (res.success) {
+            const current = this.domainUsersMap.get(domainCode) ?? [];
+            this.domainUsersMap.set(domainCode, current.filter(u => u.id !== userId));
+            Swal.fire({ icon: 'success', title: 'Eliminado', text: 'Usuario desvinculado correctamente.', timer: 2000, showConfirmButton: false });
+          } else {
+            Swal.fire({ icon: 'warning', title: 'Atención', text: res.message });
+          }
+        })
+        .catch(() => Swal.fire({ icon: 'error', title: 'Error', text: MessageDefault.errorConexion }));
+    });
+  }
+
+  // ── Asignar Usuarios ─────────────────────────────────────────
+  openAddUsersModal(domainCode: string): void {
+    this.addUsersDomainCode = domainCode;
+    this.selectedUserIds = new Set();
+    this.selectedRoleId = 0;
+    this.showAddUsersModal = true;
+    this.isLoadingUsers = true;
+
+    // IDs ya asignados a este dominio
+    const assignedIds = new Set((this.domainUsersMap.get(domainCode) ?? []).map(u => u.id));
+
+    Promise.all([
+      this.userSvc.lista$(),
+      this.typeSvc.lista$()
+    ]).then(([usersRes, rolesRes]) => {
+      if (rolesRes.success) this.roles = rolesRes.data;
+      if (usersRes.success) {
+        // Excluir usuarios ya asignados al dominio
+        this.availableUsersList = usersRes.data.users.filter(u => !assignedIds.has(u.id));
+      }
+    }).catch(() => {
+      Swal.fire({ icon: 'error', title: 'Error', text: MessageDefault.errorConexion });
+    }).finally(() => this.isLoadingUsers = false);
+  }
+
+  closeAddUsersModal(): void {
+    this.showAddUsersModal = false;
+  }
+
+  toggleUserSelection(userId: number): void {
+    if (this.selectedUserIds.has(userId)) {
+      this.selectedUserIds.delete(userId);
+    } else {
+      this.selectedUserIds.add(userId);
+    }
+  }
+
+  confirmAssignUsers(): void {
+    if (this.selectedUserIds.size === 0) return;
+    this.isAssigningUsers = true;
+
+    const requests = Array.from(this.selectedUserIds).map(userId => {
+      const user = this.availableUsersList.find(u => u.id === userId);
+      // Resolver roleId por el type del usuario; si no coincide usar el primero disponible
+      const roleId = this.roles.find(r => r.name === user?.type)?.id ?? (this.roles[0]?.id ?? 0);
+      return this.domain.assignUser$(this.addUsersDomainCode, userId, roleId);
+    });
+
+    Promise.all(requests)
+      .then(results => {
+        const failed = results.filter(r => !r.success);
+        if (failed.length === 0) {
+          Swal.fire({ icon: 'success', title: 'Éxito', text: 'Usuarios asignados correctamente.', timer: 2000, showConfirmButton: false });
+          this.showAddUsersModal = false;
+          this.getDomain();
+          this.reloadDomainUsers(this.addUsersDomainCode);
+        } else {
+          Swal.fire({ icon: 'warning', title: 'Atención', text: `${failed.length} usuario(s) no pudieron ser asignados.` });
+        }
+      })
+      .catch(() => Swal.fire({ icon: 'error', title: 'Error', text: MessageDefault.errorConexion }))
+      .finally(() => this.isAssigningUsers = false);
   }
   //#endregion
 }

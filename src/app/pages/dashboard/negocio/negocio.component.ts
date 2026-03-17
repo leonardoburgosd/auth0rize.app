@@ -37,6 +37,8 @@ export class NegocioComponent implements OnInit {
     editNegocio: createNegocioRequest = new createNegocioRequest();
     editNegocioId: number = 0;
 
+    selectedNegocios: number[] = [];
+
     constructor(private negocioService: negocioServices) { }
 
     ngOnInit(): void {
@@ -159,6 +161,42 @@ export class NegocioComponent implements OnInit {
                     })
                     .catch(() => this.showError());
             }
+        });
+    }
+
+    handleSelectionChange(selected: any[]): void {
+        this.selectedNegocios = selected.map(item => item.id);
+    }
+
+    deleteSelectedNegocios(): void {
+        if (this.selectedNegocios.length === 0) return;
+        Swal.fire({
+            title: `¿Eliminar ${this.selectedNegocios.length} negocio(s)?`,
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'px-6 py-2.5 bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all',
+                cancelButton: 'px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold rounded-xl shadow-sm mx-2 transition-all'
+            }
+        }).then(result => {
+            if (!result.isConfirmed) return;
+            const ids = [...this.selectedNegocios];
+            Promise.all(ids.map(id => this.negocioService.deleted$(id)))
+                .then(results => {
+                    const failed = results.filter(r => !r.success).length;
+                    this.negocios = this.negocios.filter(n => !ids.includes(n.id));
+                    this.selectedNegocios = [];
+                    if (failed > 0) {
+                        this.showWarning(`${failed} negocio(s) no pudieron eliminarse.`);
+                    } else {
+                        this.showSuccess(`${ids.length} negocio(s) eliminado(s) correctamente.`);
+                    }
+                })
+                .catch(() => this.showError());
         });
     }
 

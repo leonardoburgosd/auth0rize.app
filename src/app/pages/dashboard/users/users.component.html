@@ -201,13 +201,28 @@
             <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
           </select>
         </div>
+        <div class="md:col-span-2" *ngIf="!editingUser">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Dominio <span class="text-gray-400 text-xs">(opcional)</span></label>
+          <app-search-select
+            endpoint="Domain"
+            searchParam="search"
+            resultPath="data.domains"
+            displayField="code"
+            valueField="id"
+            placeholder="Buscar dominio..."
+            [(ngModel)]="userForm.domainId">
+          </app-search-select>
+        </div>
       </div>
       <div class="flex justify-end space-x-3">
         <button (click)="closeUserModal()"
           class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
           Cancelar
         </button>
-        <button class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
+        <button (click)="editingUser ? null : createUser()"
+          [disabled]="isCreating"
+          class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+          <i *ngIf="isCreating" class="fas fa-spinner fa-spin"></i>
           {{ editingUser ? 'Actualizar' : 'Crear' }}
         </button>
       </div>

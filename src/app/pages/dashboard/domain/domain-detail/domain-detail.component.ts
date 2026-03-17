@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-domain-detail',
@@ -8,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DomainDetailComponent implements OnInit {
 
-  constructor() { }
+    domainCode: string = '';
 
-  ngOnInit(): void {
-  }
+    constructor(private route: ActivatedRoute) { }
 
+    ngOnInit(): void {
+        this.domainCode = this.route.snapshot.paramMap.get('code') ?? '';
+    }
 }
