@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 import { AccountComponent } from './account/account.component';
 import { DomainComponent } from './domain/domain.component';
 import { UsersComponent } from './users/users.component';
@@ -17,6 +18,7 @@ import { ApplicationCardComponent } from "src/app/means/components/cards/applica
 import { MenuComponent } from "./menu/menu.component";
 import { ConfigComponent } from "./config/config.component";
 import { NegocioComponent } from "./negocio/negocio.component";
+import { DomainDetailComponent } from "./domain/domain-detail/domain-detail.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TableComponent } from "../../means/components/table/table.component";
 import { TableAccordionComponent } from "../../means/components/table-accordion/table-accordion.component";
@@ -41,10 +43,12 @@ import { MeansModule } from "../../means/means.module";
         ApplicationCardComponent,
         TableComponent,
         TableAccordionComponent,
-        NegocioComponent
+        NegocioComponent,
+        DomainDetailComponent
     ],
     imports: [
         CommonModule,
+        RouterModule,
         DashboardRoutingModule,
         MeansModule,
         ReactiveFormsModule,

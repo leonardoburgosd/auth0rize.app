@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  /* Cancela el p-6 del <main> del dashboard */
+  margin: -1.5rem;
+  /* Ocupa el alto disponible dentro del main */
+  height: calc(100vh - 64px); /* 64px = altura aprox del header del dashboard */
+  overflow: hidden;
+}
+
+/* CodeMirror full height */
+:host ::ng-deep .CodeMirror {
+  height: 100%;
+  font-size: 13px;
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+}
+
+:host ::ng-deep .CodeMirror-scroll {
+  height: 100%;
+}
