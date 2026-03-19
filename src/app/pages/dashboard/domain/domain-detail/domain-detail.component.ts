@@ -22,36 +22,29 @@ export class DomainDetailComponent implements OnInit, AfterViewInit {
     private cssEditor: any;
     private updateTimer: any;
 
-    htmlCode: string = `<div class="login-wrapper">
-  <div class="login-card">
-    <div class="login-logo">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-        <rect width="40" height="40" rx="12" fill="#14b8a6"/>
-        <path d="M20 10a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 14c-6.627 0-12 2.686-12 6v1h24v-1c0-3.314-5.373-6-12-6z" fill="white"/>
-      </svg>
+    htmlCode: string = `<div class="bg-slate-900 flex items-center justify-center min-h-screen flex-col">
+  <div class="w-[462px] h-[512px] bg-blue-50 rounded-[10px] border border-sky-700">
+      <img class="w-[55px] h-14 mx-auto block mt-16" src="../../../assets/icon.png" />
+    <h1 class="text-black text-xl text-center mt-6">Inicia sesión</h1>
+    <h4 class="text-black text-sm text-center mt-3 mb-12">Si eres miembro ingresa tus datos</h4>
+
+    <div class="pl-10 pr-10">
+      <input class="bg-white border border-neutral-150 px-4 py-2 m-0 w-full ring-1 rounded-md outline-none" type="text"
+        placeholder="Nombre de usuario o correo" />
+      <div class="w-full text-left pl-1 pt-2 pb-5">
+        <a href="#" class="text-sky-600 text-sm">¿Has olvidado tu nombre de usuario?</a>
+      </div>
+      <div class="flex flex-wrap justify-center">
+        <a href="#"
+          class="flex items-center font-semibold h-10 rounded pl-7 pr-7 text-black text-sm mt-4 right-auto m-auto hover:bg-blue-100">
+          Registrarme
+        </a>
+        <button type="submit"
+          class="h-10 bg-[#0f172a] rounded pl-7 pr-7 text-white text-sm mt-4 right-auto m-auto hover:bg-[#15213b]">
+          Siguiente
+        </button>
+      </div>
     </div>
-    <h1>Bienvenido</h1>
-    <p class="subtitle">Inicia sesión en tu cuenta</p>
-
-    <form>
-      <div class="field">
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" placeholder="usuario@correo.com" />
-      </div>
-      <div class="field">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="••••••••" />
-      </div>
-      <div class="options">
-        <label class="remember">
-          <input type="checkbox" /> Recordarme
-        </label>
-        <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
-      </div>
-      <button type="submit" class="btn-login">Iniciar sesión</button>
-    </form>
-
-    <p class="register">¿No tienes cuenta? <a href="#">Regístrate</a></p>
   </div>
 </div>`;
 
@@ -61,141 +54,175 @@ export class DomainDetailComponent implements OnInit, AfterViewInit {
   padding: 0;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f1f5f9;
-  min-height: 100vh;
-}
-
-.login-wrapper {
-  min-height: 100vh;
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%);
-  padding: 1rem;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-.login-card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
-
-.login-logo {
+.bg-slate-900 {
+  background: #0f172a;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  min-height: 100vh;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+div[class*="w-\\[462px\\]"] {
+  width: 462px;
+  height: 512px;
+  background: #eff6ff;
+  border-radius: 10px;
+  border: 1px solid #0284c7;
+  padding: 0;
+}
+
+img {
+  width: 55px;
+  height: 56px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 64px;
 }
 
 h1 {
+  color: #000000;
+  font-size: 1.25rem;
   text-align: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.25rem;
-}
-
-.subtitle {
-  text-align: center;
-  color: #94a3b8;
-  font-size: 0.875rem;
-  margin-bottom: 1.75rem;
-}
-
-.field {
-  margin-bottom: 1rem;
-}
-
-.field label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #475569;
-  margin-bottom: 0.4rem;
-}
-
-.field input {
-  width: 100%;
-  padding: 0.65rem 0.9rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  color: #0f172a;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.field input:focus {
-  border-color: #14b8a6;
-  box-shadow: 0 0 0 3px rgba(20,184,166,0.15);
-}
-
-.options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  font-size: 0.8rem;
-}
-
-.remember {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: #64748b;
-  cursor: pointer;
-}
-
-.forgot {
-  color: #14b8a6;
-  text-decoration: none;
+  margin-top: 24px;
   font-weight: 500;
 }
 
-.forgot:hover {
+h4 {
+  color: #000000;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+
+form {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+input {
+  background: #ffffff;
+  border: 1px solid #d5d5d5;
+  padding: 10px 16px;
+  margin: 0;
+  width: 100%;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.95rem;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', inherit;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+}
+
+input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.w-full {
+  width: 100%;
+  text-align: left;
+  padding-left: 4px;
+  padding-top: 8px;
+  padding-bottom: 20px;
+}
+
+a {
+  color: #0284c7;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0369a1;
   text-decoration: underline;
 }
 
-.btn-login {
-  width: 100%;
-  padding: 0.75rem;
-  background: #14b8a6;
-  color: white;
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button, a[class*="flex"] {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  height: 40px;
+  border-radius: 6px;
+  padding: 0 28px;
+  color: #000000;
+  font-size: 0.875rem;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
   border: none;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-
-.btn-login:hover {
-  background: #0f766e;
-}
-
-.btn-login:active {
-  transform: scale(0.98);
-}
-
-.register {
-  text-align: center;
-  margin-top: 1.25rem;
-  font-size: 0.82rem;
-  color: #94a3b8;
-}
-
-.register a {
-  color: #14b8a6;
-  font-weight: 600;
+  transition: all 0.2s ease;
   text-decoration: none;
 }
 
-.register a:hover {
-  text-decoration: underline;
+a[class*="flex"]:hover {
+  background: #dbeafe;
+}
+
+button {
+  height: 40px;
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 0 28px;
+  color: #ffffff;
+  font-size: 0.875rem;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #15213b;
+}
+
+@media (max-width: 600px) {
+  div[class*="w-\\[462px\\]"] {
+    width: 100%;
+    max-width: 462px;
+    height: auto;
+    min-height: 512px;
+  }
+
+  form {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 }`;
 
     constructor(private route: ActivatedRoute, private router: Router) { }
