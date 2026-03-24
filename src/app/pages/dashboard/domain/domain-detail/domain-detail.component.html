@@ -20,6 +20,17 @@
     </div>
 
     <div class="flex items-center gap-2">
+      <!-- Page Tabs -->
+      <div class="flex items-center gap-1 bg-gray-900 rounded-lg p-1 mr-2">
+        <button *ngFor="let pageKey of getPageKeys()" (click)="setPage(pageKey)"
+          class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all"
+          [ngClass]="activePage === pageKey
+            ? 'bg-purple-600 text-white'
+            : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'">
+          {{ pages[pageKey].name }}
+        </button>
+      </div>
+
       <button (click)="updatePreview()"
         class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-all">
         <i class="fas fa-play"></i>
