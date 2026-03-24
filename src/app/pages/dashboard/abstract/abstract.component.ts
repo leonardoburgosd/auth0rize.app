@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { MessageDefault } from 'src/app/Data/common/messageDefault';
 import { StatCard } from './statCard.interface';
 import { ActivityItem } from './activityItem.interface';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-abstract',
@@ -19,9 +21,16 @@ export class AbstractComponent implements OnInit {
   sections = [1, 2, 3, 4, 5]
   cards = [1, 2, 3]
 
-  constructor(private dashboardServices: dashboardServices) {
+  isDoubleFactorActive: boolean = false;
+
+  constructor(
+    private dashboardServices: dashboardServices,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
     this.dashboardServices.get$().then(res => {
       if (res.success) {
+        debugger
         this.statCards.push({
           title: "Total Usuarios",
           value: res.data.totalUsers.toString(),
@@ -100,6 +109,17 @@ export class AbstractComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    try {
+      const basicData = JSON.parse(this.cookieService.get('basicData'));
+      this.isDoubleFactorActive = basicData.isDoubleFactorActive ?? false;
+    } catch (error) {
+      console.error('Error al obtener basicData:', error);
+      this.isDoubleFactorActive = false;
+    }
+  }
+
+  goToConfig(): void {
+    this.router.navigate(['/dashboard/config']);
   }
 
 }
